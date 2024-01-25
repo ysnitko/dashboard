@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import LeftMenu from "@/components/LeftMenu/LeftMenu";
+import Header from "@/components/Header/Header";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,7 +18,10 @@ export default function RootLayout({
       <body className="grid grid-cols-[260px_1fr]">
         <LeftMenu />
 
-        <main>{children}</main>
+        <main className="bg-bg-page">
+          <Header />
+          {children}
+        </main>
       </body>
     </html>
   );
