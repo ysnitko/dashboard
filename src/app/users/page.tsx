@@ -1,11 +1,11 @@
-"use client";
 import Image from "next/image";
 import { usersData } from "../db/dbusers";
-import { useState } from "react";
+import { createUser } from "../lib/actions";
+import { prisma } from "../lib/prisma";
 
-export default function Users() {
-  const [statusUser, setStatusIser] = useState("Active");
+export default async function Users() {
 
+  const users = await prisma.users.findMany()
   return (
     <div className="p-[30px] flex flex-col gap-8">
       <div className="flex justify-between items-center">
@@ -30,7 +30,13 @@ export default function Users() {
           </tr>
         </thead>
         <tbody className="text-sm font-semibold">
-          {usersData.map((user) => {
+          {users.map((user : {id: string,
+          src: string, 
+        name: string,
+      login:string,
+    password:string,
+  role:string,
+status:string}) => {
             return (
               <tr key={user.id}>
                 <td className="flex gap-2 p-2">
@@ -48,23 +54,23 @@ export default function Users() {
                   <span>{user.role}</span>
                 </td>
                 <td className="p-2 flex flex-row items-center gap-2 ">
-                  {statusUser === "Active" ? (
-                    <div className="w-2 h-2 rounded-full bg-clr-status-active"></div>
-                  ) : (
+                
+                    {/* <div className="w-2 h-2 rounded-full bg-clr-status-active"></div> */}
+               
                     <div className="w-2 h-2 rounded-full bg-bg-btn-delete"></div>
-                  )}
+       
                   <span> {user.status}</span>
                 </td>
                 <td className="p-2">
-                  {statusUser === "Active" ? (
+                
                     <button className="mr-2 bg-bg-btn-block px-[1.06rem] py-1 rounded-md text-sm text-clr-text-menu font-semibold">
                       Block
                     </button>
-                  ) : (
+{/*              
                     <button className="mr-2 bg-clr-status-active px-2 py-1 rounded-md text-sm text-clr-text-menu font-semibold">
                       Unblock
-                    </button>
-                  )}
+                    </button> */}
+               
 
                   <button
                     className="bg-bg-btn-delete px-2 py-1 rounded-md text-sm text-clr-text-menu font-semibold"
