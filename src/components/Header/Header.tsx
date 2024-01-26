@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { menuLinks } from "@/lib/menu";
+import { menuLinks } from "@/app/db/menu";
 
 export default function Header() {
   const pathname = usePathname();

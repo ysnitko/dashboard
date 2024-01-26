@@ -7,9 +7,7 @@ import {
   SvgIconTasks,
   SvgIconTimeLog,
   SvgIconProjectTemplate,
-} from "../components/SvgIcon/SvgIcon";
-
-// interface MenuLinks
+} from "../../components/SvgIcon/SvgIcon";
 
 export const menuLinks: {
   title: string;

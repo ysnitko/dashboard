@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import logo from "../../../public/assets/logo.svg";
 import question from "../../../public/assets/question.svg";
-import { menuLinks } from "@/lib/menu";
+import { menuLinks } from "@/app/db/menu";
 
 export default function LeftMenu() {
   const pathname = usePathname();
@@ -12,7 +12,7 @@ export default function LeftMenu() {
     <div className="h-svh bg-bg-leftmenu pt-8 pb-8 px-[30px] flex flex-col gap-[70px] relative">
       <Image src={logo} alt="logo" width={140} height={30} />
       <div className="flex flex-col gap-[10px]">
-        <div className="text-sm flex gap-[10px] pl-[7px]  py-[5px] rounded-3xl bg-clr-text-menu items-center mb-[50px]">
+        <div className="text-sm flex gap-[10px] pl-[7px]  py-[5px] rounded-3xl bg-clr-text-menu items-center mb-[40px]">
           <button className="bg-bg-active-btn rounded-full w-[34px] h-[34px] flex justify-center items-center">
             <Image src="assets/plus.svg" alt="plus" width={24} height={24} />
           </button>
@@ -44,7 +44,7 @@ export default function LeftMenu() {
           alt="question"
           width={30}
           height={30}
-          // className="max-w-none"
+          className="max-w-none"
         />
       </button>
     </div>
