@@ -1,11 +1,15 @@
+
 import Image from "next/image";
-import { usersData } from "../db/dbusers";
-import { createUser } from "../lib/actions";
 import { prisma } from "../lib/prisma";
+import Link from "next/link";
 
 export default async function Users() {
+  
 
-  const users = await prisma.users.findMany()
+
+
+
+const users = await prisma.users.findMany()
   return (
     <div className="p-[30px] flex flex-col gap-8">
       <div className="flex justify-between items-center">
@@ -14,9 +18,9 @@ export default async function Users() {
           className="rounded-md p-1 pl-2 text-sm"
           placeholder="Search for a user..."
         />
-        <button className="text-sm bg-bg-active-btn rounded-md text-clr-text-menu font-bold px-2 py-1">
+        <Link className="text-sm bg-bg-active-btn rounded-md text-clr-text-menu font-bold px-2 py-1" href='/create-user'>
           Add new
-        </button>
+        </Link>
       </div>
       <table className="w-full border-bg-leftmenu border-collapse">
         <thead className="font-bold text-base text-clr-text-table ">
@@ -30,18 +34,12 @@ export default async function Users() {
           </tr>
         </thead>
         <tbody className="text-sm font-semibold">
-          {users.map((user : {id: string,
-          src: string, 
-        name: string,
-      login:string,
-    password:string,
-  role:string,
-status:string}) => {
+          {users.map((user : {id: number, name: string,login:string,password:string,role:string,status:string}) => {
             return (
               <tr key={user.id}>
                 <td className="flex gap-2 p-2">
                   <Image
-                    src={user.src}
+                    src='/assets/avatar.svg'
                     alt="users icon"
                     width={20}
                     height={20}
@@ -85,5 +83,6 @@ status:string}) => {
         </tbody>
       </table>
     </div>
+    
   );
 }

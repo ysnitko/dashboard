@@ -15,5 +15,4 @@ model Users {
   password String
   role String
   status String
-  src String
 }
