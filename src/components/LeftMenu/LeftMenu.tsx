@@ -1,10 +1,10 @@
-"use client";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import logo from "../../../public/assets/logo.svg";
-import question from "../../../public/assets/question.svg";
-import { menuLinks } from "@/app/db/menu";
+'use client';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import logo from '../../../public/assets/logo.svg';
+import question from '../../../public/assets/question.svg';
+import { menuLinks } from '@/app/db/menu';
 
 export default function LeftMenu() {
   const pathname = usePathname();
@@ -28,8 +28,8 @@ export default function LeftMenu() {
               key={link.title}
               className={
                 isActive
-                  ? "text-bg-active-btn bg-clr-text-menu text-sm flex gap-4 py-[13px] pl-4 rounded-3xl"
-                  : "text-clr-text-menu text-sm flex gap-4 py-[13px] pl-4 rounded-3xl"
+                  ? 'text-bg-active-btn bg-clr-text-menu text-sm flex gap-4 py-[13px] pl-4 rounded-3xl'
+                  : 'text-clr-text-menu text-sm flex gap-4 py-[13px] pl-4 rounded-3xl'
               }
             >
               {isActive ? link.icon_active : link.icon}

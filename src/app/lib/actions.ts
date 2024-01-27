@@ -21,9 +21,7 @@ const userData: Prisma.UsersUncheckedCreateInput = {
     role: role,
     status: status,
   };
-
-
-
+  
 await prisma.users.create({data: userData});
 revalidatePath('/')
 }

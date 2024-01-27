@@ -8,7 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {},
+      backgroundImage: {
+        "bg-log-out": "url('/assets/log-out.svg')" 
+      },
       colors: {
         "bg-leftmenu": "#060606",
         "bg-active-btn": "#E65F2B",
