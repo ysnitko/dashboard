@@ -25,64 +25,63 @@ export default async function Users() {
             <td>Name</td>
             <td>Login</td>
             <td>Password</td>
+            <td>Created at</td>
             <td>Role</td>
             <td>Status</td>
             <td>Action</td>
           </tr>
         </thead>
         <tbody className="text-sm font-semibold">
-          {users.map(
-            (user: {
-              id: number;
-              name: string;
-              login: string;
-              password: string;
-              role: string;
-              status: string;
-            }) => {
-              return (
-                <tr key={user.id}>
-                  <td className="flex gap-2 p-2">
-                    <Image
-                      src="/assets/avatar.svg"
-                      alt="users icon"
-                      width={20}
-                      height={20}
-                    />
-                    <span>{user.name}</span>
-                  </td>
-                  <td className="p-2">{user.login}</td>
-                  <td className="p-2">{user.password}</td>
-                  <td className="p-2">
-                    <span>{user.role}</span>
-                  </td>
-                  <td className="p-2 flex flex-row items-center gap-2 ">
-                    {/* <div className="w-2 h-2 rounded-full bg-clr-status-active"></div> */}
+          {users.map((user) => {
+            console.log(user.createdAt);
+            const modifyStringDate = user.createdAt
+              .toString()
+              .substring(0, user.createdAt.toString().indexOf('GMT'));
+            console.log(modifyStringDate);
 
-                    <div className="w-2 h-2 rounded-full bg-bg-btn-delete"></div>
+            return (
+              <tr key={user?.id}>
+                <td className="flex gap-2 p-2">
+                  <Image
+                    src="/assets/avatar.svg"
+                    alt="users icon"
+                    width={20}
+                    height={20}
+                  />
+                  <span>{user?.name}</span>
+                </td>
+                <td className="p-2">{user?.login}</td>
+                <td className="p-2">{user?.password}</td>
+                <td className="p-2">{modifyStringDate}</td>
+                <td className="p-2">
+                  <span>{user?.role}</span>
+                </td>
+                <td className="p-2 flex flex-row items-center gap-2 ">
+                  {/* <div className="w-2 h-2 rounded-full bg-clr-status-active"></div> */}
 
-                    <span> {user.status}</span>
-                  </td>
-                  <td className="p-2">
-                    <button className="mr-2 bg-bg-btn-block px-[1.06rem] py-1 rounded-md text-sm text-clr-text-menu font-semibold">
-                      Block
-                    </button>
-                    {/*              
+                  <div className="w-2 h-2 rounded-full bg-bg-btn-delete"></div>
+
+                  <span> {user?.status}</span>
+                </td>
+                <td className="p-2">
+                  <button className="mr-2 bg-bg-btn-block px-[1.06rem] py-1 rounded-md text-sm text-clr-text-menu font-semibold">
+                    Block
+                  </button>
+                  {/*              
                     <button className="mr-2 bg-clr-status-active px-2 py-1 rounded-md text-sm text-clr-text-menu font-semibold">
                       Unblock
                     </button> */}
 
-                    <button
-                      className="bg-bg-btn-delete px-2 py-1 rounded-md text-sm text-clr-text-menu font-semibold"
-                      // onClick={() => DELETE(user.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            }
-          )}
+                  <button
+                    className="bg-bg-btn-delete px-2 py-1 rounded-md text-sm text-clr-text-menu font-semibold"
+                    // onClick={() => DELETE(user.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

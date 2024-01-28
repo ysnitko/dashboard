@@ -1,27 +1,25 @@
 "use server"
 import { revalidatePath } from "next/cache";
 import { prisma } from "./prisma";
-import { Prisma} from "@prisma/client";
 
-export  async function createUser(formData: FormData) { 
-const users = await prisma.users.findMany()
-const id = users.length + 1  as number
-const  name = formData.get('name') as string;
-const  login = formData.get('email') as string;
-const  pswrd = formData.get('password') as string;
-const  role = formData.get('role') as string;
-const  status = formData.get('status') as string;
-console.log(formData);
+export async function createUser(formData: FormData) {
+  const name = formData.get("name") as string;
+  const login = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const role = formData.get("role") as string;
+  const status = formData.get("status") as string;
+  const createdAt = new Date().toISOString() as string;
 
-const userData: Prisma.UsersUncheckedCreateInput = {
-    id: id,
+  const userData ={
     name: name,
     login: login,
-    password: pswrd,
+    password: password,
     role: role,
     status: status,
+    createdAt: createdAt,
   };
-  
-await prisma.users.create({data: userData});
-revalidatePath('/')
+console.log(FormData);
+
+  await prisma.users.create({ data: userData });
+  revalidatePath("/");
 }

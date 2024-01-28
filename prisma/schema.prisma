@@ -9,10 +9,11 @@ datasource db {
 }
 
 model Users {
-  id Int @id @default(autoincrement())
+  id String @id @default(cuid())
   name String
   login String
   password String
+  createdAt DateTime @default(now())
   role String
   status String
 }
