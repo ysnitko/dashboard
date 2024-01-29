@@ -28,8 +28,8 @@ export default function LeftMenu() {
               key={link.title}
               className={
                 isActive
-                  ? 'text-bg-active-btn bg-clr-text-menu text-sm flex gap-4 py-[13px] pl-4 rounded-3xl'
-                  : 'text-clr-text-menu text-sm flex gap-4 py-[13px] pl-4 rounded-3xl'
+                  ? 'text-bg-active-btn bg-clr-text-menu text-sm flex gap-4 py-[13px] pl-4 rounded-3xl last:hidden'
+                  : 'text-clr-text-menu text-sm flex gap-4 py-[13px] pl-4 rounded-3xl last:hidden'
               }
             >
               {isActive ? link.icon_active : link.icon}

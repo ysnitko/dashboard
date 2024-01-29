@@ -4,12 +4,13 @@ import Link from 'next/link';
 
 export default async function Users() {
   const users = await prisma.users.findMany();
+
   return (
     <div className="p-[30px] flex flex-col gap-8">
       <div className="flex justify-between items-center">
         <input
           type="search"
-          className="rounded-md p-1 pl-2 text-sm"
+          className="rounded-md p-1 pl-2 text-sm outline-none"
           placeholder="Search for a user..."
         />
         <Link
@@ -32,8 +33,7 @@ export default async function Users() {
           </tr>
         </thead>
         <tbody className="text-sm font-semibold">
-          {users.map((user) => {
-            console.log(user.createdAt);
+          {users.map((user, index) => {
             const modifyStringDate = user.createdAt
               .toString()
               .substring(0, user.createdAt.toString().indexOf('GMT'));
@@ -41,7 +41,7 @@ export default async function Users() {
 
             return (
               <tr key={user?.id}>
-                <td className="flex gap-2 p-2">
+                <td className="flex gap-1 p-3 px-0">
                   <Image
                     src="/assets/avatar.svg"
                     alt="users icon"
@@ -56,11 +56,7 @@ export default async function Users() {
                 <td className="p-2">
                   <span>{user?.role}</span>
                 </td>
-                <td className="p-2 flex flex-row items-center gap-2 ">
-                  {/* <div className="w-2 h-2 rounded-full bg-clr-status-active"></div> */}
-
-                  <div className="w-2 h-2 rounded-full bg-bg-btn-delete"></div>
-
+                <td className="p-2">
                   <span> {user?.status}</span>
                 </td>
                 <td className="p-2">
