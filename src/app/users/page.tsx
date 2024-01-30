@@ -1,5 +1,6 @@
 import { Users } from '@prisma/client';
 import { prisma } from '../lib/prisma';
+import { deleteUser } from '../lib/actions';
 import Link from 'next/link';
 
 export default async function Users() {
@@ -38,6 +39,8 @@ export default async function Users() {
               .toString()
               .substring(0, user.createdAt.toString().indexOf('GMT'));
 
+            const deleteUserWithId = deleteUser.bind(null, user?.id);
+
             return (
               <tr key={user?.id} className="bg-bg-section rounded-sm">
                 <td className="p-2">{user?.name}</td>
@@ -50,16 +53,23 @@ export default async function Users() {
                 <td className="p-2">
                   <span> {user?.status}</span>
                 </td>
-                <td className="p-2">
-                  <button className="mr-2 bg-bg-btn-block px-[1.06rem] py-1 rounded-md text-sm text-clr-text-menu font-semibold bg-bg-btn-edit">
-                    Edit
-                  </button>
-                  <button
-                    className="bg-bg-btn-delete px-2 py-1 rounded-md text-sm text-clr-text-menu font-semibold"
-                    // onClick={() => DELETE(user.id)}
+                <td className="p-2 flex">
+                  <Link
+                    href={`/users/${user?.id}`}
+                    className="mr-2 bg-bg-btn-block px-[1.06rem] py-1 rounded-md text-sm text-clr-text-menu font-semibold bg-bg-btn-edit"
+                    type="submit"
                   >
-                    Delete
-                  </button>
+                    Edit
+                  </Link>
+
+                  <form action={deleteUserWithId}>
+                    <button
+                      className="bg-bg-btn-delete px-2 py-1 rounded-md text-sm text-clr-text-menu font-semibold"
+                      type="submit"
+                    >
+                      Delete
+                    </button>
+                  </form>
                 </td>
               </tr>
             );

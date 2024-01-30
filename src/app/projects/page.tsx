@@ -1,11 +1,11 @@
-"use client";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+'use client';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { ChangeEvent, useState } from 'react';
 
 export default function Projects() {
   const router = useRouter();
-  const [selectedOption, setselectedOption] = useState("all-users");
+  const [selectedOption, setselectedOption] = useState('all-users');
 
   const handleSelectAll = (event: ChangeEvent<HTMLSelectElement>) => {
     setselectedOption(event.target.value);
@@ -14,11 +14,12 @@ export default function Projects() {
   return (
     <div className="p-[30px] pt-3 flex flex-col gap-5">
       <button
-        className="max-w-2 text-sm"
+        className="max-w-5  text-sm flex gap-1"
         type="button"
         onClick={() => router.back()}
       >
-        Back
+        <Image src="/assets/back.svg" alt="back" width={40} height={40} />
+        <span>Back</span>
       </button>
       <div>
         <select
@@ -37,7 +38,7 @@ export default function Projects() {
         <div className="flex justify-between">
           <div
             className={
-              selectedOption === "all-users" ? "invisible flex" : "flex"
+              selectedOption === 'all-users' ? 'invisible flex' : 'flex'
             }
           >
             <Image
