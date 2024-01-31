@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import logo from '../../../public/assets/logo.svg';
 import question from '../../../public/assets/question.svg';
-import { menuLinks } from '@/app/db/menu';
+import { menuLinks } from '@/app/lib/menu';
 
 export default function LeftMenu() {
   const pathname = usePathname();

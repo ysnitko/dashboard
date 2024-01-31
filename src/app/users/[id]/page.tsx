@@ -57,60 +57,34 @@ export default async function User({ params }: { params: { id: string } }) {
             defaultValue={data?.password}
           />
         </label>
-
         <label
           htmlFor="role"
           className="flex flex-col gap-2 text-sm font-semibold"
         >
           Role
-          <input
-            type="text"
-            id="role"
-            name="role"
-            className="p-4 outline-none opacity-50 rounded-md"
-            defaultValue={data?.role}
-          />
-        </label>
-
-        <label
-          htmlFor="status"
-          className="flex flex-col gap-2 text-sm font-semibold"
-        >
-          Status
-          <input
-            type="text"
-            id="status"
-            name="status"
-            className="p-4 outline-none opacity-50 rounded-md"
-            defaultValue={data?.status}
-          />
-        </label>
-        <label
-          htmlFor="role-sel"
-          className="flex flex-col gap-2 text-sm font-semibold"
-        >
-          Role
           <select
-            name="role-sel"
+            name="role"
             id="role-sel"
             className="p-4 outline-none opacity-50 rounded-md"
+            defaultValue={data?.role}
           >
             <option value="choose-role" selected>
               Choose role
             </option>
             <option value="admin">Admin</option>
-            <option value="project-manager">Project manager</option>
+            <option value="project manager">Project manager</option>
           </select>
         </label>
         <label
-          htmlFor="status-sel"
+          htmlFor="status"
           className="flex flex-col gap-2 text-sm font-semibold"
         >
           Status
           <select
-            name="status-sel"
-            id="status-sel"
+            name="status"
+            id="status"
             className="p-4 outline-none opacity-50 rounded-md"
+            defaultValue={data?.status}
           >
             <option value="choose-status" selected>
               Choose status
