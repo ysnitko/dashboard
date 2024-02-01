@@ -1,5 +1,5 @@
-"use client";
-import React, { useEffect, useRef } from "react";
+'use client';
+import React, { useEffect, useRef } from 'react';
 
 interface Props {
   progress: number;
@@ -8,6 +8,17 @@ interface Props {
 export default function ProgressBar({ progress }: Props) {
   const progressRef = useRef<SVGCircleElement>(null);
 
+  const colorLine = (value: number) => {
+    if (0 <= value && value <= 25) {
+      return '#FF0000';
+    } else if (25 < value && value <= 50) {
+      return '#FFA500';
+    } else if (50 < value && value <= 75) {
+      return '#FFFF00';
+    } else if (75 < value && value <= 100) {
+      return '#008000';
+    }
+  };
   useEffect(() => {
     if (progressRef.current) {
       const lengthCircle = 2 * Math.PI * 40;
@@ -19,9 +30,8 @@ export default function ProgressBar({ progress }: Props) {
 
   return (
     <svg
-      className="w-full h-full"
-      height="100"
-      width="100"
+      height="45"
+      width="45"
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/200/svg"
     >
@@ -29,7 +39,7 @@ export default function ProgressBar({ progress }: Props) {
         cx={50}
         cy={50}
         r={40}
-        strokeWidth={2}
+        strokeWidth={8}
         fill="none"
         stroke="#ccc"
       />
@@ -39,14 +49,15 @@ export default function ProgressBar({ progress }: Props) {
         cy={50}
         r={40}
         fill="none"
-        strokeWidth={2}
-        stroke="#ff0000"
+        strokeWidth={8}
+        stroke={colorLine(progress)}
         transform="rotate(-90, 50, 50)"
       />
 
       <text
         x={50}
         y={50}
+        fontSize={24}
         textAnchor="middle"
         dominantBaseline="middle"
         fill="#000"

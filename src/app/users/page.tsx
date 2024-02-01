@@ -33,7 +33,7 @@ export default async function Users() {
             <td></td>
           </tr>
         </thead>
-        <tbody className="text-sm font-semibold">
+        <tbody className="text-sm">
           {users.map((user: Users) => {
             const modifyStringDate = user.createdAt
               .toString()

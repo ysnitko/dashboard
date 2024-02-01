@@ -1,5 +1,6 @@
 // import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ChangeEvent, useState } from 'react';
 import { prisma } from '../lib/prisma';
 import { Projects } from '@prisma/client';
@@ -8,6 +9,7 @@ import ProgressBar from '@/components/ProgressBar/ProgressBar';
 export default async function Projects() {
   // const router = useRouter();
   const projects = await prisma.projects.findMany();
+  const users = await prisma.users.findMany();
   console.log(projects);
 
   // const [selectedOption, setSelectedOption] = useState('all-users');
@@ -30,21 +32,27 @@ export default async function Projects() {
         <select
           name="select-user"
           id="select-user"
-          className="bg-bg-page text-sm text-clr-text-table font-semibold"
+          className="bg-bg-page text-sm text-clr-text-table font-semibold outline-none"
           // onChange={handleSelectAll}
           // defaultValue={selectedOption}
         >
           <option value="all-users">All Users</option>
-          <option value="Adam">Adam</option>
-          <option value="Tom">Tom</option>
+          {users.map((user) => {
+            return (
+              <option key={user?.id} value={user?.name}>
+                {user?.name}
+              </option>
+            );
+          })}
         </select>
       </div>
       <div>
         <div className="flex justify-between">
           <div
-          // className={
-          //   selectedOption === 'all-users' ? 'invisible flex' : 'flex'
-          // }
+            // className={
+            //   selectedOption === 'all-users' ? 'invisible flex' : 'flex'
+            // }
+            className="flex"
           >
             <Image
               src="/assets/avatar.svg"
@@ -107,20 +115,23 @@ export default async function Projects() {
             <td>Name</td>
             <td>Project manager</td>
             <td>Due date</td>
-            <td>Created at</td>
+            <td>Days left</td>
             <td>Status</td>
             <td>Progress</td>
           </tr>
         </thead>
-        <tbody className="text-sm font-semibold">
+        <tbody className="text-sm">
           {projects.map((project: Projects) => {
             const modifyStringDate = project.createdAt
               .toString()
               .substring(0, project.createdAt.toString().indexOf('GMT'));
 
             return (
-              <tr key={project?.id} className="bg-bg-section ">
-                <td className="flex gap-1 p-3 px-2">{project?.name}</td>
+              <tr
+                key={project?.id}
+                className="bg-bg-section rounded-sm text-center"
+              >
+                <td className="p-2">{project?.name}</td>
                 <td className="p-2">{project?.projectManager}</td>
                 <td className="p-2">{project?.dueData}</td>
                 <td className="p-2">{modifyStringDate}</td>
@@ -128,9 +139,28 @@ export default async function Projects() {
                   <span>{project?.status}</span>
                 </td>
                 <td className="p-2">
-                  <ProgressBar progress={+project?.progress} />√
+                  <ProgressBar progress={+project?.progress} />
                 </td>
-                <td className="p-2 w-[150px]"></td>
+
+                <td className="p-2 ">
+                  <div className="flex justify-center ">
+                    <Link
+                      href={`/projects/${project?.id}`}
+                      className="mr-2 bg-bg-btn-block px-[1.06rem] py-1 rounded-md text-sm text-clr-text-menu font-semibold bg-bg-btn-edit"
+                      type="submit"
+                    >
+                      Complete
+                    </Link>
+                    <form action="">
+                      <button
+                        className="bg-bg-btn-delete px-2 py-1 rounded-md text-sm text-clr-text-menu font-semibold"
+                        type="submit"
+                      >
+                        Delete
+                      </button>
+                    </form>
+                  </div>
+                </td>
               </tr>
             );
           })}
