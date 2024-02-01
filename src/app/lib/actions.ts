@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "./prisma";
 import { redirect } from "next/navigation";
 
+
 export async function createUser(formData: FormData) {
   const name = formData.get("name") as string;
   const login = formData.get("email") as string;
@@ -22,6 +23,28 @@ export async function createUser(formData: FormData) {
   await prisma.users.create({ data: userData });
   revalidatePath("/");
 }
+
+export async function createProject(formData: FormData) {
+  const name = formData.get("name") as string;
+  const projectManager = formData.get("email") as string;
+  const dueDate = formData.get("duedate") as string;
+  const progress = formData.get("progress") as string;
+  const status = formData.get("status") as string;
+  const createdAt = new Date().toISOString() as string;
+
+  const projectData = {
+    name: name,
+    projectManager: projectManager,
+    dueDate: dueDate,
+    status: status,
+    createdAt: createdAt,
+    progress: progress,
+  }
+  await prisma.projects.create({ data: projectData });
+  revalidatePath("/");
+}
+
+
 
 
 export async function deleteUser(id: number) {

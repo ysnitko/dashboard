@@ -1,22 +1,27 @@
-'use client';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
+import { prisma } from '../lib/prisma';
+import { Projects } from '@prisma/client';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
 
-export default function Projects() {
-  const router = useRouter();
-  const [selectedOption, setselectedOption] = useState('all-users');
+export default async function Projects() {
+  // const router = useRouter();
+  const projects = await prisma.projects.findMany();
+  console.log(projects);
 
-  const handleSelectAll = (event: ChangeEvent<HTMLSelectElement>) => {
-    setselectedOption(event.target.value);
-  };
+  // const [selectedOption, setSelectedOption] = useState('all-users');
+
+  // const handleSelectAll = (event: ChangeEvent<HTMLSelectElement>) => {
+  //   setSelectedOption(event.target.value);
+  // };
 
   return (
     <div className="p-[30px] pt-3 flex flex-col gap-5">
       <button
         className="max-w-5  text-sm flex gap-1"
         type="button"
-        onClick={() => router.back()}
+        // onClick={() => router.back()}
       >
         <Image src="/assets/back.svg" alt="back" width={40} height={40} />
         <span>Back</span>
@@ -26,8 +31,8 @@ export default function Projects() {
           name="select-user"
           id="select-user"
           className="bg-bg-page text-sm text-clr-text-table font-semibold"
-          onChange={handleSelectAll}
-          defaultValue={selectedOption}
+          // onChange={handleSelectAll}
+          // defaultValue={selectedOption}
         >
           <option value="all-users">All Users</option>
           <option value="Adam">Adam</option>
@@ -37,9 +42,9 @@ export default function Projects() {
       <div>
         <div className="flex justify-between">
           <div
-            className={
-              selectedOption === 'all-users' ? 'invisible flex' : 'flex'
-            }
+          // className={
+          //   selectedOption === 'all-users' ? 'invisible flex' : 'flex'
+          // }
           >
             <Image
               src="/assets/avatar.svg"
@@ -100,57 +105,35 @@ export default function Projects() {
         <thead className="font-bold text-base text-clr-text-table">
           <tr>
             <td>Name</td>
-            <td>Login</td>
-            <td>Password</td>
+            <td>Project manager</td>
+            <td>Due date</td>
             <td>Created at</td>
-            <td>Role</td>
             <td>Status</td>
-            <td>Action</td>
+            <td>Progress</td>
           </tr>
         </thead>
         <tbody className="text-sm font-semibold">
-          <tr className="bg-bg-section ">
-            <td className="flex gap-1 p-3 px-2">
-              <Image
-                src="/assets/avatar.svg"
-                alt="users icon"
-                width={20}
-                height={20}
-              />
-              <span>user?.nam</span>
-            </td>
-            <td className="p-2">user?.login</td>
-            <td className="p-2">user?.password</td>
-            <td className="p-2">modifyStringDate</td>
-            <td className="p-2">
-              <span>user?.role</span>
-            </td>
-            <td className="p-2">
-              <span>user?.status</span>
-            </td>
-            <td className="p-2 w-[150px]"></td>
-          </tr>
-          <tr className="bg-bg-section ">
-            <td className="flex gap-1 p-3 px-2">
-              <Image
-                src="/assets/avatar.svg"
-                alt="users icon"
-                width={20}
-                height={20}
-              />
-              <span>user?.nam</span>
-            </td>
-            <td className="p-2">user?.login</td>
-            <td className="p-2">user?.password</td>
-            <td className="p-2">modifyStringDate</td>
-            <td className="p-2">
-              <span>user?.role</span>
-            </td>
-            <td className="p-2">
-              <span>user?.status</span>
-            </td>
-            <td className="p-2 w-[150px]"></td>
-          </tr>
+          {projects.map((project: Projects) => {
+            const modifyStringDate = project.createdAt
+              .toString()
+              .substring(0, project.createdAt.toString().indexOf('GMT'));
+
+            return (
+              <tr key={project?.id} className="bg-bg-section ">
+                <td className="flex gap-1 p-3 px-2">{project?.name}</td>
+                <td className="p-2">{project?.projectManager}</td>
+                <td className="p-2">{project?.dueData}</td>
+                <td className="p-2">{modifyStringDate}</td>
+                <td className="p-2">
+                  <span>{project?.status}</span>
+                </td>
+                <td className="p-2">
+                  <ProgressBar progress={+project?.progress} />√
+                </td>
+                <td className="p-2 w-[150px]"></td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

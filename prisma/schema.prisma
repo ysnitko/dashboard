@@ -17,3 +17,13 @@ model Users {
   role String
   status String
 }
+
+model Projects {
+  id Int @id @default(autoincrement())
+  name String 
+  projectManager String
+  createdAt DateTime @default(now())
+  dueData String
+  progress String
+  status String
+}
