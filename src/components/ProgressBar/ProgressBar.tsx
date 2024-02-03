@@ -19,6 +19,7 @@ export default function ProgressBar({ progress }: Props) {
       return '#008000';
     }
   };
+
   useEffect(() => {
     if (progressRef.current) {
       const lengthCircle = 2 * Math.PI * 40;

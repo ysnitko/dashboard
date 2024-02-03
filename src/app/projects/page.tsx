@@ -1,13 +1,12 @@
-// import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import BackButton from '@/components/BackButton/BackButton';
 import { ChangeEvent, useState } from 'react';
 import { prisma } from '../lib/prisma';
 import { Projects } from '@prisma/client';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 
 export default async function Projects() {
-  // const router = useRouter();
   const projects = await prisma.projects.findMany();
   const users = await prisma.users.findMany();
   console.log(projects);
@@ -20,14 +19,7 @@ export default async function Projects() {
 
   return (
     <div className="p-[30px] pt-3 flex flex-col gap-5">
-      <button
-        className="max-w-5  text-sm flex gap-1"
-        type="button"
-        // onClick={() => router.back()}
-      >
-        <Image src="/assets/back.svg" alt="back" width={40} height={40} />
-        <span>Back</span>
-      </button>
+      <BackButton />
       <div>
         <select
           name="select-user"
@@ -125,6 +117,7 @@ export default async function Projects() {
             const modifyStringDate = project.createdAt
               .toString()
               .substring(0, project.createdAt.toString().indexOf('GMT'));
+            console.log(project.projectManager.users[1]);
 
             return (
               <tr
