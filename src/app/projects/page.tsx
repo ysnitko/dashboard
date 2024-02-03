@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import BackButton from '@/components/BackButton/BackButton';
-import { ChangeEvent, useState } from 'react';
 import { prisma } from '../lib/prisma';
 import { Projects } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 
 export default async function Projects() {
@@ -117,7 +117,6 @@ export default async function Projects() {
             const modifyStringDate = project.createdAt
               .toString()
               .substring(0, project.createdAt.toString().indexOf('GMT'));
-            console.log(project.projectManager.users[1]);
 
             return (
               <tr
@@ -125,7 +124,11 @@ export default async function Projects() {
                 className="bg-bg-section rounded-sm text-center"
               >
                 <td className="p-2">{project?.name}</td>
-                <td className="p-2">{project?.projectManager}</td>
+                <td className="p-2">
+                  {project.projectManager.map((element: string) => {
+                    <span key={element?.id}>{element?.name}</span>;
+                  })}
+                </td>
                 <td className="p-2">{project?.dueData}</td>
                 <td className="p-2">{modifyStringDate}</td>
                 <td className="p-2">

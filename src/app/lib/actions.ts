@@ -12,6 +12,7 @@ export async function createUser(formData: FormData) {
   const status = formData.get("status") as string;
   const createdAt = new Date().toISOString() as string;
 
+
   const userData ={
     name: name,
     login: login,
@@ -32,6 +33,7 @@ export async function createProject(formData: FormData) {
   const status = formData.get("status") as string;
   const createdAt = new Date().toISOString() as string;
 
+
   const projectData = {
     name: name,
     projectManager: projectManager,
@@ -43,8 +45,6 @@ export async function createProject(formData: FormData) {
   await prisma.projects.create({ data: projectData });
   revalidatePath("/");
 }
-
-
 
 
 export async function deleteUser(id: number) {
