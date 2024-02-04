@@ -23,9 +23,8 @@ model Projects {
   id Int @id @default(autoincrement())
   name String 
   projectManager Users[]
-  userId Int @default(0)
   createdAt DateTime @default(now())
-  dueData String
+  dueDate String
   progress String
   status String
 }

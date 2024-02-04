@@ -3,7 +3,6 @@ import Link from 'next/link';
 import BackButton from '@/components/BackButton/BackButton';
 import { prisma } from '../lib/prisma';
 import { Projects } from '@prisma/client';
-import { Prisma } from '@prisma/client';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 
 export default async function Projects() {
@@ -125,9 +124,9 @@ export default async function Projects() {
               >
                 <td className="p-2">{project?.name}</td>
                 <td className="p-2">
-                  {project.projectManager.map((element: string) => {
+                  {/* {project.projectManager.map((element: string) => {
                     <span key={element?.id}>{element?.name}</span>;
-                  })}
+                  })} */}
                 </td>
                 <td className="p-2">{project?.dueData}</td>
                 <td className="p-2">{modifyStringDate}</td>

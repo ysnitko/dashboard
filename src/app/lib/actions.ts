@@ -27,8 +27,8 @@ export async function createUser(formData: FormData) {
 
 export async function createProject(formData: FormData) {
   const name = formData.get("name") as string;
-  const projectManager = formData.get("email") as string;
-  const dueDate = formData.get("duedate") as string;
+  const projectManagerName = formData.get("project-manager") as string;
+  const dueDate = formData.get("due-date") as string;
   const progress = formData.get("progress") as string;
   const status = formData.get("status") as string;
   const createdAt = new Date().toISOString() as string;
@@ -36,7 +36,7 @@ export async function createProject(formData: FormData) {
 
   const projectData = {
     name: name,
-    projectManager: projectManager,
+    projectManager: [...projectManagerName],
     dueDate: dueDate,
     status: status,
     createdAt: createdAt,
