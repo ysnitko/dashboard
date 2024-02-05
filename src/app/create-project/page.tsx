@@ -1,33 +1,8 @@
-'use client';
 import { createProject } from '@/app/lib/actions';
-import { useRouter } from 'next/navigation';
 import { prisma } from '../lib/prisma';
-import { useEffect, useState } from 'react';
 
-export default function CreateProjectForm() {
-  const router = useRouter();
-  const [usersArr, setUsersArr] = useState<
-    {
-      id: number;
-      name: string;
-      login: string;
-      password: string;
-      createdAt: Date;
-      role: string;
-      status: string;
-    }[]
-  >([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const data = await prisma.users.findMany();
-
-      setUsersArr(data);
-    };
-
-    fetchUsers();
-  }, []);
-
+export default async function CreateProjectForm() {
+  const users = await prisma.users.findMany();
   return (
     <form
       action={createProject}
@@ -56,19 +31,21 @@ export default function CreateProjectForm() {
             name="project-manager"
             id="project-manager"
             className="p-4 outline-none opacity-50 rounded-md"
+            defaultValue={'all-users'}
           >
-            <option value="1">wewew</option>
-            <option value="23">3424</option>
-            {usersArr.map((user) => {
+            <option value="all-users" selected>
+              all-users
+            </option>
+            {users.map((user) => {
               return (
-                <option key={user.name} value={user?.name}>
+                <option key={user.id} value={user?.name}>
                   {user?.name}
                 </option>
               );
             })}
           </select>
         </label>
-
+        {/* 
         <label
           htmlFor="due-date"
           className="flex flex-col gap-2 text-sm font-semibold"
@@ -80,7 +57,7 @@ export default function CreateProjectForm() {
             name="due-date"
             className="p-4 outline-none opacity-50 rounded-md"
           />
-        </label>
+        </label> */}
         <label
           htmlFor="status"
           className="flex flex-col gap-2 text-sm font-semibold"
@@ -90,6 +67,7 @@ export default function CreateProjectForm() {
             name="status"
             id="status"
             className="p-4 outline-none opacity-50 rounded-md"
+            defaultValue="choose-status"
           >
             <option value="choose-status" selected>
               Choose status
@@ -115,7 +93,8 @@ export default function CreateProjectForm() {
       <button
         type="submit"
         className="bg-bg-btn-block text-bg-page font-bold p-5 rounded-md bg-bg-active-btn"
-        onClick={() => router.back()}
+        // onClick={() => router.back()
+        // }
       >
         Submit
       </button>

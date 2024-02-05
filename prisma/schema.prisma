@@ -16,13 +16,14 @@ model Users {
   createdAt DateTime @default(now())
   role String
   status String
-  managedProjects Projects[]
+  managedProjects Projects?
 }
 
 model Projects {
   id Int @id @default(autoincrement())
+  projectManager Users? @relation(fields: [managerId], references: [id])
+  managerId Int @default(0) @unique
   name String 
-  projectManager Users[]
   createdAt DateTime @default(now())
   dueDate String
   progress String
