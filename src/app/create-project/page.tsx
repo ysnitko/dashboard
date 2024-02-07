@@ -3,6 +3,14 @@ import { prisma } from '../lib/prisma';
 
 export default async function CreateProjectForm() {
   const users = await prisma.users.findMany();
+
+  const onSelectUser = async (id: number) => {
+    const userSelect = await prisma.users.findUnique({
+      where: { id },
+    });
+    return userSelect;
+  };
+
   return (
     <form
       action={createProject}
@@ -31,7 +39,6 @@ export default async function CreateProjectForm() {
             name="project-manager"
             id="project-manager"
             className="p-4 outline-none opacity-50 rounded-md"
-            defaultValue={'all-users'}
           >
             <option value="all-users" selected>
               all-users
@@ -40,6 +47,7 @@ export default async function CreateProjectForm() {
               return (
                 <option key={user.id} value={user?.name}>
                   {user?.name}
+                  {user?.id}
                 </option>
               );
             })}
@@ -58,7 +66,7 @@ export default async function CreateProjectForm() {
             className="p-4 outline-none opacity-50 rounded-md"
           />
         </label> */}
-        <label
+        {/* <label
           htmlFor="status"
           className="flex flex-col gap-2 text-sm font-semibold"
         >
@@ -88,7 +96,7 @@ export default async function CreateProjectForm() {
             id="progress"
             className="p-4 outline-none opacity-50 rounded-md"
           />
-        </label>
+        </label> */}
       </div>
       <button
         type="submit"

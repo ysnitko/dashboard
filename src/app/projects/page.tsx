@@ -113,9 +113,9 @@ export default async function Projects() {
         </thead>
         <tbody className="text-sm">
           {projects.map((project: Projects) => {
-            const modifyStringDate = project.createdAt
-              .toString()
-              .substring(0, project.createdAt.toString().indexOf('GMT'));
+            // const modifyStringDate = project.createdAt
+            //   .toString()
+            //   .substring(0, project.createdAt.toString().indexOf('GMT'));
 
             return (
               <tr
@@ -128,13 +128,11 @@ export default async function Projects() {
                     <span key={element?.id}>{element?.name}</span>;
                   })} */}
                 </td>
-                <td className="p-2">{project?.dueData}</td>
-                <td className="p-2">{modifyStringDate}</td>
+                {/* <td className="p-2">{project?.dueData}</td> */}
+                {/* <td className="p-2">{modifyStringDate}</td> */}
+                <td className="p-2">{/* <span>{project?.status}</span> */}</td>
                 <td className="p-2">
-                  <span>{project?.status}</span>
-                </td>
-                <td className="p-2">
-                  <ProgressBar progress={+project?.progress} />
+                  {/* <ProgressBar progress={+project?.progress} /> */}
                 </td>
 
                 <td className="p-2 ">

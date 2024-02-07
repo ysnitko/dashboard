@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,23 +8,19 @@ datasource db {
 }
 
 model Users {
-  id Int @id @default(autoincrement())
-  name String 
-  login String @unique
-  password String
-  createdAt DateTime @default(now())
-  role String
-  status String
-  managedProjects Projects?
+  id              Int        @id @default(autoincrement())
+  name            String
+  login           String     @unique
+  password        String
+  createdAt       DateTime   @default(now())
+  role            String
+  status          String
+  managedProjects Projects[]
 }
 
 model Projects {
-  id Int @id @default(autoincrement())
+  id             Int    @id @default(autoincrement())
   projectManager Users? @relation(fields: [managerId], references: [id])
-  managerId Int @default(0) @unique
-  name String 
-  createdAt DateTime @default(now())
-  dueDate String
-  progress String
-  status String
+  managerId      Int?   @unique @default(0)
+  name           String
 }
