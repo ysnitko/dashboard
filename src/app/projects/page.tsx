@@ -124,16 +124,16 @@ export default async function Projects() {
               >
                 <td className="p-2">{project?.name}</td>
                 <td className="p-2">
-                  {/* {project.projectManager.map((element: string) => {
-                    <span key={element?.id}>{element?.name}</span>;
+                  {/* {projectsUsers.map((manager) => {
+                    return <span>{manager}</span>;
                   })} */}
                 </td>
                 {/* <td className="p-2">{project?.dueData}</td> */}
                 {/* <td className="p-2">{modifyStringDate}</td> */}
-                <td className="p-2">{/* <span>{project?.status}</span> */}</td>
-                <td className="p-2">
-                  {/* <ProgressBar progress={+project?.progress} /> */}
-                </td>
+                {/* <td className="p-2"><span>{project?.status}</span></td> */}
+                {/* <td className="p-2">
+                  <ProgressBar progress={+project?.progress} />
+                </td> */}
 
                 <td className="p-2 ">
                   <div className="flex justify-center ">

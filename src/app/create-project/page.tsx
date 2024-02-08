@@ -4,13 +4,6 @@ import { prisma } from '../lib/prisma';
 export default async function CreateProjectForm() {
   const users = await prisma.users.findMany();
 
-  const onSelectUser = async (id: number) => {
-    const userSelect = await prisma.users.findUnique({
-      where: { id },
-    });
-    return userSelect;
-  };
-
   return (
     <form
       action={createProject}

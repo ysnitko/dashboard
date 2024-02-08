@@ -26,34 +26,40 @@ export async function createUser(formData: FormData) {
   revalidatePath("/");
 }
 
+  export async function createProject(formData: FormData) {
+    const name = formData.get("name") as string;
 
+    const projectManagerName = formData.get("project-manager") as string;
+    // const dueDate = formData.get("due-date") as string;
+    // const progress = formData.get("progress") as string;
+    // const status = formData.get("status") as string;
+    // const createdAt = new Date().toISOString() as string;
+    const manager = await prisma.users.findUnique({
+      where: {
+        name: projectManagerName,
+      }
+    });
+    
+    console.log(manager);
 
-export async function createProject(formData: FormData) {
-  const name = formData.get("name") as string;
-  const projectManagerName = formData.get("project-manager") as string;
-  // const dueDate = formData.get("due-date") as string;
-  // const progress = formData.get("progress") as string;
-  // const status = formData.get("status") as string;
-  // const createdAt = new Date().toISOString() as string;
+    const projectData = {
+      name: name,
+      projectManager: {
+        connect: {
+          name: manager?.name,
+        },
+      },
+    };
+    
+    
+      // dueDate: dueDate,
+      // status: status,
+      // createdAt: createdAt,
+      // progress: progress,
 
-
-  const projectData = {
-    name: name,
-    projectManager: {
-      create: {name: projectManagerName}
-    },
-    // dueDate: dueDate,
-    // status: status,
-    // createdAt: createdAt,
-    // progress: progress,
+    await prisma.projects.create({ data: projectData });
+    revalidatePath("/");
   }
-  await prisma.projects.create({ data: projectData });
-  revalidatePath("/");
-}
-
-
-
-
 
 export async function deleteUser(id: number) {
   await prisma.users.delete({
