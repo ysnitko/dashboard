@@ -8,19 +8,19 @@ datasource db {
 }
 
 model Users {
-  id              Int        @id @default(autoincrement())
-  name            String     @unique
-  login           String     @unique
-  password        String
-  createdAt       DateTime   @default(now())
-  role            String
-  status          String
-  managedProjects Projects[]
+  id        Int        @id @default(autoincrement())
+  name      String
+  login     String     @unique
+  password  String
+  createdAt DateTime   @default(now())
+  role      String
+  status    String
+  projects  Projects[]
 }
 
 model Projects {
-  id             Int    @id @default(autoincrement())
-  projectManager Users? @relation(fields: [managerId], references: [id])
-  managerId      Int?   @unique @default(0)
-  name           String
+  id               Int    @id @default(autoincrement())
+  projectManager   Users? @relation(fields: [projectManagerId], references: [id])
+  projectManagerId Int?
+  title            String
 }

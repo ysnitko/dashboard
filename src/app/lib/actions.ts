@@ -27,14 +27,13 @@ export async function createUser(formData: FormData) {
 }
 
   export async function createProject(formData: FormData) {
-    const name = formData.get("name") as string;
-
+    const title = formData.get("title") as string;
     const projectManagerName = formData.get("project-manager") as string;
     // const dueDate = formData.get("due-date") as string;
     // const progress = formData.get("progress") as string;
     // const status = formData.get("status") as string;
     // const createdAt = new Date().toISOString() as string;
-    const manager = await prisma.users.findUnique({
+    const manager = await prisma.users.findFirst({
       where: {
         name: projectManagerName,
       }
@@ -43,12 +42,13 @@ export async function createUser(formData: FormData) {
     console.log(manager);
 
     const projectData = {
-      name: name,
-      projectManager: {
+      title: title,
+      projectManager: { 
         connect: {
-          name: manager?.name,
-        },
-      },
+          id: manager?.id
+        }
+      }
+     
     };
     
     
@@ -60,6 +60,7 @@ export async function createUser(formData: FormData) {
     await prisma.projects.create({ data: projectData });
     revalidatePath("/");
   }
+  
 
 export async function deleteUser(id: number) {
   await prisma.users.delete({
@@ -69,6 +70,15 @@ export async function deleteUser(id: number) {
   })
   revalidatePath("/");
 }
+
+export async function findUser(id: number) {
+ const managerName =  await prisma.users.findUnique({
+    where: {
+      id: id,
+  }})
+  return managerName?.name
+}
+
 
 export async function updateUser(id: number, formData: FormData) {
   const name = formData.get("name") as string;

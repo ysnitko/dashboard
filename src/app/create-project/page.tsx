@@ -11,14 +11,14 @@ export default async function CreateProjectForm() {
     >
       <div className="grid grid-cols-2 gap-x-8 gap-y-6">
         <label
-          htmlFor="name"
+          htmlFor="title"
           className="flex flex-col gap-2 text-sm font-semibold"
         >
           Name
           <input
             type="text"
-            id="name"
-            name="name"
+            id="title"
+            name="title"
             className="p-4 outline-none opacity-50 rounded-md "
           />
         </label>

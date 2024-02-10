@@ -3,6 +3,7 @@ import Link from 'next/link';
 import BackButton from '@/components/BackButton/BackButton';
 import { prisma } from '../lib/prisma';
 import { Projects } from '@prisma/client';
+import { findUser } from '../lib/actions';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 
 export default async function Projects() {
@@ -122,12 +123,8 @@ export default async function Projects() {
                 key={project?.id}
                 className="bg-bg-section rounded-sm text-center"
               >
-                <td className="p-2">{project?.name}</td>
-                <td className="p-2">
-                  {/* {projectsUsers.map((manager) => {
-                    return <span>{manager}</span>;
-                  })} */}
-                </td>
+                <td className="p-2">{project?.title}</td>
+                <td className="p-2">{findUser(project.id)}</td>
                 {/* <td className="p-2">{project?.dueData}</td> */}
                 {/* <td className="p-2">{modifyStringDate}</td> */}
                 {/* <td className="p-2"><span>{project?.status}</span></td> */}
