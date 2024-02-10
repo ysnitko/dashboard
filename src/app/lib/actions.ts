@@ -71,7 +71,11 @@ export async function deleteUser(id: number) {
   revalidatePath("/");
 }
 
-export async function findUser(id: number) {
+export async function findUser(id: number | null) {
+  if (id === null) {
+    return null;
+  }
+
  const managerName =  await prisma.users.findUnique({
     where: {
       id: id,

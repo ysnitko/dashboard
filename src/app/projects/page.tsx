@@ -104,7 +104,7 @@ export default async function Projects() {
       <table className="w-full border-bg-leftmenu border-separate border-spacing-y-2 ">
         <thead className="font-bold text-base text-clr-text-table">
           <tr>
-            <td>Name</td>
+            <td>Title</td>
             <td>Project manager</td>
             <td>Due date</td>
             <td>Days left</td>
@@ -114,6 +114,9 @@ export default async function Projects() {
         </thead>
         <tbody className="text-sm">
           {projects.map((project: Projects) => {
+            const pmName = findUser(project?.projectManagerId);
+            console.log(pmName);
+
             // const modifyStringDate = project.createdAt
             //   .toString()
             //   .substring(0, project.createdAt.toString().indexOf('GMT'));
@@ -124,7 +127,7 @@ export default async function Projects() {
                 className="bg-bg-section rounded-sm text-center"
               >
                 <td className="p-2">{project?.title}</td>
-                <td className="p-2">{findUser(project.id)}</td>
+                <td className="p-2">{pmName}</td>
                 {/* <td className="p-2">{project?.dueData}</td> */}
                 {/* <td className="p-2">{modifyStringDate}</td> */}
                 {/* <td className="p-2"><span>{project?.status}</span></td> */}
