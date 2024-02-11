@@ -1,11 +1,7 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
 
-interface Props {
-  progress: number;
-}
-
-export default function ProgressBar({ progress }: Props) {
+export default function ProgressBar({ progress }: { progress: number | null }) {
   const progressRef = useRef<SVGCircleElement>(null);
 
   const colorLine = (value: number) => {
@@ -22,6 +18,9 @@ export default function ProgressBar({ progress }: Props) {
 
   useEffect(() => {
     if (progressRef.current) {
+      if (progress === null) {
+        return;
+      }
       const lengthCircle = 2 * Math.PI * 40;
       const dashOffset = lengthCircle - (progress / 100) * lengthCircle;
       progressRef.current.style.strokeDasharray = `${lengthCircle}`;
@@ -51,7 +50,7 @@ export default function ProgressBar({ progress }: Props) {
         r={40}
         fill="none"
         strokeWidth={8}
-        stroke={colorLine(progress)}
+        stroke={colorLine(progress || 0)}
         transform="rotate(-90, 50, 50)"
       />
 

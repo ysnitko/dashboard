@@ -19,8 +19,11 @@ model Users {
 }
 
 model Projects {
-  id               Int    @id @default(autoincrement())
-  projectManager   Users? @relation(fields: [projectManagerId], references: [id])
-  projectManagerId Int?
+  id               Int      @id @default(autoincrement())
   title            String
+  projectManager   Users?   @relation(fields: [projectManagerId], references: [id])
+  projectManagerId Int?
+  createdAt        DateTime @default(now())
+  status           String   @default("On going")
+  progress         Int?     @default(0)
 }

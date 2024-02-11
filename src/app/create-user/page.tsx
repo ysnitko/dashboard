@@ -58,10 +58,9 @@ export default function CreateUserForm() {
             name="role"
             id="role"
             className="p-4 outline-none opacity-50 rounded-md"
+            defaultValue="choose-role"
           >
-            <option value="choose-role" selected>
-              Choose role
-            </option>
+            <option value="choose-role">Choose role</option>
             <option value="admin">Admin</option>
             <option value="project manager">Project manager</option>
           </select>
@@ -75,10 +74,9 @@ export default function CreateUserForm() {
             name="status"
             id="status"
             className="p-4 outline-none opacity-50 rounded-md"
+            defaultValue="choose-status"
           >
-            <option value="choose-status" selected>
-              Choose status
-            </option>
+            <option value="choose-status">Choose status</option>
             <option value="active">Active</option>
             <option value="blocked">Blocked</option>
           </select>

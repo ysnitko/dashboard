@@ -14,7 +14,7 @@ export default async function CreateProjectForm() {
           htmlFor="title"
           className="flex flex-col gap-2 text-sm font-semibold"
         >
-          Name
+          Title
           <input
             type="text"
             id="title"
@@ -32,10 +32,9 @@ export default async function CreateProjectForm() {
             name="project-manager"
             id="project-manager"
             className="p-4 outline-none opacity-50 rounded-md"
+            defaultValue="choose-users"
           >
-            <option value="all-users" selected>
-              all-users
-            </option>
+            <option value="choose-users">Choose user</option>
             {users.map((user) => {
               return (
                 <option key={user.id} value={user?.name}>
@@ -59,7 +58,7 @@ export default async function CreateProjectForm() {
             className="p-4 outline-none opacity-50 rounded-md"
           />
         </label> */}
-        {/* <label
+        <label
           htmlFor="status"
           className="flex flex-col gap-2 text-sm font-semibold"
         >
@@ -70,9 +69,7 @@ export default async function CreateProjectForm() {
             className="p-4 outline-none opacity-50 rounded-md"
             defaultValue="choose-status"
           >
-            <option value="choose-status" selected>
-              Choose status
-            </option>
+            <option value="choose-status">Choose status</option>
             <option value="completed">Completed</option>
             <option value="delayed">Delayed</option>
             <option value="at-risk">At risk</option>
@@ -89,13 +86,11 @@ export default async function CreateProjectForm() {
             id="progress"
             className="p-4 outline-none opacity-50 rounded-md"
           />
-        </label> */}
+        </label>
       </div>
       <button
         type="submit"
         className="bg-bg-btn-block text-bg-page font-bold p-5 rounded-md bg-bg-active-btn"
-        // onClick={() => router.back()
-        // }
       >
         Submit
       </button>

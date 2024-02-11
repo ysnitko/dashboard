@@ -30,8 +30,8 @@ export async function createUser(formData: FormData) {
     const title = formData.get("title") as string;
     const projectManagerName = formData.get("project-manager") as string;
     // const dueDate = formData.get("due-date") as string;
-    // const progress = formData.get("progress") as string;
-    // const status = formData.get("status") as string;
+    const progress = formData.get("progress") as string;
+    const status = formData.get("status") as string;
     // const createdAt = new Date().toISOString() as string;
     const manager = await prisma.users.findFirst({
       where: {
@@ -47,18 +47,15 @@ export async function createUser(formData: FormData) {
         connect: {
           id: manager?.id
         }
-      }
+      },
+      progress: +progress,
+      status: status,
      
     };
-    
-    
       // dueDate: dueDate,
-      // status: status,
       // createdAt: createdAt,
-      // progress: progress,
-
     await prisma.projects.create({ data: projectData });
-    revalidatePath("/");
+    redirect("/projects");
   }
   
 

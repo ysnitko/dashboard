@@ -106,8 +106,8 @@ export default async function Projects() {
           <tr>
             <td>Title</td>
             <td>Project manager</td>
-            <td>Due date</td>
-            <td>Days left</td>
+            {/* <td>Due date</td>
+            <td>Days left</td> */}
             <td>Status</td>
             <td>Progress</td>
           </tr>
@@ -128,12 +128,15 @@ export default async function Projects() {
               >
                 <td className="p-2">{project?.title}</td>
                 <td className="p-2">{pmName}</td>
+
                 {/* <td className="p-2">{project?.dueData}</td> */}
-                {/* <td className="p-2">{modifyStringDate}</td> */}
-                {/* <td className="p-2"><span>{project?.status}</span></td> */}
-                {/* <td className="p-2">
-                  <ProgressBar progress={+project?.progress} />
-                </td> */}
+
+                <td className="p-2">
+                  <span>{project?.status}</span>
+                </td>
+                <td className="p-2">
+                  <ProgressBar progress={project?.progress} />
+                </td>
 
                 <td className="p-2 ">
                   <div className="flex justify-center ">
