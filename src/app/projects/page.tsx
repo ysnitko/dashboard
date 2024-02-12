@@ -9,13 +9,6 @@ import ProgressBar from '@/components/ProgressBar/ProgressBar';
 export default async function Projects() {
   const projects = await prisma.projects.findMany();
   const users = await prisma.users.findMany();
-  console.log(projects);
-
-  // const [selectedOption, setSelectedOption] = useState('all-users');
-
-  // const handleSelectAll = (event: ChangeEvent<HTMLSelectElement>) => {
-  //   setSelectedOption(event.target.value);
-  // };
 
   return (
     <div className="p-[30px] pt-3 flex flex-col gap-5">
@@ -25,8 +18,7 @@ export default async function Projects() {
           name="select-user"
           id="select-user"
           className="bg-bg-page text-sm text-clr-text-table font-semibold outline-none"
-          // onChange={handleSelectAll}
-          // defaultValue={selectedOption}
+          defaultValue="all-users"
         >
           <option value="all-users">All Users</option>
           {users.map((user) => {
@@ -108,6 +100,7 @@ export default async function Projects() {
             <td>Project manager</td>
             {/* <td>Due date</td>
             <td>Days left</td> */}
+            <td>Created at</td>
             <td>Status</td>
             <td>Progress</td>
           </tr>
@@ -115,12 +108,9 @@ export default async function Projects() {
         <tbody className="text-sm">
           {projects.map((project: Projects) => {
             const pmName = findUser(project?.projectManagerId);
-            console.log(pmName);
-
-            // const modifyStringDate = project.createdAt
-            //   .toString()
-            //   .substring(0, project.createdAt.toString().indexOf('GMT'));
-
+            const modifyStringDate = project.createdAt
+              .toString()
+              .substring(0, project.createdAt.toString().indexOf('GMT'));
             return (
               <tr
                 key={project?.id}
@@ -130,10 +120,8 @@ export default async function Projects() {
                 <td className="p-2">{pmName}</td>
 
                 {/* <td className="p-2">{project?.dueData}</td> */}
-
-                <td className="p-2">
-                  <span>{project?.status}</span>
-                </td>
+                <td className="p-2">{modifyStringDate}</td>
+                <td className="p-2">{project?.status}</td>
                 <td className="p-2">
                   <ProgressBar progress={project?.progress} />
                 </td>

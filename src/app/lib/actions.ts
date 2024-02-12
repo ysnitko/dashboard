@@ -4,7 +4,6 @@ import { prisma } from "./prisma";
 import { redirect } from "next/navigation";
 import User from "../users/[id]/page";
 
-
 export async function createUser(formData: FormData) {
   const name = formData.get("name") as string;
   const login = formData.get("email") as string;
@@ -12,7 +11,6 @@ export async function createUser(formData: FormData) {
   const role = formData.get("role") as string;
   const status = formData.get("status") as string;
   const createdAt = new Date().toISOString() as string;
-
 
   const userData ={
     name: name,
@@ -23,7 +21,7 @@ export async function createUser(formData: FormData) {
     createdAt: createdAt,
   };
   await prisma.users.create({ data: userData });
-  revalidatePath("/");
+  redirect("/users");
 }
 
   export async function createProject(formData: FormData) {
@@ -32,7 +30,7 @@ export async function createUser(formData: FormData) {
     // const dueDate = formData.get("due-date") as string;
     const progress = formData.get("progress") as string;
     const status = formData.get("status") as string;
-    // const createdAt = new Date().toISOString() as string;
+    const createdAt = new Date().toISOString() as string;
     const manager = await prisma.users.findFirst({
       where: {
         name: projectManagerName,
@@ -50,10 +48,11 @@ export async function createUser(formData: FormData) {
       },
       progress: +progress,
       status: status,
+      createdAt: createdAt,
      
     };
       // dueDate: dueDate,
-      // createdAt: createdAt,
+     
     await prisma.projects.create({ data: projectData });
     redirect("/projects");
   }
@@ -72,7 +71,6 @@ export async function findUser(id: number | null) {
   if (id === null) {
     return null;
   }
-
  const managerName =  await prisma.users.findUnique({
     where: {
       id: id,

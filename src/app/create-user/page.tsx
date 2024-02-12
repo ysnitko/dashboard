@@ -1,10 +1,6 @@
-'use client';
 import { createUser } from '@/app/lib/actions';
-import { useRouter } from 'next/navigation';
 
 export default function CreateUserForm() {
-  const router = useRouter();
-
   return (
     <form
       action={createUser}
@@ -85,7 +81,6 @@ export default function CreateUserForm() {
       <button
         type="submit"
         className="bg-bg-btn-block text-bg-page font-bold p-5 rounded-md bg-bg-active-btn"
-        onClick={() => router.back()}
       >
         Submit
       </button>
