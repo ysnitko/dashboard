@@ -11,7 +11,7 @@ export default function LeftMenu() {
   const pathname = usePathname();
   const router = useRouter();
   return (
-    <div className="h-svh bg-bg-leftmenu pt-8 pb-8 px-[30px] flex flex-col gap-[70px] relative">
+    <div className="h-full bg-bg-leftmenu pt-8 pb-8 px-[30px] flex flex-col gap-[70px] relative">
       <Image src={logo} alt="logo" width={140} height={30} />
       <div className="flex flex-col gap-[10px]">
         <div className="text-sm flex gap-[10px] pl-[7px]  py-[5px] rounded-3xl bg-clr-text-menu items-center mb-[40px]">
