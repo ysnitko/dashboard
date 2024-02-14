@@ -119,7 +119,7 @@ export default async function Projects() {
 
                 <td className="p-2 flex">
                   <Link
-                    href={`/users/${project?.id}`}
+                    href={`/projects/${project?.id}`}
                     className="mr-2 bg-bg-btn-block px-[1.06rem] py-1 rounded-md text-sm text-clr-text-menu font-semibold bg-bg-btn-edit"
                     type="submit"
                   >

@@ -93,3 +93,33 @@ export async function updateUser(id: number, formData: FormData) {
   })
   redirect("/users");
 }
+
+export async function updateProject(id: number, formData: FormData) {
+  const title = formData.get("title") as string;
+  const projectManagerName = formData.get("project-manager") as string;
+  const progress = Number(formData.get("progress"));
+  const status = formData.get("status") as string;
+  const manager = await prisma.users.findFirst({
+    where: {
+      name: projectManagerName,
+    }
+  });
+
+  const projectData = {
+    title: title,
+    projectManager: { 
+      connect: {
+        id: manager?.id
+      }
+    },
+    progress: +progress,
+    status: status,
+  };
+
+  await prisma.projects.update({
+    where: {id,
+    }, 
+    data: projectData
+  })
+redirect('/projects');
+}
