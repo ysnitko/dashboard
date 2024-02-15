@@ -49,7 +49,6 @@ export default async function Project({ params }: { params: { id: string } }) {
               return (
                 <option key={user.id} value={user?.name}>
                   {user?.name}
-                  {user?.id}
                 </option>
               );
             })}

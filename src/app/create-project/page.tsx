@@ -39,7 +39,6 @@ export default async function CreateProjectForm() {
               return (
                 <option key={user.id} value={user?.name}>
                   {user?.name}
-                  {user?.id}
                 </option>
               );
             })}

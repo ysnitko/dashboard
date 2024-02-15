@@ -67,6 +67,15 @@ export async function deleteUser(id: number) {
   revalidatePath("/");
 }
 
+export async function deleteProject(id: number) {
+  await prisma.projects.delete({
+    where: {
+      id,
+    }
+  })
+ redirect("/projects");
+}
+
 export async function findUser(id: number | null) {
   if (id === null) {
     return null;
@@ -77,7 +86,6 @@ export async function findUser(id: number | null) {
   }})
   return managerName?.name
 }
-
 
 export async function updateUser(id: number, formData: FormData) {
   const name = formData.get("name") as string;

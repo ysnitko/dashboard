@@ -4,11 +4,14 @@ import BackButton from '@/components/BackButton/BackButton';
 import { prisma } from '../lib/prisma';
 import { Projects } from '@prisma/client';
 import { findUser } from '../lib/actions';
+import { deleteProject } from '../lib/actions';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 
 export default async function Projects() {
   const projects = await prisma.projects.findMany();
   const users = await prisma.users.findMany();
+
+  const defaultUsers = 'all users';
 
   return (
     <div className="p-[30px] pt-3 flex flex-col gap-5">
@@ -17,7 +20,7 @@ export default async function Projects() {
         name="select-user"
         id="select-user"
         className="bg-bg-page text-sm text-clr-text-table font-semibold outline-none"
-        defaultValue="all-users"
+        defaultValue={defaultUsers}
       >
         <option value="all-users">All Users</option>
         {users.map((user) => {
@@ -97,12 +100,10 @@ export default async function Projects() {
         </thead>
         <tbody className="text-sm">
           {projects.map(async (project: Projects) => {
-            const pmName = await findUser(project?.projectManagerId);
-            console.log(pmName);
-
             const modifyStringDate = project.createdAt
               .toString()
               .substring(0, project.createdAt.toString().indexOf('GMT'));
+            const deleteProjectWithId = deleteProject.bind(null, project?.id);
             return (
               <tr
                 key={project?.id}
@@ -126,7 +127,7 @@ export default async function Projects() {
                     Edit
                   </Link>
 
-                  <form>
+                  <form action={deleteProjectWithId}>
                     <button
                       className="bg-bg-btn-delete px-2 py-1 rounded-md text-sm text-clr-text-menu font-semibold"
                       type="submit"
