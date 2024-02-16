@@ -36,9 +36,7 @@ export async function createUser(formData: FormData) {
         name: projectManagerName,
       }
     });
-    
-    console.log(manager);
-
+  
     const projectData = {
       title: title,
       projectManager: { 
@@ -84,6 +82,8 @@ export async function findUser(id: number | null) {
     where: {
       id: id,
   }})
+  console.log(managerName?.name);
+  
   return managerName?.name
 }
 
@@ -130,4 +130,9 @@ export async function updateProject(id: number, formData: FormData) {
     data: projectData
   })
 redirect('/projects');
+}
+
+export  async function getUsers() {
+const users = await prisma.users.findMany();
+return users
 }

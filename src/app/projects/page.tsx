@@ -6,31 +6,22 @@ import { Projects } from '@prisma/client';
 import { findUser } from '../lib/actions';
 import { deleteProject } from '../lib/actions';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import ProjectManagerSelected from '@/components/ProjectManagerSelected/ProjectManagerSelected';
+import { ChangeEvent } from 'react';
 
 export default async function Projects() {
   const projects = await prisma.projects.findMany();
   const users = await prisma.users.findMany();
 
-  const defaultUsers = 'all users';
+  // const selectPm = (e: ChangeEvent<HTMLSelectElement>) => {
+  //   e.target.value;
+  // };
 
+  // console.log(selectPm);
   return (
     <div className="p-[30px] pt-3 flex flex-col gap-5">
       <BackButton />
-      <select
-        name="select-user"
-        id="select-user"
-        className="bg-bg-page text-sm text-clr-text-table font-semibold outline-none"
-        defaultValue={defaultUsers}
-      >
-        <option value="all-users">All Users</option>
-        {users.map((user) => {
-          return (
-            <option key={user?.id} value={user?.name}>
-              {user?.name}
-            </option>
-          );
-        })}
-      </select>
+      <ProjectManagerSelected />
       <div className="flex justify-between">
         <div
           // className={
