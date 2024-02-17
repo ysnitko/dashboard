@@ -13,6 +13,10 @@ const config: Config = {
       },
       colors: {
         "bg-color": "#F4F2FF",
+        "text-header": "#6E6893",
+        "text-btn-filter": "#6E6893",
+        "text-total-prise": "#6D5BD0",
+        "border-clr": "#C6C2DE",
         // "bg-active-btn": "#E65F2B",
         // "clr-text-menu": "#F1F1F1",
         // "clr-new-project": "#171717",

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Header from '@/components/Header/Header';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -9,7 +8,6 @@ export const metadata: Metadata = {
 };
 
 const inter = Inter({
-  weight: '400',
   subsets: ['latin'],
 });
 
@@ -21,8 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-bg-color">
-        <main className={inter.className}>
-          <Header />
+        <main className={`${inter.className} my-0 mx-auto  max-w-5xl`}>
           {children}
         </main>
       </body>
