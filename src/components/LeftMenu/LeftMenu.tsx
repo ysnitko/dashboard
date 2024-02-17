@@ -1,10 +1,8 @@
 'use client';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-
 import Link from 'next/link';
 import logo from '../../../public/assets/logo.svg';
-import question from '../../../public/assets/question.svg';
 import { menuLinks } from '@/app/lib/menu';
 
 export default function LeftMenu() {
@@ -21,7 +19,7 @@ export default function LeftMenu() {
               alt="plus"
               width={24}
               height={24}
-              onClick={() => router.push('/create-project')}
+              onClick={() => router.push('/create-user')}
             />
           </button>
           <span className="text-clr-new-project text-sm cursor-default">
@@ -56,15 +54,6 @@ export default function LeftMenu() {
           );
         })}
       </div>
-      <button className="absolute bottom-6 left-6 bg-bg-active-btn w-10 h-10 rounded-full flex justify-center items-center">
-        <Image
-          src={question}
-          alt="question"
-          width={30}
-          height={30}
-          className="max-w-none"
-        />
-      </button>
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function Header() {
 
   return (
     <div className="flex justify-between p-[30px] items-center ">
-      <h1 className="text-[32px] text-bg-leftmenu">{titleHeader?.title}</h1>
+      <h1 className="text-[32px] text-bg-leftmenu">TABLE HEADING</h1>
       <div className="flex items-center gap-[12px] ">
         <button className="h-[30px] w-[30px] rounded-full bg-bg-log-out bg-contain bg-no-repeat"></button>
         <div className="flex p-1 pr-4 gap-[10px] bg-clr-text-menu rounded-full">
