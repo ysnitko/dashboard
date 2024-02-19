@@ -30,7 +30,7 @@ export default function FilterAndSearch() {
             className="absolute top-[12px] left-[10px]"
           />
           <input
-            className=" bg-bg-color rounded-md text-[12px] min-w-[400px] p-[10px] px-[35px] text-text-btn-filter"
+            className=" bg-bg-color rounded-md text-[12px] min-w-[400px] p-[10px] pl-[40px] text-text-btn-filter"
             type="search"
             name="search"
             id="search"
@@ -38,7 +38,7 @@ export default function FilterAndSearch() {
           />
         </label>
       </div>
-      <button className="bg-bg-btn-dues text-bg-color p-[10px] rounded-md font-semibold  ">
+      <button className="bg-bg-btn-dues text-bg-color px-4 py-1 rounded-md font-semibold  ">
         PAY DUES
       </button>
     </div>
