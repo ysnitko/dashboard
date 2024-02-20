@@ -13,13 +13,19 @@ const config: Config = {
       },
       colors: {
         "bg-color": "#F4F2FF",
+        "table-border-clr": "#D9D5EC",
         "bg-table-primary": "#FFFFFF",
+        "bg-active-status": "#E6E6F2",
+        "bg-paid-status": "#CDFFCD",
         "text-header": "#6E6893",
         "text-btn-filter": "#6E6893",
         "text-total-prise": "#6D5BD0",
         "border-clr": "#C6C2DE",
-        "bg-btn-dues":"#6D5BD0",
-        "clr-primary": "#25213B"
+        "bg-btn-dues": "#6D5BD0",
+        "clr-primary": "#25213B",
+        "clr-active-status": "#4A4AFF",
+        "clr-paid-status": "#007F00",
+
         // "bg-active-btn": "#E65F2B",
         // "clr-text-menu": "#F1F1F1",
         // "clr-new-project": "#171717",
@@ -32,7 +38,7 @@ const config: Config = {
         // "clr-status-active": "#1A932E",
       },
       fontFamily: {
-        "ff-main":"Inter",
+        "ff-main": "Inter",
       },
     },
   },

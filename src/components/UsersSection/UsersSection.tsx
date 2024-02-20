@@ -1,9 +1,11 @@
-import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
+import FilterAndSearch from "../FilterAndSearch/FilterAndSearch";
+import Table from "../Table/Table";
 
 export default function UsersSection() {
   return (
-    <div className="rounded-3xl mt-5 border-none">
+    <div className="rounded-xl mt-5 border-solid border-[1px]">
       <FilterAndSearch />
+      <Table />
     </div>
   );
 }
