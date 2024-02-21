@@ -1,5 +1,5 @@
-import FilterAndSearch from "../FilterAndSearch/FilterAndSearch";
-import Table from "../Table/Table";
+import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
+import { Table } from '../Table/Table';
 
 export default function UsersSection() {
   return (

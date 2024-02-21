@@ -1,7 +1,7 @@
-import Image from "next/image";
+import Image from 'next/image';
 export default function FilterAndSearch() {
   return (
-    <div className="flex justify-between bg-bg-table-primary p-4">
+    <div className="flex justify-between bg-bg-table-primary p-4 mt-5">
       <div className="flex gap-4">
         <button className="flex text-base p-[10px] gap-3 border-[1px] rounded-md text-clr-primary">
           <Image src="/assets/Filter.svg" alt="filter" width={20} height={20} />
