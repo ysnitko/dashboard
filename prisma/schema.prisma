@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,22 +11,11 @@ datasource db {
 }
 
 model Users {
-  id        Int        @id @default(autoincrement())
-  name      String
-  login     String     @unique
-  password  String
-  createdAt DateTime   @default(now())
-  role      String
-  status    String
-  projects  Projects[]
-}
-
-model Projects {
-  id               Int      @id @default(autoincrement())
-  title            String
-  projectManager   Users?   @relation(fields: [projectManagerId], references: [id])
-  projectManagerId Int?
-  createdAt        DateTime @default(now())
-  status           String   @default("On going")
-  progress         Int?     @default(0)
+  id            Int      @id @default(autoincrement())
+  name          String
+  email         String   @unique
+  userStatus    String
+  createdAt     DateTime @default(now())
+  paymentStatus String
+  amount        Int
 }

@@ -1,7 +1,6 @@
 'use client';
 import Image from 'next/image';
 import React, { useMemo, useState } from 'react';
-import { DATA } from '../../table';
 import {
   flexRender,
   getCoreRowModel,
@@ -47,24 +46,45 @@ const columns = [
   },
   {
     header: 'USER STATUS',
-    accessorKey: 'user_status',
+    accessorKey: 'userStatus',
     cell: (props: any) => {
       return (
         <div className="text-xs flex flex-col gap-1 justify-center">
-          <p className="flex gap-1 bg-bg-active-status rounded-[10px] px-2 py-[2px] w-fit">
-            <Image
-              src="/assets/status-active.svg"
-              alt="status-active"
-              width={6}
-              height={6}
-            />
-            <span className="text-clr-active-status font-medium">
-              {props.row.original.user_status}
-            </span>
-          </p>
-          <span className="text-xs font-medium text-text-header">
-            Last login: 14/APR/2020
-          </span>
+          {props.getValue() === 'Active' ? (
+            <>
+              <p className="flex gap-1 bg-bg-active-status rounded-[10px] px-2 py-[2px] w-fit">
+                <Image
+                  src="/assets/status-active.svg"
+                  alt="status-active"
+                  width={6}
+                  height={6}
+                />
+                <span className="text-clr-active-status font-medium">
+                  {props.getValue()}
+                </span>
+              </p>
+              <span className="text-xs font-medium text-text-header">
+                Last login: 14/APR/2020
+              </span>
+            </>
+          ) : (
+            <>
+              <p className="flex gap-1 bg-bg-active-status rounded-[10px] px-2 py-[2px] w-fit">
+                <Image
+                  src="/assets/status-inactive.svg"
+                  alt="status-inactive"
+                  width={6}
+                  height={6}
+                />
+                <span className="text-clr-inactive-status font-medium">
+                  {props.getValue()}
+                </span>
+              </p>
+              <span className="text-xs font-medium text-text-header">
+                Last login: 14/APR/2020
+              </span>
+            </>
+          )}
         </div>
       );
     },
@@ -72,7 +92,7 @@ const columns = [
 
   {
     header: 'PAYMENT STATUS',
-    accessorKey: 'payment_status',
+    accessorKey: 'paymentStatus',
     cell: (props: any) => {
       return (
         <div className="text-xs flex flex-col gap-1 justify-start">
@@ -84,7 +104,7 @@ const columns = [
               height={6}
             />
             <span className="text-clr-paid-status font-medium">
-              {props.row.original.payment_status}
+              {props.getValue()}
             </span>
           </p>
           <span className="text-xs font-medium text-text-header">
@@ -98,10 +118,12 @@ const columns = [
   {
     header: 'AMOUNT',
     accessorKey: 'amount',
-    cell: () => {
+    cell: (props: any) => {
       return (
         <p className="text-sm flex flex-col gap-1 justify-start">
-          <span className="text-clr-primary font-medium">200$</span>
+          <span className="text-clr-primary font-medium">
+            ${props.getValue()}
+          </span>
           <span className="text-xs font-medium text-text-header">USD</span>
         </p>
       );
@@ -137,15 +159,20 @@ const columns = [
   },
 ];
 
-export default function Table() {
-  const data: {
+export default function Table({
+  users,
+}: {
+  users: {
     id: number;
     name: string;
-    payment_status: string;
-    amount: number;
     email: string;
-  }[] = useMemo(() => DATA, []);
-  console.log(DATA);
+    userStatus: string;
+    createdAt: Date;
+    paymentStatus: string;
+    amount: number;
+  }[];
+}) {
+  const data = useMemo(() => users, [users]);
 
   const table = useReactTable({
     data,
