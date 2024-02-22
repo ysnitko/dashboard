@@ -8,7 +8,7 @@ interface Props {
 export default function FilterAndSearch(props: Props) {
   const { filtering, setFiltering } = props;
   return (
-    <div className="flex justify-between bg-bg-table-primary p-4 mt-5">
+    <div className="flex justify-between bg-bg-table-primary p-4 mt-5 border-[1px] border-border-clr border-b-0  rounded-t-[8px]">
       <div className="flex gap-4">
         <button className="flex text-base p-[10px] gap-3 border-[1px] rounded-md text-clr-primary">
           <Image src="/assets/Filter.svg" alt="filter" width={20} height={20} />
@@ -29,7 +29,7 @@ export default function FilterAndSearch(props: Props) {
             id="search"
             value={filtering}
             onChange={(e) => setFiltering(e.target.value)}
-            placeholder="Search Users by Name, Email or Date"
+            placeholder="Search Users by Name, Status or Amount"
           />
         </label>
       </div>

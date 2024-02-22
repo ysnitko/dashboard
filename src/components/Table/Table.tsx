@@ -2,12 +2,14 @@
 import Image from 'next/image';
 import React, { useMemo, useState } from 'react';
 import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
+import FilterForPayment from '../FilterForPayment/FilterForPayment';
 import Footer from '../Footer/Footer';
 import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   useReactTable,
+  getPaginationRowModel,
 } from '@tanstack/react-table';
 
 const columns = [
@@ -182,6 +184,7 @@ export default function Table({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     state: {
       globalFilter: filtering,
     },
@@ -196,13 +199,14 @@ export default function Table({
 
   return (
     <div>
+      <FilterForPayment {...props} />
       <FilterAndSearch {...props} />
       <table className="w-full">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr
               key={headerGroup.id}
-              className="text-base font-semibold text-text-header tracking-widest border-border-clr border-[1px] "
+              className="text-base font-semibold text-text-header tracking-widest border-border-clr border-[1px]"
             >
               {headerGroup.headers.map((header) => (
                 <th key={header.id} className="p-4 text-left">

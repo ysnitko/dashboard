@@ -1,8 +1,19 @@
-export default function FilterForPayment() {
+interface Props {
+  filtering: string;
+  setFiltering: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function FilterForPayment(props: Props) {
+  const { filtering, setFiltering } = props;
   return (
     <div className="flex justify-between items-center border-b-[1px] border-border-clr">
-      <div className="flex  gap-5 text-sm">
-        <button className="p-2 text-text-btn-filter">All</button>
+      <div className="flex gap-5 text-sm">
+        <button
+          className="p-2 text-text-btn-filter"
+          onClick={() => setFiltering('paid')}
+        >
+          All
+        </button>
         <button className="p-2 text-text-btn-filter">Paid</button>
         <button className="p-2 text-text-btn-filter">Unpaid</button>
         <button className="p-2 text-text-btn-filter d">Overdue</button>
