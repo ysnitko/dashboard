@@ -197,7 +197,6 @@ export default function Table({
   return (
     <div>
       <FilterAndSearch {...props} />
-
       <table className="w-full">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (

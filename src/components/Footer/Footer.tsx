@@ -2,15 +2,7 @@ import Image from 'next/image';
 import { ChangeEvent } from 'react';
 
 interface Props {
-  table: {
-    setPageSize: () => number;
-    getPageCount: () => number;
-    getCanPreviousPage: () => boolean;
-    getCanNextPage: () => boolean;
-    previousPage: () => void;
-    nextPage: () => void;
-    // Add any other necessary table methods/properties
-  };
+  table: Table<TData>;
 }
 
 export default function Footer(props: Props) {
@@ -24,14 +16,16 @@ export default function Footer(props: Props) {
           name="per-page"
           id="per-page"
           onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-            table.setPageSize(e.target.value)
+            table.setPageSize(+e.target.value)
           }
         >
           <option value="10">10</option>
           <option value="20">20</option>
         </select>
       </label>
-      <p>of {table.getPageCount()}</p>
+      <p>
+        {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+      </p>
       <button
         disabled={!table.getCanPreviousPage()}
         onClick={() => table.previousPage()}
