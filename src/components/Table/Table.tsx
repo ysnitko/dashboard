@@ -1,12 +1,14 @@
 'use client';
 import Image from 'next/image';
 import React, { useMemo, useState } from 'react';
+import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
+import Footer from '../Footer/Footer';
 import {
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
 
 const columns = [
   {
@@ -173,16 +175,28 @@ export default function Table({
   }[];
 }) {
   const data = useMemo(() => users, [users]);
+  const [filtering, setFiltering] = useState<string>('');
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      globalFilter: filtering,
+    },
+    onGlobalFilterChange: setFiltering,
   });
+
+  const props = {
+    filtering: filtering,
+    setFiltering: setFiltering,
+    table: table,
+  };
 
   return (
     <div>
-      <FilterAndSearch />
+      <FilterAndSearch {...props} />
 
       <table className="w-full">
         <thead>
@@ -217,6 +231,7 @@ export default function Table({
           ))}
         </tbody>
       </table>
+      <Footer {...props} />
     </div>
   );
 }

@@ -1,5 +1,12 @@
 import Image from 'next/image';
-export default function FilterAndSearch() {
+
+interface Props {
+  filtering: string;
+  setFiltering: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function FilterAndSearch(props: Props) {
+  const { filtering, setFiltering } = props;
   return (
     <div className="flex justify-between bg-bg-table-primary p-4 mt-5">
       <div className="flex gap-4">
@@ -20,6 +27,8 @@ export default function FilterAndSearch() {
             type="search"
             name="search"
             id="search"
+            value={filtering}
+            onChange={(e) => setFiltering(e.target.value)}
             placeholder="Search Users by Name, Email or Date"
           />
         </label>
