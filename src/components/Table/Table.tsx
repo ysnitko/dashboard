@@ -10,6 +10,7 @@ import {
   getFilteredRowModel,
   useReactTable,
   getPaginationRowModel,
+  ColumnFilter,
 } from '@tanstack/react-table';
 
 const columns = [
@@ -178,6 +179,7 @@ export default function Table({
 }) {
   const data = useMemo(() => users, [users]);
   const [filtering, setFiltering] = useState<string>('');
+  const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
 
   const table = useReactTable({
     data,
@@ -187,8 +189,10 @@ export default function Table({
     getPaginationRowModel: getPaginationRowModel(),
     state: {
       globalFilter: filtering,
+      columnFilters: columnFilters,
     },
     onGlobalFilterChange: setFiltering,
+    onColumnFiltersChange: setColumnFilters,
   });
 
   const props = {
@@ -199,7 +203,11 @@ export default function Table({
 
   return (
     <div>
-      <FilterForPayment {...props} />
+      <FilterForPayment
+        columnFilters={columnFilters}
+        setColumnFilters={setColumnFilters}
+        table={table}
+      />
       <FilterAndSearch {...props} />
       <table className="w-full">
         <thead>
