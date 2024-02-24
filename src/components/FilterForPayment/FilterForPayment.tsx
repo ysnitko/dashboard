@@ -6,28 +6,30 @@ interface Props {
   setColumnFilters: Dispatch<SetStateAction<ColumnFilter[]>>;
   table: any;
 }
+interface CustomColumnFilter extends ColumnFilter {
+  filterFn?: (row: any, columnId: string, filterValue: any) => boolean;
+}
 
 export default function FilterForPayment(props: Props) {
   const { columnFilters, setColumnFilters, table } = props;
 
-  const handleFilter = () => {
-    console.log(
-      props.table
-      // .filter((column: string) => column.includes('paid')
-    );
+  const handleFilter = (value: string) => {
+    let updatedFilters: CustomColumnFilter[] = [
+      {
+        id: 'paymentStatus',
+        value: value === 'All' ? '' : value,
+        filterFn: (row, columnId) => {
+          if (value === 'All') {
+            return true;
+          } else {
+            return row[columnId] === value;
+          }
+        },
+      },
+    ];
 
-    // const updatedFilters = props.table
-    //   .getColumn('paymentStatus')
-    //   .map((column: any) => {
-    //     if (column.id === 'paymentStatus') {
-    //       // Замените 'yourColumnName' на имя вашей колонки
-    //       return { ...column, filterValue: value };
-    //     }
-    //     return column;
-    //   });
-
-    // setColumnFilters(updatedFilters);
-    // console.log(columnFilters);
+    setColumnFilters(updatedFilters);
+    console.log(columnFilters);
   };
 
   return (

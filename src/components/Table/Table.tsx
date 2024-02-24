@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react';
 import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
 import FilterForPayment from '../FilterForPayment/FilterForPayment';
 import Footer from '../Footer/Footer';
+import { Users } from '@prisma/client';
 import {
   flexRender,
   getCoreRowModel,
@@ -11,158 +12,9 @@ import {
   useReactTable,
   getPaginationRowModel,
   ColumnFilter,
+  ColumnDef,
+  FilterFn,
 } from '@tanstack/react-table';
-
-const columns = [
-  {
-    header: () => {
-      return (
-        <input
-          className="w-5 h-5"
-          type="checkbox"
-          name="check-user"
-          id="check-user"
-        />
-      );
-    },
-    accessorKey: 'id',
-    cell: () => {
-      return (
-        <input
-          className="w-5 h-5"
-          type="checkbox"
-          name="check-user"
-          id="check-user"
-        />
-      );
-    },
-  },
-  {
-    header: 'NAME',
-    accessorKey: 'name',
-    cell: (props: any) => {
-      return (
-        <p className="text-sm flex flex-col">
-          <span className="text-clr-primary">{props.getValue()}</span>
-          <span className="text-text-header">{props.row.original.email}</span>
-        </p>
-      );
-    },
-  },
-  {
-    header: 'USER STATUS',
-    accessorKey: 'userStatus',
-    cell: (props: any) => {
-      return (
-        <div className="text-xs flex flex-col gap-1 justify-center">
-          {props.getValue() === 'Active' ? (
-            <>
-              <p className="flex gap-1 bg-bg-active-status rounded-[10px] px-2 py-[2px] w-fit">
-                <Image
-                  src="/assets/status-active.svg"
-                  alt="status-active"
-                  width={6}
-                  height={6}
-                />
-                <span className="text-clr-active-status font-medium">
-                  {props.getValue()}
-                </span>
-              </p>
-              <span className="text-xs font-medium text-text-header">
-                Last login: 14/APR/2020
-              </span>
-            </>
-          ) : (
-            <>
-              <p className="flex gap-1 bg-bg-active-status rounded-[10px] px-2 py-[2px] w-fit">
-                <Image
-                  src="/assets/status-inactive.svg"
-                  alt="status-inactive"
-                  width={6}
-                  height={6}
-                />
-                <span className="text-clr-inactive-status font-medium">
-                  {props.getValue()}
-                </span>
-              </p>
-              <span className="text-xs font-medium text-text-header">
-                Last login: 14/APR/2020
-              </span>
-            </>
-          )}
-        </div>
-      );
-    },
-  },
-
-  {
-    header: 'PAYMENT STATUS',
-    accessorKey: 'paymentStatus',
-    cell: (props: any) => {
-      return (
-        <div className="text-xs flex flex-col gap-1 justify-start">
-          <p className="flex gap-1 bg-bg-paid-status rounded-[10px] px-2 py-[2px] w-fit justify-left">
-            <Image
-              src="/assets/status-paid.svg"
-              alt="status-paid"
-              width={6}
-              height={6}
-            />
-            <span className="text-clr-paid-status font-medium">
-              {props.getValue()}
-            </span>
-          </p>
-          <span className="text-xs font-medium text-text-header">
-            Paid on 15/APR/2020
-          </span>
-        </div>
-      );
-    },
-  },
-
-  {
-    header: 'AMOUNT',
-    accessorKey: 'amount',
-    cell: (props: any) => {
-      return (
-        <p className="text-sm flex flex-col gap-1 justify-start">
-          <span className="text-clr-primary font-medium">
-            ${props.getValue()}
-          </span>
-          <span className="text-xs font-medium text-text-header">USD</span>
-        </p>
-      );
-    },
-  },
-  {
-    header: () => {
-      return (
-        <div className="flex justify-end">
-          <Image
-            className=""
-            src="/assets/More.svg"
-            width={20}
-            height={20}
-            alt="more"
-          />
-        </div>
-      );
-    },
-    accessorKey: 'view_more',
-    cell: () => {
-      return (
-        <div className="flex justify-end items-end gap-4">
-          <span className="text-xs font-medium text-text-header">
-            View More
-          </span>
-          <button type="button" className="w-[20px] h-[20px]">
-            <Image src="/assets/More.svg" alt="more" width={20} height={20} />
-          </button>
-        </div>
-      );
-    },
-  },
-];
 
 export default function Table({
   users,
@@ -181,6 +33,167 @@ export default function Table({
   const [filtering, setFiltering] = useState<string>('');
   const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
 
+  const columns = React.useMemo<ColumnDef<Users, any>[]>(
+    () => [
+      {
+        header: () => {
+          return (
+            <input
+              className="w-5 h-5"
+              type="checkbox"
+              name="check-user"
+              id="check-user"
+            />
+          );
+        },
+        accessorKey: 'id',
+        cell: () => {
+          return (
+            <input
+              className="w-5 h-5"
+              type="checkbox"
+              name="check-user"
+              id="check-user"
+            />
+          );
+        },
+      },
+      {
+        header: 'NAME',
+        accessorKey: 'name',
+        cell: (props: any) => {
+          return (
+            <p className="text-sm flex flex-col">
+              <span className="text-clr-primary">{props.getValue()}</span>
+              <span className="text-text-header">
+                {props.row.original.email}
+              </span>
+            </p>
+          );
+        },
+      },
+      {
+        header: 'USER STATUS',
+        accessorKey: 'userStatus',
+        cell: (props: any) => {
+          return (
+            <div className="text-xs flex flex-col gap-1 justify-center">
+              {props.getValue() === 'Active' ? (
+                <>
+                  <p className="flex gap-1 bg-bg-active-status rounded-[10px] px-2 py-[2px] w-fit">
+                    <Image
+                      src="/assets/status-active.svg"
+                      alt="status-active"
+                      width={6}
+                      height={6}
+                    />
+                    <span className="text-clr-active-status font-medium">
+                      {props.getValue()}
+                    </span>
+                  </p>
+                  <span className="text-xs font-medium text-text-header">
+                    Last login: 14/APR/2020
+                  </span>
+                </>
+              ) : (
+                <>
+                  <p className="flex gap-1 bg-bg-active-status rounded-[10px] px-2 py-[2px] w-fit">
+                    <Image
+                      src="/assets/status-inactive.svg"
+                      alt="status-inactive"
+                      width={6}
+                      height={6}
+                    />
+                    <span className="text-clr-inactive-status font-medium">
+                      {props.getValue()}
+                    </span>
+                  </p>
+                  <span className="text-xs font-medium text-text-header">
+                    Last login: 14/APR/2020
+                  </span>
+                </>
+              )}
+            </div>
+          );
+        },
+      },
+
+      {
+        header: 'PAYMENT STATUS',
+        accessorKey: 'paymentStatus',
+        cell: (props: any) => {
+          return (
+            <div className="text-xs flex flex-col gap-1 justify-start">
+              <p className="flex gap-1 bg-bg-paid-status rounded-[10px] px-2 py-[2px] w-fit justify-left">
+                <Image
+                  src="/assets/status-paid.svg"
+                  alt="status-paid"
+                  width={6}
+                  height={6}
+                />
+                <span className="text-clr-paid-status font-medium">
+                  {props.getValue()}
+                </span>
+              </p>
+              <span className="text-xs font-medium text-text-header">
+                Paid on 15/APR/2020
+              </span>
+            </div>
+          );
+        },
+      },
+
+      {
+        header: 'AMOUNT',
+        accessorKey: 'amount',
+        cell: (props: any) => {
+          return (
+            <p className="text-sm flex flex-col gap-1 justify-start">
+              <span className="text-clr-primary font-medium">
+                ${props.getValue()}
+              </span>
+              <span className="text-xs font-medium text-text-header">USD</span>
+            </p>
+          );
+        },
+      },
+      {
+        header: () => {
+          return (
+            <div className="flex justify-end">
+              <Image
+                className=""
+                src="/assets/More.svg"
+                width={20}
+                height={20}
+                alt="more"
+              />
+            </div>
+          );
+        },
+        accessorKey: 'view_more',
+        cell: () => {
+          return (
+            <div className="flex justify-end items-end gap-4">
+              <span className="text-xs font-medium text-text-header">
+                View More
+              </span>
+              <button type="button" className="w-[20px] h-[20px]">
+                <Image
+                  src="/assets/More.svg"
+                  alt="more"
+                  width={20}
+                  height={20}
+                />
+              </button>
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
+
   const table = useReactTable({
     data,
     columns,
@@ -191,6 +204,7 @@ export default function Table({
       globalFilter: filtering,
       columnFilters: columnFilters,
     },
+
     onGlobalFilterChange: setFiltering,
     onColumnFiltersChange: setColumnFilters,
   });
