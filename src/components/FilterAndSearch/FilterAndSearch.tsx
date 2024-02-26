@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Filter from '../Filter/Filter';
+import { useState } from 'react';
 
 interface Props {
   filtering: string;
@@ -7,13 +9,19 @@ interface Props {
 
 export default function FilterAndSearch(props: Props) {
   const { filtering, setFiltering } = props;
+  const [toggledFilter, setToggleFilter] = useState(false);
   return (
     <div className="flex justify-between bg-bg-table-primary p-4 mt-5 border-[1px] border-border-clr border-b-0  rounded-t-[8px]">
-      <div className="flex gap-4">
-        <button className="flex text-base p-[10px] gap-3 border-[1px] rounded-md text-clr-primary">
+      <div className="flex gap-4 relative">
+        <button
+          className="flex text-base p-[10px] gap-3 border-[1px] rounded-md text-clr-primary"
+          onClick={() => setToggleFilter(!toggledFilter)}
+        >
           <Image src="/assets/Filter.svg" alt="filter" width={20} height={20} />
           Filter
         </button>
+        {toggledFilter && <Filter />}
+
         <label htmlFor="search" className="flex relative">
           <Image
             src="/assets/Search.svg"
