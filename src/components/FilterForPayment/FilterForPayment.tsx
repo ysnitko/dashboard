@@ -35,7 +35,7 @@ export default function FilterForPayment(props: Props) {
   return (
     <div className="flex justify-between items-center border-b-[1px] border-border-clr">
       <div className="flex gap-5 text-sm">
-        {['All', 'Paid', 'Unpaid', 'Overdue'].map((item, index) => (
+        {['All', 'Paid', 'Unsalaried', 'Overdue'].map((item, index) => (
           <button
             key={index}
             className="p-2 text-text-btn-filter"
