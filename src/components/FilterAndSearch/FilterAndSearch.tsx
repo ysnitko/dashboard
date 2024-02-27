@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Filter from '../Filter/Filter';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { listenForOutsideClicks } from '../listenForOutsideClicks/listenForOutsideClicks';
 
 interface Props {
   filtering: string;
@@ -10,12 +11,23 @@ interface Props {
 export default function FilterAndSearch(props: Props) {
   const { filtering, setFiltering } = props;
   const [toggledFilter, setToggleFilter] = useState(false);
+  const [listening, setListening] = useState(false);
+  const menuRef = useRef(null);
+
+  const toggle = () => {
+    setToggleFilter(!toggledFilter);
+  };
+
+  useEffect(
+    listenForOutsideClicks(listening, setListening, menuRef, setToggleFilter)
+  );
+
   return (
     <div className="flex justify-between bg-bg-table-primary p-4 mt-5 border-[1px] border-border-clr border-b-0  rounded-t-[8px]">
-      <div className="flex gap-4 relative">
+      <div className="flex gap-4 relative" ref={menuRef}>
         <button
           className="flex text-base p-[10px] gap-3 border-[1px] rounded-md text-clr-primary"
-          onClick={() => setToggleFilter(!toggledFilter)}
+          onClick={toggle}
         >
           <Image src="/assets/Filter.svg" alt="filter" width={20} height={20} />
           Filter
