@@ -15,11 +15,13 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getSortedRowModel,
   useReactTable,
   getPaginationRowModel,
   ColumnFilter,
+  ColumnSort,
   ColumnDef,
-  FilterFn,
+  SortingState,
 } from '@tanstack/react-table';
 
 export default function Table({
@@ -38,6 +40,7 @@ export default function Table({
   const data = useMemo(() => users, [users]);
   const [filtering, setFiltering] = useState<string>('');
   const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
+  const [sorting, setSorting] = useState<ColumnSort[]>([]);
 
   const columns = React.useMemo<ColumnDef<Users, any>[]>(
     () => [
@@ -211,19 +214,23 @@ export default function Table({
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     state: {
       globalFilter: filtering,
       columnFilters: columnFilters,
+      sorting: sorting,
     },
-
     onGlobalFilterChange: setFiltering,
     onColumnFiltersChange: setColumnFilters,
+    onSortingChange: setSorting,
   });
 
   const props = {
     filtering: filtering,
     setFiltering: setFiltering,
     table: table,
+    sorting,
+    setSorting,
   };
 
   return (

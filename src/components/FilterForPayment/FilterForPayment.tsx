@@ -11,7 +11,7 @@ interface CustomColumnFilter extends ColumnFilter {
 }
 
 export default function FilterForPayment(props: Props) {
-  const { columnFilters, setColumnFilters, table } = props;
+  const { columnFilters, setColumnFilters } = props;
 
   const handleFilter = (value: string) => {
     let updatedFilters: CustomColumnFilter[] = [
