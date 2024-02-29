@@ -5,6 +5,11 @@ import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
 import FilterForPayment from '../FilterForPayment/FilterForPayment';
 import Footer from '../Footer/Footer';
 import { Users } from '@prisma/client';
+import {
+  textStatusPayment,
+  bgStatusPayment,
+  srcStatusPayment,
+} from '@/app/lib/table';
 
 import {
   flexRender,
@@ -123,16 +128,21 @@ export default function Table({
         header: 'PAYMENT STATUS',
         accessorKey: 'paymentStatus',
         cell: (props: any) => {
+          const textColorStatus = textStatusPayment(props.getValue());
+          const bgClrStatus = bgStatusPayment(props.getValue());
+          const srcImgPayment = srcStatusPayment(props.getValue());
           return (
             <div className="text-xs flex flex-col gap-1 justify-start">
-              <p className="flex gap-1 bg-bg-paid-status rounded-[10px] px-2 py-[2px] w-fit justify-left">
+              <p
+                className={`flex gap-1 ${bgClrStatus} rounded-[10px] px-2 py-[2px] w-fit justify-left`}
+              >
                 <Image
-                  src="/assets/status-paid.svg"
+                  src={`${srcImgPayment}`}
                   alt="status-paid"
                   width={6}
                   height={6}
                 />
-                <span className="text-clr-paid-status font-medium">
+                <span className={`${textColorStatus} font-medium`}>
                   {props.getValue()}
                 </span>
               </p>

@@ -1,5 +1,5 @@
-import React from 'react';
-import { sortedFields, filterFields } from '@/app/lib/filter';
+import React from "react";
+import { sortedFields, filterFields } from "@/app/lib/filter";
 
 export default function Filter() {
   return (
@@ -10,13 +10,13 @@ export default function Filter() {
           return (
             <label
               key={field.id}
-              htmlFor="sort"
+              htmlFor={field.title}
               className="flex justify-between items-stretch"
             >
               <span className="text-sm text-clr-primary tracking-widest">
                 {field.title}
               </span>
-              <input type="checkbox" name="sort" id="sort" />
+              <input type="checkbox" name={field.title} id={field.title} />
             </label>
           );
         })}
@@ -28,13 +28,13 @@ export default function Filter() {
             return (
               <label
                 key={field.id}
-                htmlFor="filter"
+                htmlFor={field.title}
                 className="flex justify-between items-stretch"
               >
                 <span className="text-sm text-clr-primary tracking-widest">
                   {field.title}
                 </span>
-                <input type="checkbox" name="filter" id="filter" />
+                <input type="checkbox" name={field.title} id={field.title} />
               </label>
             );
           })}
