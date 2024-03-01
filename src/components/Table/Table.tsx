@@ -21,7 +21,6 @@ import {
   ColumnFilter,
   ColumnSort,
   ColumnDef,
-  SortingState,
 } from '@tanstack/react-table';
 
 export default function Table({
@@ -218,7 +217,7 @@ export default function Table({
     state: {
       globalFilter: filtering,
       columnFilters: columnFilters,
-      sorting: sorting,
+      sorting,
     },
     onGlobalFilterChange: setFiltering,
     onColumnFiltersChange: setColumnFilters,
@@ -231,6 +230,8 @@ export default function Table({
     table: table,
     sorting,
     setSorting,
+    columnFilters: columnFilters,
+    setColumnFilters: setColumnFilters,
   };
 
   return (

@@ -1,25 +1,66 @@
 import React from 'react';
 import { sortedFields, filterFields } from '@/app/lib/filter';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { ColumnFilter, ColumnSort } from '@tanstack/react-table';
 
 interface Props {
+  columnFilters: ColumnFilter[];
+  setColumnFilters: Dispatch<SetStateAction<ColumnFilter[]>>;
   sorting: ColumnSort[];
-  setSorting: React.Dispatch<React.SetStateAction<ColumnSort>>;
+  setSorting: Dispatch<SetStateAction<ColumnSort[]>>;
 }
 
-interface ColumnSort {
-  [fieldName: string]: 'asc' | 'desc';
+interface CustomColumnFilter extends ColumnFilter {
+  filterFn?: (row: any, columnId: string, filterValue: any) => boolean;
+}
+
+interface CustomColumnSorting extends ColumnSort {
+  sortingFn?: (rowA: any, rowB: any, columnId: any) => number | undefined;
 }
 
 export default function Filter(props: Props) {
-  const { sorting, setSorting } = props;
+  const { setSorting, columnFilters, setColumnFilters } = props;
+  const [selectedSort, setSelectedSort] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('');
 
-  const handleSort = (value: string) => {
-    const updatedSorting: ColumnSort = {
-      ...sorting,
-      [value]: sorting[value] === 'asc' ? 'desc' : 'asc',
-    };
-    setSorting(updatedSorting);
+  const onChangeSort = (columnName: string) => {
+    let updateSorting: CustomColumnSorting[] = [
+      {
+        id: columnName,
+        desc: false,
+        sortingFn: (rowA, rowB, columnId) => {
+          return rowA.getValue(columnId).value < rowB.getValue(columnId).value
+            ? 1
+            : -1;
+        },
+      },
+    ];
+    if (columnName === 'Default') {
+      setSorting([]);
+    } else {
+      setSorting(updateSorting);
+    }
+    setSelectedSort(columnName);
+    console.log(selectedSort);
+  };
+
+  const onChangeFilter = (value: string) => {
+    let updatedFilters: CustomColumnFilter[] = [
+      {
+        id: 'userStatus',
+        value: value === 'All' ? '' : value,
+        filterFn: (row, columnId) => {
+          if (value === 'All') {
+            return true;
+          } else {
+            return row[columnId] === value;
+          }
+        },
+      },
+    ];
+    setColumnFilters(updatedFilters);
+    setSelectedFilter(value);
+    console.log(columnFilters);
   };
 
   return (
@@ -37,11 +78,11 @@ export default function Filter(props: Props) {
                 {field.title}
               </span>
               <input
-                type="checkbox"
-                name={field.title}
+                type="radio"
+                name="radiogroup1"
                 id={field.title}
-                checked={sorting[field.title] !== undefined}
-                onChange={() => handleSort(field.title)}
+                checked={field.columnName === selectedSort}
+                onChange={() => onChangeSort(field.columnName)}
               />
             </label>
           );
@@ -60,7 +101,13 @@ export default function Filter(props: Props) {
                 <span className="text-sm text-clr-primary tracking-widest">
                   {field.title}
                 </span>
-                <input type="checkbox" name={field.title} id={field.title} />
+                <input
+                  type="radio"
+                  name="radiogroup"
+                  id={field.title}
+                  checked={field.title === selectedFilter}
+                  onChange={() => onChangeFilter(field.title)}
+                />
               </label>
             );
           })}

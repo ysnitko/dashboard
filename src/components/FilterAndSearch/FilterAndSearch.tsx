@@ -2,13 +2,15 @@ import Image from 'next/image';
 import Filter from '../Filter/Filter';
 import { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 import { listenForOutsideClicks } from '../listenForOutsideClicks/listenForOutsideClicks';
-import { ColumnSort, SortingState } from '@tanstack/react-table';
+import { ColumnSort, ColumnFilter } from '@tanstack/react-table';
 
 interface Props {
   filtering: string;
   setFiltering: React.Dispatch<React.SetStateAction<string>>;
+  columnFilters: ColumnFilter[];
+  setColumnFilters: Dispatch<SetStateAction<ColumnFilter[]>>;
   sorting: ColumnSort[];
-  setSorting: React.Dispatch<React.SetStateAction<SortingState>>;
+  setSorting: Dispatch<SetStateAction<ColumnSort[]>>;
 }
 
 export default function FilterAndSearch(props: Props) {
@@ -35,7 +37,7 @@ export default function FilterAndSearch(props: Props) {
           <Image src="/assets/Filter.svg" alt="filter" width={20} height={20} />
           Filter
         </button>
-        {toggledFilter && <Filter sorting={sorting} setSorting={setSorting} />}
+        {toggledFilter && <Filter {...props} />}
 
         <label htmlFor="search" className="flex relative">
           <Image
