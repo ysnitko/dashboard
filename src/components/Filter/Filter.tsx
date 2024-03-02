@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { sortedFields, filterFields } from '@/app/lib/filter';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { ColumnFilter, ColumnSort } from '@tanstack/react-table';
@@ -60,7 +60,7 @@ export default function Filter(props: Props) {
     ];
     setColumnFilters(updatedFilters);
     setSelectedFilter(value);
-    console.log(columnFilters);
+    console.log(selectedFilter);
   };
 
   return (

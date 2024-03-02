@@ -1,10 +1,11 @@
 'use client';
 import Image from 'next/image';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
 import FilterForPayment from '../FilterForPayment/FilterForPayment';
 import Footer from '../Footer/Footer';
 import { Users } from '@prisma/client';
+import UserMenu from '../UserMenu/UserMenu';
 import {
   textStatusPayment,
   bgStatusPayment,
@@ -40,6 +41,7 @@ export default function Table({
   const [filtering, setFiltering] = useState<string>('');
   const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
+  const [open, setOpen] = useState(false);
 
   const columns = React.useMemo<ColumnDef<Users, any>[]>(
     () => [
@@ -187,11 +189,16 @@ export default function Table({
         accessorKey: 'view_more',
         cell: () => {
           return (
-            <div className="flex justify-end items-end gap-4">
+            <div className="flex justify-end items-end gap-4 left-0 relative">
               <span className="text-xs font-medium text-text-header">
                 View More
               </span>
-              <button type="button" className="w-[20px] h-[20px]">
+
+              <button
+                type="button"
+                className="w-[20px] h-[20px]"
+                onClick={() => setOpen(true)}
+              >
                 <Image
                   src="/assets/More.svg"
                   alt="more"
@@ -199,12 +206,15 @@ export default function Table({
                   height={20}
                 />
               </button>
+              <div className="absolute top-2 right-0">
+                {open && <UserMenu setOpen={setOpen} />}
+              </div>
             </div>
           );
         },
       },
     ],
-    []
+    [open]
   );
 
   const table = useReactTable({
@@ -232,6 +242,7 @@ export default function Table({
     setSorting,
     columnFilters: columnFilters,
     setColumnFilters: setColumnFilters,
+    setOpen: setOpen,
   };
 
   return (
