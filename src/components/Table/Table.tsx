@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
 import FilterForPayment from '../FilterForPayment/FilterForPayment';
 import Footer from '../Footer/Footer';
@@ -41,15 +41,21 @@ export default function Table({
   const [filtering, setFiltering] = useState<string>('');
   const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
-  const [open, setOpen] = useState(false);
+  const [openRowId, setOpenRowId] = useState<number | null>(null);
 
-  const handleOpen = (event: any, id?: number) => {
-    event.preventDefault();
-    const target = +event.target.id;
-
-    const findTarget = data;
-    console.log(findTarget);
-  };
+  const handleOpen = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>, id: number) => {
+      event.preventDefault();
+      setOpenRowId((prevOpenRowId) => {
+        if (prevOpenRowId === id) {
+          return null;
+        } else {
+          return id;
+        }
+      });
+    },
+    []
+  );
 
   const columns = React.useMemo<ColumnDef<Users, any>[]>(
     () => [
@@ -195,17 +201,20 @@ export default function Table({
           );
         },
         accessorKey: 'view_more',
-        cell: () => {
+
+        cell: (props: any) => {
+          const rowId = props.row.original.id;
+          const isOpen = rowId === openRowId;
           return (
             <div className="flex justify-end items-end gap-4 left-0 relative">
               <span className="text-xs font-medium text-text-header">
                 View More
               </span>
               <button
-                id={}
+                id={rowId}
                 type="button"
                 className="w-[20px] h-[20px]"
-                onClick={handleOpen}
+                onClick={(e) => handleOpen(e, rowId)}
               >
                 <Image
                   src="/assets/More.svg"
@@ -215,14 +224,14 @@ export default function Table({
                 />
               </button>
               <div className="absolute top-2 right-0">
-                {open && <UserMenu setOpen={setOpen} />}
+                {isOpen && <UserMenu {...props} />}
               </div>
             </div>
           );
         },
       },
     ],
-    [open]
+    [openRowId, handleOpen]
   );
 
   const table = useReactTable({
@@ -250,7 +259,7 @@ export default function Table({
     setSorting,
     columnFilters: columnFilters,
     setColumnFilters: setColumnFilters,
-    setOpen: setOpen,
+    setOpenRowId: setOpenRowId,
   };
 
   return (
