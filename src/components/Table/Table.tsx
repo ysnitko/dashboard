@@ -43,6 +43,14 @@ export default function Table({
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const [open, setOpen] = useState(false);
 
+  const handleOpen = (event: any, id?: number) => {
+    event.preventDefault();
+    const target = +event.target.id;
+
+    const findTarget = data;
+    console.log(findTarget);
+  };
+
   const columns = React.useMemo<ColumnDef<Users, any>[]>(
     () => [
       {
@@ -193,11 +201,11 @@ export default function Table({
               <span className="text-xs font-medium text-text-header">
                 View More
               </span>
-
               <button
+                id={}
                 type="button"
                 className="w-[20px] h-[20px]"
-                onClick={() => setOpen(true)}
+                onClick={handleOpen}
               >
                 <Image
                   src="/assets/More.svg"
