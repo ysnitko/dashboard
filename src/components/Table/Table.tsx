@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
 import FilterForPayment from '../FilterForPayment/FilterForPayment';
 import Footer from '../Footer/Footer';
@@ -42,22 +42,24 @@ export default function Table({
   const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([]);
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const [openRowId, setOpenRowId] = useState<number | null>(null);
+  const [open, setOpen] = useState<boolean>(false);
 
-  const handleOpen = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>, id: number) => {
-      event.preventDefault();
-      setOpenRowId((prevOpenRowId) => {
-        if (prevOpenRowId === id) {
-          return null;
-        } else {
-          return id;
-        }
-      });
-    },
-    []
-  );
+  const handleOpen = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    id: number
+  ) => {
+    event.preventDefault();
+    setOpen(true);
+    setOpenRowId((prevOpenRowId) => {
+      if (prevOpenRowId === id) {
+        return null;
+      } else {
+        return id;
+      }
+    });
+  };
 
-  const columns = React.useMemo<ColumnDef<Users, any>[]>(
+  const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
         header: () => {
@@ -206,14 +208,14 @@ export default function Table({
           const rowId = props.row.original.id;
           const isOpen = rowId === openRowId;
           return (
-            <div className="flex justify-end items-end gap-4 left-0 relative">
+            <div className="flex justify-end items-end gap-4 relative">
               <span className="text-xs font-medium text-text-header">
                 View More
               </span>
               <button
                 id={rowId}
                 type="button"
-                className="w-[20px] h-[20px]"
+                className={`w-[20px] h-[20px] `}
                 onClick={(e) => handleOpen(e, rowId)}
               >
                 <Image
@@ -223,9 +225,11 @@ export default function Table({
                   height={20}
                 />
               </button>
-              <div className="absolute top-2 right-0">
-                {isOpen && <UserMenu {...props} />}
-              </div>
+              {open && isOpen ? (
+                <UserMenu setOpen={setOpen} rowId={rowId} />
+              ) : (
+                ''
+              )}
             </div>
           );
         },

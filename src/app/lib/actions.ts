@@ -8,25 +8,25 @@ export async function getData() {
   return data;
 }
 
-export async function createUser(formData: FormData) {
-  const name = formData.get('name') as string;
-  const login = formData.get('email') as string;
-  const password = formData.get('password') as string;
-  const role = formData.get('role') as string;
-  const status = formData.get('status') as string;
-  const createdAt = new Date().toISOString() as string;
+// export async function createUser(formData: FormData) {
+//   const name = formData.get('name') as string;
+//   const login = formData.get('email') as string;
+//   const password = formData.get('password') as string;
+//   const role = formData.get('role') as string;
+//   const status = formData.get('status') as string;
+//   const createdAt = new Date().toISOString() as string;
 
-  const userData = {
-    name: name,
-    login: login,
-    password: password,
-    role: role,
-    status: status,
-    createdAt: createdAt,
-  };
-  await prisma.users.create({ data: userData });
-  redirect('/users');
-}
+//   const userData = {
+//     name: name,
+//     login: login,
+//     password: password,
+//     role: role,
+//     status: status,
+//     createdAt: createdAt,
+//   };
+//   await prisma.users.create({ data: userData });
+//   redirect('/users');
+// }
 
 // export async function createProject(formData: FormData) {
 //   const title = formData.get('title') as string;
@@ -90,48 +90,48 @@ export async function findUser(id: number | null) {
   return managerName?.name;
 }
 
-export async function updateUser(id: number, formData: FormData) {
-  const name = formData.get('name') as string;
-  const login = formData.get('email') as string;
-  const password = formData.get('password') as string;
-  const role = formData.get('role') as string;
-  const status = formData.get('status') as string;
-  const createdAt = new Date().toISOString() as string;
-  await prisma.users.update({
-    where: { id },
-    data: { name, status, createdAt, role, login, password },
-  });
-  redirect('/users');
-}
+// export async function updateUser(id: number, formData: FormData) {
+//   const name = formData.get('name') as string;
+//   const login = formData.get('email') as string;
+//   const password = formData.get('password') as string;
+//   const role = formData.get('role') as string;
+//   const status = formData.get('status') as string;
+//   const createdAt = new Date().toISOString() as string;
+//   await prisma.users.update({
+//     where: { id },
+//     data: { name, status, createdAt, role, login, password },
+//   });
+//   redirect('/users');
+// }
 
-export async function updateProject(id: number, formData: FormData) {
-  const title = formData.get('title') as string;
-  const projectManagerName = formData.get('project-manager') as string;
-  const progress = Number(formData.get('progress'));
-  const status = formData.get('status') as string;
-  const manager = await prisma.users.findFirst({
-    where: {
-      name: projectManagerName,
-    },
-  });
+// export async function updateProject(id: number, formData: FormData) {
+//   const title = formData.get('title') as string;
+//   const projectManagerName = formData.get('project-manager') as string;
+//   const progress = Number(formData.get('progress'));
+//   const status = formData.get('status') as string;
+//   const manager = await prisma.users.findFirst({
+//     where: {
+//       name: projectManagerName,
+//     },
+//   });
 
-  const projectData = {
-    title: title,
-    projectManager: {
-      connect: {
-        id: manager?.id,
-      },
-    },
-    progress: +progress,
-    status: status,
-  };
+//   const projectData = {
+//     title: title,
+//     projectManager: {
+//       connect: {
+//         id: manager?.id,
+//       },
+//     },
+//     progress: +progress,
+//     status: status,
+//   };
 
-  await prisma.projects.update({
-    where: { id },
-    data: projectData,
-  });
-  redirect('/projects');
-}
+//   await prisma.projects.update({
+//     where: { id },
+//     data: projectData,
+//   });
+//   redirect('/projects');
+// }
 
 export async function getUsers() {
   const users = await prisma.users.findMany();

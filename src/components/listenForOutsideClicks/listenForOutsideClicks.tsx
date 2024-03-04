@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, MutableRefObject } from 'react';
+import { Dispatch, SetStateAction, MutableRefObject } from "react";
 
 export function listenForOutsideClicks(
   listening: boolean,
@@ -12,6 +12,7 @@ export function listenForOutsideClicks(
     setListening(true);
     [`click`, `touchstart`].forEach((type) => {
       document.addEventListener(`click`, (evt) => {
+        if (menuRef.current === null) return;
         if (menuRef.current.contains(evt.target)) return;
         setToggleFilter(false);
       });
