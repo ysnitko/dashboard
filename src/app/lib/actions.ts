@@ -8,25 +8,24 @@ export async function getData() {
   return data;
 }
 
-// export async function createUser(formData: FormData) {
-//   const name = formData.get('name') as string;
-//   const login = formData.get('email') as string;
-//   const password = formData.get('password') as string;
-//   const role = formData.get('role') as string;
-//   const status = formData.get('status') as string;
-//   const createdAt = new Date().toISOString() as string;
+export async function createUser(formData: FormData) {
+  const name = formData.get('name') as string;
+  const email = formData.get('email') as string;
+  const userStatus = formData.get('user-status') as string;
+  const paymentStatus = formData.get('payment-status') as string;
+  const amount = formData.get('amount') as string;
+  const createdAt = new Date().toISOString() as string;
 
-//   const userData = {
-//     name: name,
-//     login: login,
-//     password: password,
-//     role: role,
-//     status: status,
-//     createdAt: createdAt,
-//   };
-//   await prisma.users.create({ data: userData });
-//   redirect('/users');
-// }
+  const userData = {
+    name: name,
+    email: email,
+    userStatus: userStatus,
+    paymentStatus: paymentStatus,
+    amount: +amount,
+    createdAt: createdAt,
+  };
+  await prisma.users.create({ data: userData });
+}
 
 // export async function createProject(formData: FormData) {
 //   const title = formData.get('title') as string;

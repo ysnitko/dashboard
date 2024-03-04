@@ -1,10 +1,20 @@
 import { createUser } from '@/app/lib/actions';
+import { Dispatch, SetStateAction } from 'react';
 
-export default function CreateUserForm() {
+export default function CreateUser({
+  setCreateUser,
+}: {
+  setCreateUser: Dispatch<SetStateAction<boolean>>;
+}) {
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setCreateUser(false);
+  };
+
   return (
     <form
       action={createUser}
-      className="flex flex-col h-[40%] p-[30px] justify-between"
+      className="flex flex-col  p-[30px] justify-between absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  bg-bg-table-primary"
     >
       <div className="grid grid-cols-2 gap-x-8 gap-y-6">
         <label
@@ -34,53 +44,53 @@ export default function CreateUserForm() {
         </label>
 
         <label
-          htmlFor="password"
+          htmlFor="user-status"
           className="flex flex-col gap-2 text-sm font-semibold"
         >
-          Password
-          <input
-            type="password"
-            id="password"
-            name="password"
+          User Status
+          <select
+            name="user-status"
+            id="user-status"
             className="p-4 outline-none opacity-50 rounded-md"
-          />
+            defaultValue="Blocked"
+          >
+            <option value="Active">Active</option>
+            <option value="Blocked">Blocked</option>
+          </select>
         </label>
         <label
-          htmlFor="role"
+          htmlFor="payment-status"
           className="flex flex-col gap-2 text-sm font-semibold"
         >
-          Role
+          Payment Status
           <select
-            name="role"
-            id="role"
+            name="payment-status"
+            id="payment-status"
             className="p-4 outline-none opacity-50 rounded-md"
-            defaultValue="choose-role"
+            defaultValue="Unsalaried"
           >
-            <option value="choose-role">Choose role</option>
-            <option value="admin">Admin</option>
-            <option value="project manager">Project manager</option>
+            <option value="Paid">Paid</option>
+            <option value="Unsalaried">Unsalaried</option>
+            <option value="Overdue">Overdue</option>
           </select>
         </label>
         <label
           htmlFor="status"
           className="flex flex-col gap-2 text-sm font-semibold"
         >
-          Status
-          <select
-            name="status"
-            id="status"
-            className="p-4 outline-none opacity-50 rounded-md"
-            defaultValue="choose-status"
-          >
-            <option value="choose-status">Choose status</option>
-            <option value="active">Active</option>
-            <option value="blocked">Blocked</option>
-          </select>
+          Amount
+          <input
+            type="text"
+            id="amount"
+            name="amount"
+            className="p-4 outline-none opacity-50 rounded-md "
+          />
         </label>
       </div>
       <button
         type="submit"
         className="bg-bg-btn-block text-bg-page font-bold p-5 rounded-md bg-bg-active-btn"
+        // onClick={(e) => handleSubmit(e)}
       >
         Submit
       </button>

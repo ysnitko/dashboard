@@ -1,5 +1,8 @@
 import { ColumnFilter } from '@tanstack/react-table';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import CreateUser from '../CreateUser/CreateUser';
 
 interface Props {
   columnFilters: ColumnFilter[];
@@ -12,6 +15,7 @@ interface CustomColumnFilter extends ColumnFilter {
 
 export default function FilterForPayment(props: Props) {
   const { columnFilters, setColumnFilters } = props;
+  const [createUser, setCreateUser] = useState<SetStateAction<boolean>>(false);
 
   const handleFilter = (value: string) => {
     let updatedFilters: CustomColumnFilter[] = [
@@ -27,9 +31,7 @@ export default function FilterForPayment(props: Props) {
         },
       },
     ];
-
     setColumnFilters(updatedFilters);
-    console.log(columnFilters);
   };
 
   return (
@@ -45,6 +47,13 @@ export default function FilterForPayment(props: Props) {
           </button>
         ))}
       </div>
+      <button
+        className="flex gap-2 p-2 text-text-btn-filter text-sm border-[1px] rounded-full"
+        onClick={() => setCreateUser(true)}
+      >
+        <Image src={'/assets/plus.svg'} alt="create" width={15} height={15} />
+        <span>Create user</span>
+      </button>
       <span className="text-sm py-2 text-text-btn-filter ">
         Total payable amount:
         <span className="text-lg font-bold text-text-total-prise">
@@ -52,6 +61,7 @@ export default function FilterForPayment(props: Props) {
         </span>
         <span className="text-lg text-text-btn-filter">&nbsp;USD</span>
       </span>
+      {createUser && <CreateUser setCreateUser={setCreateUser} />}
     </div>
   );
 }
