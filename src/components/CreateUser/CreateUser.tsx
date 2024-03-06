@@ -1,19 +1,15 @@
-import { createUser } from "@/app/lib/actions";
-import { Dispatch, SetStateAction } from "react";
+import { createUser } from '@/app/lib/actions';
+import { Dispatch, SetStateAction } from 'react';
 
 export default function CreateUser({
   setCreateUser,
 }: {
   setCreateUser: Dispatch<SetStateAction<boolean>>;
 }) {
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setCreateUser(false);
-  };
-
   return (
     <form
       action={createUser}
+      onSubmit={() => setCreateUser(false)}
       className="flex flex-col  p-[30px] justify-between absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  bg-bg-table-primary border-[1px] rounded-md
       shadow-xl
       "
@@ -72,9 +68,7 @@ export default function CreateUser({
             name="payment-status"
             id="payment-status"
             className="p-3 outline-none opacity-50 rounded-md bg-bg-color font-semibold
-            [&_option]:font-medium
-            
-            "
+            [&_option]:font-medium"
             defaultValue="Unsalaried"
           >
             <option value="Paid">Paid</option>
@@ -99,14 +93,13 @@ export default function CreateUser({
         <button
           type="submit"
           className="bg-bg-color text-bg-page font-bold p-3 rounded-md mt-10 w-1/3 text-text-header"
-          // onClick={(e) => handleSubmit(e)}
         >
           Create
         </button>
         <button
           type="button"
           className="bg-bg-color text-bg-page font-bold p-3 rounded-md mt-10 w-1/3  text-text-header opacity-50 hover:opacity-100"
-          // onClick={(e) => handleSubmit(e)}
+          onClick={() => setCreateUser(false)}
         >
           Cancel
         </button>

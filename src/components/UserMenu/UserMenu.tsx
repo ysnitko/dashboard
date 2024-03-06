@@ -1,9 +1,9 @@
-import Link from "next/link";
-
-import Image from "next/image";
-import { Dispatch, SetStateAction, useRef, useState, useEffect } from "react";
-import { listenForOutsideClicks } from "../listenForOutsideClicks/listenForOutsideClicks";
-import { deleteUser } from "@/app/lib/actions";
+import Link from 'next/link';
+import Image from 'next/image';
+import { Dispatch, SetStateAction, useRef, useState, useEffect } from 'react';
+import { listenForOutsideClicks } from '../listenForOutsideClicks/listenForOutsideClicks';
+import { deleteUser } from '@/app/lib/actions';
+import UpdateUser from '../UpdateUser/UpdateUser';
 
 export default function UserMenu({
   setOpen,
@@ -13,6 +13,7 @@ export default function UserMenu({
   rowId: number;
 }) {
   const [listening, setListening] = useState<boolean>(false);
+  const [updateUser, setUpdateUser] = useState<boolean>(false);
   const menuRef = useRef(null);
 
   useEffect(listenForOutsideClicks(listening, setListening, menuRef, setOpen));
@@ -31,11 +32,11 @@ export default function UserMenu({
       </button>
 
       <li className="p-1 rounded-[4px]">
-        <Link href={"/"}>Edit</Link>
+        <button onClick={() => setUpdateUser(true)}>Edit</button>
       </li>
 
       <li className="p-1 rounded-[4px]">
-        <Link href={"/"}>View Profile</Link>
+        <Link href={'/'}>View Profile</Link>
       </li>
       <li className="p-1 rounded-[4px]">
         <button className="text-left text-clr-paid-status">
@@ -50,6 +51,7 @@ export default function UserMenu({
           Delete User
         </button>
       </li>
+      {updateUser && <UpdateUser setUpdateUser={setUpdateUser} id={rowId} />}
     </ul>
   );
 }

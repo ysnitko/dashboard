@@ -25,6 +25,7 @@ export async function createUser(formData: FormData) {
     createdAt: createdAt,
   };
   await prisma.users.create({ data: userData });
+  revalidatePath('/');
 }
 
 // export async function createProject(formData: FormData) {
@@ -89,19 +90,19 @@ export async function findUser(id: number | null) {
   return managerName?.name;
 }
 
-// export async function updateUser(id: number, formData: FormData) {
-//   const name = formData.get('name') as string;
-//   const login = formData.get('email') as string;
-//   const password = formData.get('password') as string;
-//   const role = formData.get('role') as string;
-//   const status = formData.get('status') as string;
-//   const createdAt = new Date().toISOString() as string;
-//   await prisma.users.update({
-//     where: { id },
-//     data: { name, status, createdAt, role, login, password },
-//   });
-//   redirect('/users');
-// }
+export async function updateUser(id: number, formData: FormData) {
+  const name = formData.get('name') as string;
+  const email = formData.get('email') as string;
+  const userStatus = formData.get('user-status') as string;
+  const paymentStatus = formData.get('payment-status') as string;
+  const amount = formData.get('amount') as string;
+  const createdAt = new Date().toISOString() as string;
+  await prisma.users.update({
+    where: { id },
+    data: { name, email, userStatus, paymentStatus, amount, createdAt },
+  });
+  revalidatePath('/');
+}
 
 // export async function updateProject(id: number, formData: FormData) {
 //   const title = formData.get('title') as string;

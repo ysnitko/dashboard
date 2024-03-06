@@ -1,15 +1,27 @@
-import { createUser } from '@/app/lib/actions';
+'use server';
+import { updateUser } from '@/app/lib/actions';
 import { Dispatch, SetStateAction } from 'react';
+import { prisma } from '@/app/lib/prisma';
 
-export default function CreateUser({
-  setCreateUser,
+export default async function UpdateUser({
+  setUpdateUser,
+  id,
 }: {
-  setCreateUser: Dispatch<SetStateAction<boolean>>;
+  setUpdateUser: Dispatch<SetStateAction<boolean>>;
+  id: string;
 }) {
+  const data = await prisma.users.findUnique({
+    where: {
+      id,
+    },
+  });
+  const updateUserWithId = updateUser.bind(null, parseInt(id));
+  console.log(updateUserWithId);
+
   return (
     <form
-      action={createUser}
-      onSubmit={() => setCreateUser(false)}
+      action={updateUserWithId}
+      onSubmit={() => setUpdateUser(false)}
       className="flex flex-col  p-[30px] justify-between absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  bg-bg-table-primary border-[1px] rounded-md
       shadow-xl
       "
@@ -94,12 +106,12 @@ export default function CreateUser({
           type="submit"
           className="bg-bg-color text-bg-page font-bold p-3 rounded-md mt-10 w-1/3 text-text-header"
         >
-          Create
+          Save
         </button>
         <button
           type="button"
           className="bg-bg-color text-bg-page font-bold p-3 rounded-md mt-10 w-1/3  text-text-header opacity-50 hover:opacity-100"
-          onClick={() => setCreateUser(false)}
+          onClick={() => setUpdateUser(false)}
         >
           Cancel
         </button>

@@ -1,5 +1,5 @@
-import { ColumnFilter } from '@tanstack/react-table';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { ColumnFilter } from "@tanstack/react-table";
+import { Dispatch, SetStateAction, useState } from "react";
 
 interface Props {
   columnFilters: ColumnFilter[];
@@ -13,18 +13,21 @@ interface CustomColumnFilter extends ColumnFilter {
 export default function FilterForPayment(props: Props) {
   const { columnFilters, setColumnFilters } = props;
   const [activeFilter, setActiveFilter] =
-    useState<SetStateAction<string>>('All');
+    useState<SetStateAction<string>>("All");
 
-  const handleFilter = (event: any, value: string) => {
+  const handleFilter = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    value: string
+  ) => {
     event.preventDefault();
     setActiveFilter(value);
 
     let updatedFilters: CustomColumnFilter[] = [
       {
-        id: 'paymentStatus',
-        value: value === 'All' ? '' : value,
+        id: "paymentStatus",
+        value: value === "All" ? "" : value,
         filterFn: (row, columnId) => {
-          if (value === 'All') {
+          if (value === "All") {
             return true;
           } else {
             return row[columnId] === value;
@@ -36,14 +39,14 @@ export default function FilterForPayment(props: Props) {
   };
 
   return (
-    <div className="flex justify-between items-center  border-border-clr">
-      <div className="flex gap-5 text-sm border-b-[1px]">
-        {['All', 'Paid', 'Unsalaried', 'Overdue'].map((item, index) => {
+    <div className="flex justify-between  border-border-clr border-b-[1px]">
+      <div className="flex gap-5 text-sm min-h-full">
+        {["All", "Paid", "Unsalaried", "Overdue"].map((item, index) => {
           return (
             <button
               key={index}
-              className={`p-2 h-full text-text-btn-filter ${
-                activeFilter === item ? 'border-b-2 border-text-header  ' : ''
+              className={`h-full p-1 text-text-btn-filter ${
+                activeFilter === item ? "border-b-2 border-text-header  " : ""
               }
                 `}
               onClick={(event) => handleFilter(event, item)}
@@ -54,7 +57,7 @@ export default function FilterForPayment(props: Props) {
         })}
       </div>
 
-      <span className="text-sm py-2 text-text-btn-filter ">
+      <span className="text-sm py-1 text-text-btn-filter w-full text-right ">
         Total payable amount:
         <span className="text-lg font-bold text-text-total-prise">
           &nbsp;$900.00
