@@ -1,28 +1,31 @@
-'use server';
-import { updateUser } from '@/app/lib/actions';
-import { Dispatch, SetStateAction } from 'react';
-import { prisma } from '@/app/lib/prisma';
+'use client';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { updateUser, findUser } from '@/app/lib/actions';
 
-export default async function UpdateUser({
+export default function UpdateUser({
   setUpdateUser,
   id,
 }: {
   setUpdateUser: Dispatch<SetStateAction<boolean>>;
   id: string;
 }) {
-  const data = await prisma.users.findUnique({
-    where: {
-      id,
-    },
-  });
+  const [user, setUser] = useState<any>({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await findUser(+id);
+      setUser(data);
+    };
+    fetchData();
+  }, [id]);
+
   const updateUserWithId = updateUser.bind(null, parseInt(id));
-  console.log(updateUserWithId);
 
   return (
     <form
       action={updateUserWithId}
       onSubmit={() => setUpdateUser(false)}
-      className="flex flex-col  p-[30px] justify-between absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  bg-bg-table-primary border-[1px] rounded-md
+      className="flex flex-col p-[30px] justify-between fixed top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  bg-bg-table-primary border-[1px] rounded-md
       shadow-xl
       "
     >
@@ -40,6 +43,7 @@ export default async function UpdateUser({
             id="name"
             name="name"
             className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
+            defaultValue={user?.name}
           />
         </label>
 
@@ -53,6 +57,7 @@ export default async function UpdateUser({
             id="email"
             name="email"
             className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
+            defaultValue={user?.email}
           />
         </label>
 
@@ -65,7 +70,7 @@ export default async function UpdateUser({
             name="user-status"
             id="user-status"
             className="p-3 outline-none opacity-50 rounded-md bg-bg-color [&_option]:font-medium"
-            defaultValue="Blocked"
+            defaultValue={user?.userStatus}
           >
             <option value="Active">Active</option>
             <option value="Blocked">Blocked</option>
@@ -81,7 +86,7 @@ export default async function UpdateUser({
             id="payment-status"
             className="p-3 outline-none opacity-50 rounded-md bg-bg-color font-semibold
             [&_option]:font-medium"
-            defaultValue="Unsalaried"
+            defaultValue={user?.paymentStatus}
           >
             <option value="Paid">Paid</option>
             <option value="Unsalaried">Unsalaried</option>
@@ -98,6 +103,7 @@ export default async function UpdateUser({
             id="amount"
             name="amount"
             className="p-3 outline-none opacity-50 rounded-md bg-bg-color "
+            defaultValue={user?.amount}
           />
         </label>
       </div>

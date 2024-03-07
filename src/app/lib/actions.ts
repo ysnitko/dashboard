@@ -77,17 +77,18 @@ export async function deleteUser(id: number) {
 // }
 
 export async function findUser(id: number | null) {
+  console.log(id);
+
   if (id === null) {
     return null;
   }
-  const managerName = await prisma.users.findUnique({
+  const user = await prisma.users.findUnique({
     where: {
       id: id,
     },
   });
-  console.log(managerName?.name);
 
-  return managerName?.name;
+  return user;
 }
 
 export async function updateUser(id: number, formData: FormData) {
@@ -95,7 +96,7 @@ export async function updateUser(id: number, formData: FormData) {
   const email = formData.get('email') as string;
   const userStatus = formData.get('user-status') as string;
   const paymentStatus = formData.get('payment-status') as string;
-  const amount = formData.get('amount') as string;
+  const amount = Number(formData.get('amount'));
   const createdAt = new Date().toISOString() as string;
   await prisma.users.update({
     where: { id },
