@@ -43,6 +43,7 @@ export default function Table({
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const [openRowId, setOpenRowId] = useState<number | null>(null);
   const [open, setOpen] = useState<boolean>(false);
+  const [isActive, setIsActive] = useState<boolean>(false);
 
   const handleOpen = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -226,7 +227,7 @@ export default function Table({
                 />
               </button>
               {open && isOpen ? (
-                <UserMenu setOpen={setOpen} rowId={rowId} />
+                <UserMenu setOpen={setOpen} rowId={rowId} isActive={isActive} />
               ) : (
                 ''
               )}

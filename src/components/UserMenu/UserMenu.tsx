@@ -1,22 +1,30 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useRef, useState, useEffect } from 'react';
 import { listenForOutsideClicks } from '../listenForOutsideClicks/listenForOutsideClicks';
-import { deleteUser } from '@/app/lib/actions';
+import { deleteUser, userActivate } from '@/app/lib/actions';
 import UpdateUser from '../UpdateUser/UpdateUser';
 
 export default function UserMenu({
   setOpen,
   rowId,
+  isActive,
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>;
   rowId: number;
+  isActive: boolean;
 }) {
   const [listening, setListening] = useState<boolean>(false);
   const [updateUser, setUpdateUser] = useState<boolean>(false);
   const menuRef = useRef(null);
 
   useEffect(listenForOutsideClicks(listening, setListening, menuRef, setOpen));
+
+  // const updateUserWithStatus = userActivate.bind(
+  //   null,
+  //   parseInt(rowId.toString())
+  // );
 
   return (
     <ul
@@ -32,14 +40,22 @@ export default function UserMenu({
       </button>
 
       <li className="p-1 rounded-[4px]">
-        <button onClick={() => setUpdateUser(true)}>Edit</button>
+        <button
+          className=" w-full text-left"
+          onClick={() => setUpdateUser(true)}
+        >
+          Edit
+        </button>
       </li>
 
       <li className="p-1 rounded-[4px]">
         <Link href={'/'}>View Profile</Link>
       </li>
       <li className="p-1 rounded-[4px]">
-        <button className="text-left text-clr-paid-status">
+        <button
+          className="text-left text-clr-paid-status"
+          onClick={() => userActivate(rowId)}
+        >
           Activate User
         </button>
       </li>
@@ -51,7 +67,9 @@ export default function UserMenu({
           Delete User
         </button>
       </li>
-      {updateUser && <UpdateUser setUpdateUser={setUpdateUser} id={rowId} />}
+      {updateUser && (
+        <UpdateUser setUpdateUser={setUpdateUser} id={rowId.toString()} />
+      )}
     </ul>
   );
 }

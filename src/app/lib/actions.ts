@@ -1,7 +1,6 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { prisma } from './prisma';
-import { redirect } from 'next/navigation';
 
 export async function getData() {
   const data = await prisma.users.findMany();
@@ -103,6 +102,18 @@ export async function updateUser(id: number, formData: FormData) {
     data: { name, email, userStatus, paymentStatus, amount, createdAt },
   });
   revalidatePath('/');
+}
+
+export async function userActivate(id: number) {
+  await prisma.users.update({
+    where: { id, userStatus: 'Blocked' },
+    data: {
+      userStatus: 'Active',
+    },
+  });
+
+  revalidatePath('/');
+  return true;
 }
 
 // export async function updateProject(id: number, formData: FormData) {
