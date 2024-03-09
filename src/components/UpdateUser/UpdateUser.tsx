@@ -1,24 +1,16 @@
 'use client';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { updateUser, findUser } from '@/app/lib/actions';
+import { Dispatch, SetStateAction } from 'react';
+import { updateUser } from '@/app/lib/actions';
 
 export default function UpdateUser({
   setUpdateUser,
   id,
+  user,
 }: {
   setUpdateUser: Dispatch<SetStateAction<boolean>>;
   id: string;
+  user: any;
 }) {
-  const [user, setUser] = useState<any>({});
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await findUser(+id);
-      setUser(data);
-    };
-    fetchData();
-  }, [id]);
-
   const updateUserWithId = updateUser.bind(null, parseInt(id));
 
   return (
@@ -30,7 +22,7 @@ export default function UpdateUser({
       "
     >
       <h2 className="text-text-header font-bold text-xl border-b-2 mb-4">
-        Create user
+        Edit user
       </h2>
       <div className="grid grid-cols-2 gap-x-8 gap-y-4">
         <label

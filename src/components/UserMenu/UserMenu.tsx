@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useRef, useState, useEffect } from 'react';
 import { listenForOutsideClicks } from '../listenForOutsideClicks/listenForOutsideClicks';
-import { deleteUser, userActivate } from '@/app/lib/actions';
+import { deleteUser, userActivate, findUser } from '@/app/lib/actions';
 import UpdateUser from '../UpdateUser/UpdateUser';
 
 export default function UserMenu({
@@ -17,14 +17,18 @@ export default function UserMenu({
 }) {
   const [listening, setListening] = useState<boolean>(false);
   const [updateUser, setUpdateUser] = useState<boolean>(false);
+  const [user, setUser] = useState<any>({});
   const menuRef = useRef(null);
 
   useEffect(listenForOutsideClicks(listening, setListening, menuRef, setOpen));
 
-  // const updateUserWithStatus = userActivate.bind(
-  //   null,
-  //   parseInt(rowId.toString())
-  // );
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await findUser(+rowId);
+      setUser(data);
+    };
+    fetchData();
+  }, [rowId]);
 
   return (
     <ul
@@ -53,8 +57,11 @@ export default function UserMenu({
       </li>
       <li className="p-1 rounded-[4px]">
         <button
-          className="text-left text-clr-paid-status"
+          className={`text-left text-clr-paid-status ${
+            user?.userStatus === 'Active' ? 'opacity-50' : ''
+          }`}
           onClick={() => userActivate(rowId)}
+          disabled={user?.userStatus === 'Active'}
         >
           Activate User
         </button>
@@ -68,7 +75,11 @@ export default function UserMenu({
         </button>
       </li>
       {updateUser && (
-        <UpdateUser setUpdateUser={setUpdateUser} id={rowId.toString()} />
+        <UpdateUser
+          setUpdateUser={setUpdateUser}
+          id={rowId.toString()}
+          user={user}
+        />
       )}
     </ul>
   );
