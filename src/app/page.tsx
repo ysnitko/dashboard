@@ -11,7 +11,18 @@ export default async function Home() {
     createdAt: Date;
     paymentStatus: string;
     amount: number;
-  }[] = await prisma.users.findMany();
+    subRows: {
+      id: number;
+      date: Date;
+      userActivity: string;
+      details: string;
+      usersId: number | null;
+    }[];
+  }[] = await prisma.users.findMany({
+    include: {
+      subRows: true,
+    },
+  });
 
   return (
     <>

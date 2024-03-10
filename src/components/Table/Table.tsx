@@ -1,10 +1,9 @@
 'use client';
 import Image from 'next/image';
-import React, { useMemo, useState, useRef, useEffect } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
 import FilterForPayment from '../FilterForPayment/FilterForPayment';
 import Footer from '../Footer/Footer';
-import { Users } from '@prisma/client';
 import UserMenu from '../UserMenu/UserMenu';
 import {
   textStatusPayment,
@@ -22,7 +21,10 @@ import {
   ColumnFilter,
   ColumnSort,
   ColumnDef,
+  getExpandedRowModel,
+  ExpandedState,
 } from '@tanstack/react-table';
+import { log } from 'console';
 
 export default function Table({
   users,
@@ -35,6 +37,7 @@ export default function Table({
     createdAt: Date;
     paymentStatus: string;
     amount: number;
+    subRows: any[];
   }[];
 }) {
   const data = useMemo(() => users, [users]);
@@ -43,22 +46,22 @@ export default function Table({
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const [openRowId, setOpenRowId] = useState<number | null>(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [isActive, setIsActive] = useState<boolean>(false);
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
-  const handleOpen = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    id: number
-  ) => {
-    event.preventDefault();
-    setOpen(true);
-    setOpenRowId((prevOpenRowId) => {
-      if (prevOpenRowId === id) {
-        return null;
-      } else {
-        return id;
-      }
-    });
-  };
+  const handleOpenView = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>, id: number) => {
+      event.preventDefault();
+      setOpen(true);
+      setOpenRowId((prevOpenRowId) => {
+        if (prevOpenRowId === id) {
+          return null;
+        } else {
+          return id;
+        }
+      });
+    },
+    []
+  );
 
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
@@ -74,14 +77,47 @@ export default function Table({
           );
         },
         accessorKey: 'id',
-        cell: () => {
+        cell: (props) => {
           return (
-            <input
-              className="w-5 h-5"
-              type="checkbox"
-              name="check-user"
-              id="check-user"
-            />
+            <div className="flex gap-3 justify-between">
+              <input
+                className="w-5 h-5"
+                type="checkbox"
+                name="check-user"
+                id="check-user"
+              />
+              {props.row.getCanExpand() ? (
+                <button
+                  {...{
+                    onClick: props.row.getToggleExpandedHandler(),
+                    style: { cursor: 'pointer' },
+                  }}
+                >
+                  {props.row.getIsExpanded() ? (
+                    <Image
+                      src={'/assets/open-menu.svg'}
+                      width={15}
+                      height={15}
+                      alt="toggle"
+                    />
+                  ) : (
+                    <Image
+                      src={'/assets/closed-menu.svg'}
+                      width={15}
+                      height={15}
+                      alt="toggle"
+                    />
+                  )}
+                </button>
+              ) : (
+                <Image
+                  src={'/assets/closed-menu.svg'}
+                  width={15}
+                  height={15}
+                  alt="toggle"
+                />
+              )}
+            </div>
           );
         },
       },
@@ -217,7 +253,7 @@ export default function Table({
                 id={rowId}
                 type="button"
                 className={`w-[20px] h-[20px] `}
-                onClick={(e) => handleOpen(e, rowId)}
+                onClick={(e) => handleOpenView(e, rowId)}
               >
                 <Image
                   src="/assets/More.svg"
@@ -227,7 +263,7 @@ export default function Table({
                 />
               </button>
               {open && isOpen ? (
-                <UserMenu setOpen={setOpen} rowId={rowId} isActive={isActive} />
+                <UserMenu setOpen={setOpen} rowId={rowId} />
               ) : (
                 ''
               )}
@@ -236,24 +272,29 @@ export default function Table({
         },
       },
     ],
-    [openRowId, handleOpen]
+    [openRowId, handleOpenView, open]
   );
 
   const table = useReactTable({
     data,
     columns,
+    enableExpanding: true,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
     state: {
       globalFilter: filtering,
       columnFilters: columnFilters,
       sorting,
+      expanded,
     },
     onGlobalFilterChange: setFiltering,
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
+    onExpandedChange: setExpanded,
+    getSubRows: (row) => row.subRows,
   });
 
   const props = {

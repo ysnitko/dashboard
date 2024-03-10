@@ -9,11 +9,9 @@ import UpdateUser from '../UpdateUser/UpdateUser';
 export default function UserMenu({
   setOpen,
   rowId,
-  isActive,
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>;
   rowId: number;
-  isActive: boolean;
 }) {
   const [listening, setListening] = useState<boolean>(false);
   const [updateUser, setUpdateUser] = useState<boolean>(false);

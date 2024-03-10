@@ -11,11 +11,21 @@ datasource db {
 }
 
 model Users {
-  id            Int      @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   name          String
-  email         String   @unique
+  email         String    @unique
   userStatus    String
-  createdAt     DateTime @default(now())
+  createdAt     DateTime  @default(now())
   paymentStatus String
   amount        Int
+  subRows       SubRows[]
+}
+
+model SubRows {
+  id           Int      @id @default(autoincrement())
+  date         DateTime
+  userActivity String
+  details      String
+  Users        Users?   @relation(fields: [usersId], references: [id])
+  usersId      Int?
 }
