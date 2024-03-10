@@ -5,6 +5,7 @@ import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
 import FilterForPayment from '../FilterForPayment/FilterForPayment';
 import Footer from '../Footer/Footer';
 import UserMenu from '../UserMenu/UserMenu';
+import SubRowsTable from '../SubRowsTable/SubrowsTable';
 import {
   textStatusPayment,
   bgStatusPayment,
@@ -24,7 +25,6 @@ import {
   getExpandedRowModel,
   ExpandedState,
 } from '@tanstack/react-table';
-import { log } from 'console';
 
 export default function Table({
   users,
@@ -78,6 +78,8 @@ export default function Table({
         },
         accessorKey: 'id',
         cell: (props) => {
+          console.log(props.row.getToggleExpandedHandler());
+
           return (
             <div className="flex gap-3 justify-between">
               <input
@@ -110,12 +112,7 @@ export default function Table({
                   )}
                 </button>
               ) : (
-                <Image
-                  src={'/assets/closed-menu.svg'}
-                  width={15}
-                  height={15}
-                  alt="toggle"
-                />
+                ''
               )}
             </div>
           );
