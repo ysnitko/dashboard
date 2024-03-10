@@ -5,7 +5,7 @@ import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
 import FilterForPayment from '../FilterForPayment/FilterForPayment';
 import Footer from '../Footer/Footer';
 import UserMenu from '../UserMenu/UserMenu';
-import SubRowsTable from '../SubRowsTable/SubrowsTable';
+import SubRowsTable from '../SubRowsTable/SubRowsTable';
 import {
   textStatusPayment,
   bgStatusPayment,
@@ -78,8 +78,6 @@ export default function Table({
         },
         accessorKey: 'id',
         cell: (props) => {
-          console.log(props.row.getToggleExpandedHandler());
-
           return (
             <div className="flex gap-3 justify-between">
               <input
@@ -269,7 +267,7 @@ export default function Table({
         },
       },
     ],
-    [openRowId, handleOpenView, open]
+    [openRowId, handleOpenView, open, expanded]
   );
 
   const table = useReactTable({
@@ -333,16 +331,19 @@ export default function Table({
         </thead>
         <tbody className="text-left">
           {table.getRowModel().rows.map((row) => (
-            <tr
-              key={row.id}
-              className="bg-bg-table-primary border-border-clr border-[1px] "
-            >
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="p-4">
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
+            <>
+              <tr
+                key={row.id}
+                className="bg-bg-table-primary border-border-clr border-[1px] "
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className="p-4">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+              <SubRowsTable users={users} id={+row.id} />
+            </>
           ))}
         </tbody>
       </table>

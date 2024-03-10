@@ -13,25 +13,66 @@ import {
   ExpandedState,
 } from '@tanstack/react-table';
 import { useMemo } from 'react';
+import { log } from 'console';
 
-import { DATA } from '@/app/lib/table';
-
-export default function SubRowsTable() {
-  const data = useMemo(() => DATA, []);
+export default function SubRowsTable({
+  users,
+  id,
+}: {
+  users: {
+    id: number;
+    name: string;
+    email: string;
+    userStatus: string;
+    createdAt: Date;
+    paymentStatus: string;
+    amount: number;
+    subRows: any[];
+  }[];
+  id: number;
+}) {
+  const data = useMemo(() => users, [users]);
 
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
         header: 'DATE',
         accessorKey: 'date',
+        cell: (props: any) => {
+          return (
+            <div>
+              {props.row.original.subRows.map((subRow: any) => (
+                <span key={subRow.id}>{subRow.date.toString()}</span>
+              ))}
+            </div>
+          );
+        },
       },
       {
         header: 'USER ACTIVITY',
         accessorKey: 'useActivity',
+        cell: (props: any) => {
+          return (
+            <ul>
+              {props.row.original.subRows.map((subRow: any) => (
+                <li key={subRow.id}>{subRow.userActivity}</li>
+              ))}
+            </ul>
+          );
+        },
       },
       {
         header: 'DETAIL',
         accessorKey: 'detail',
+        cell: (props: any) => {
+          return (
+            <ul>
+              {props.row.original.subRows.map((subRow: any) => (
+                <li key={subRow.id}>{subRow.detail}</li>
+              ))}
+            </ul>
+          );
+        },
       },
     ],
     []
