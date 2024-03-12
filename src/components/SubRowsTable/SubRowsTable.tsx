@@ -13,7 +13,6 @@ import {
   ExpandedState,
 } from '@tanstack/react-table';
 import { useMemo } from 'react';
-import { log } from 'console';
 
 export default function SubRowsTable({
   users,
@@ -38,44 +37,36 @@ export default function SubRowsTable({
       {
         header: 'DATE',
         accessorKey: 'date',
-        cell: (props: any) => {
-          return (
-            <div>
-              {props.row.original.subRows.map((subRow: any) => (
-                <span key={subRow.id}>{subRow.date.toString()}</span>
-              ))}
-            </div>
-          );
+        cell: ({ table }: any) => {
+          return table
+            .getCoreRowModel()
+            .rows[id].original.subRows.map((subRow: any) =>
+              subRow.date.toString()
+            );
         },
       },
       {
         header: 'USER ACTIVITY',
         accessorKey: 'useActivity',
-        cell: (props: any) => {
-          return (
-            <ul>
-              {props.row.original.subRows.map((subRow: any) => (
-                <li key={subRow.id}>{subRow.userActivity}</li>
-              ))}
-            </ul>
-          );
+        cell: ({ table }: any) => {
+          return table
+            .getCoreRowModel()
+            .rows[id].original.subRows.map(
+              (subRow: any) => subRow.userActivity
+            );
         },
       },
       {
         header: 'DETAIL',
         accessorKey: 'detail',
-        cell: (props: any) => {
-          return (
-            <ul>
-              {props.row.original.subRows.map((subRow: any) => (
-                <li key={subRow.id}>{subRow.detail}</li>
-              ))}
-            </ul>
-          );
+        cell: ({ table }: any) => {
+          return table
+            .getCoreRowModel()
+            .rows[id].original.subRows.map((subRow: any) => subRow.detail);
         },
       },
     ],
-    []
+    [id]
   );
 
   const table = useReactTable({
@@ -88,6 +79,8 @@ export default function SubRowsTable({
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
   });
+
+  console.log(table.getRowModel().rows[0]);
 
   return (
     <>

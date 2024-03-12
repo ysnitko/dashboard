@@ -267,7 +267,7 @@ export default function Table({
         },
       },
     ],
-    [openRowId, handleOpenView, open, expanded]
+    [openRowId, handleOpenView, open]
   );
 
   const table = useReactTable({
