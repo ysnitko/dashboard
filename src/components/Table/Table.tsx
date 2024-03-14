@@ -5,7 +5,7 @@ import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
 import FilterForPayment from '../FilterForPayment/FilterForPayment';
 import Footer from '../Footer/Footer';
 import UserMenu from '../UserMenu/UserMenu';
-import SubRowsTable from '../SubRowsTable/SubRowsTable';
+import dateformat, { masks } from 'dateformat';
 import {
   textStatusPayment,
   bgStatusPayment,
@@ -134,6 +134,10 @@ export default function Table({
         header: 'USER STATUS',
         accessorKey: 'userStatus',
         cell: (props: any) => {
+          const now = props.row.original.createdAt;
+          masks.hammerTime = 'dd/mmm/yyyy';
+          dateformat(now, 'hammerTime');
+
           return (
             <div className="text-xs flex flex-col gap-1 justify-center">
               {props.getValue() === 'Active' ? (
@@ -150,7 +154,7 @@ export default function Table({
                     </span>
                   </p>
                   <span className="text-xs font-medium text-text-header">
-                    Last login: 14/APR/2020
+                    Created at: {`${dateformat(now, 'hammerTime')}`}
                   </span>
                 </>
               ) : (
@@ -167,7 +171,7 @@ export default function Table({
                     </span>
                   </p>
                   <span className="text-xs font-medium text-text-header">
-                    Last login: 14/APR/2020
+                    Created at: {`${dateformat(now, 'hammerTime')}`}
                   </span>
                 </>
               )}
@@ -180,6 +184,10 @@ export default function Table({
         header: 'PAYMENT STATUS',
         accessorKey: 'paymentStatus',
         cell: (props: any) => {
+          const now = props.row.original.createdAt;
+          masks.hammerTime = 'dd/mmm/yyyy';
+          dateformat(now, 'hammerTime');
+
           const textColorStatus = textStatusPayment(props.getValue());
           const bgClrStatus = bgStatusPayment(props.getValue());
           const srcImgPayment = srcStatusPayment(props.getValue());
@@ -199,7 +207,13 @@ export default function Table({
                 </span>
               </p>
               <span className="text-xs font-medium text-text-header">
-                Paid on 15/APR/2020
+                {props.row.original.paymentStatus === 'Paid'
+                  ? `Paid on ${dateformat(now, 'hammerTime')}`
+                  : props.row.original.paymentStatus === 'Unsalaried'
+                  ? `Dues on ${dateformat(now, 'hammerTime')}`
+                  : props.row.original.paymentStatus === 'Overdue'
+                  ? `Dued on ${dateformat(now, 'hammerTime')}`
+                  : ''}
               </span>
             </div>
           );
@@ -342,7 +356,6 @@ export default function Table({
                   </td>
                 ))}
               </tr>
-              <SubRowsTable users={users} id={+row.id} />
             </>
           ))}
         </tbody>
