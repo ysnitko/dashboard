@@ -1,19 +1,29 @@
-import { ColumnFilter } from "@tanstack/react-table";
-import { Dispatch, SetStateAction, useState } from "react";
+import { ColumnFilter } from '@tanstack/react-table';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 interface Props {
   columnFilters: ColumnFilter[];
   setColumnFilters: Dispatch<SetStateAction<ColumnFilter[]>>;
-  table: any;
+  users: {
+    id: number;
+    name: string;
+    email: string;
+    userStatus: string;
+    createdAt: Date;
+    paymentStatus: string;
+    amount: number;
+    subRows: any[];
+  }[];
 }
+
 interface CustomColumnFilter extends ColumnFilter {
   filterFn?: (row: any, columnId: string, filterValue: any) => boolean;
 }
 
 export default function FilterForPayment(props: Props) {
-  const { columnFilters, setColumnFilters } = props;
+  const { setColumnFilters, users } = props;
   const [activeFilter, setActiveFilter] =
-    useState<SetStateAction<string>>("All");
+    useState<SetStateAction<string>>('All');
 
   const handleFilter = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -24,10 +34,10 @@ export default function FilterForPayment(props: Props) {
 
     let updatedFilters: CustomColumnFilter[] = [
       {
-        id: "paymentStatus",
-        value: value === "All" ? "" : value,
+        id: 'paymentStatus',
+        value: value === 'All' ? '' : value,
         filterFn: (row, columnId) => {
-          if (value === "All") {
+          if (value === 'All') {
             return true;
           } else {
             return row[columnId] === value;
@@ -38,15 +48,24 @@ export default function FilterForPayment(props: Props) {
     setColumnFilters(updatedFilters);
   };
 
+  const totalPayable = () => {
+    return users.reduce((acc, user) => {
+      if (user.paymentStatus === 'Paid') {
+        return acc + Number(user.amount);
+      }
+      return acc;
+    }, 0);
+  };
+
   return (
     <div className="flex justify-between  border-border-clr border-b-[1px]">
       <div className="flex gap-5 text-sm min-h-full">
-        {["All", "Paid", "Unsalaried", "Overdue"].map((item, index) => {
+        {['All', 'Paid', 'Unsalaried', 'Overdue'].map((item, index) => {
           return (
             <button
               key={index}
               className={`h-full p-1 text-text-btn-filter ${
-                activeFilter === item ? "border-b-2 border-text-header  " : ""
+                activeFilter === item ? 'border-b-2 border-text-header  ' : ''
               }
                 `}
               onClick={(event) => handleFilter(event, item)}
@@ -60,7 +79,7 @@ export default function FilterForPayment(props: Props) {
       <span className="text-sm py-1 text-text-btn-filter w-full text-right ">
         Total payable amount:
         <span className="text-lg font-bold text-text-total-prise">
-          &nbsp;$900.00
+          &nbsp;${totalPayable()}
         </span>
         <span className="text-lg text-text-btn-filter">&nbsp;USD</span>
       </span>

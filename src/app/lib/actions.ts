@@ -76,8 +76,6 @@ export async function deleteUser(id: number) {
 // }
 
 export async function findUser(id: number | null) {
-  console.log(id);
-
   if (id === null) {
     return null;
   }
@@ -86,7 +84,6 @@ export async function findUser(id: number | null) {
       id: id,
     },
   });
-
   return user;
 }
 
@@ -105,6 +102,21 @@ export async function updateUser(id: number, formData: FormData) {
 }
 
 export async function userActivate(id: number) {
+  const user: {
+    id: number;
+    name: string;
+    email: string;
+    userStatus: string;
+    createdAt: Date;
+    paymentStatus: string;
+    amount: number;
+  } | null = await prisma.users.findUnique({
+    where: { id },
+  });
+
+  if (user && user.userStatus === 'Active') {
+    return false;
+  }
   await prisma.users.update({
     where: { id, userStatus: 'Blocked' },
     data: {

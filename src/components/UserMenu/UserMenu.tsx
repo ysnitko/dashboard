@@ -14,8 +14,8 @@ export default function UserMenu({
   rowId: number;
 }) {
   const [listening, setListening] = useState<boolean>(false);
-  const [updateUser, setUpdateUser] = useState<boolean>(false);
   const [user, setUser] = useState<any>({});
+  const [updateUser, setUpdateUser] = useState<boolean>(false);
   const menuRef = useRef(null);
 
   useEffect(listenForOutsideClicks(listening, setListening, menuRef, setOpen));

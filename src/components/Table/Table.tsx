@@ -86,7 +86,7 @@ export default function Table({
                 name="check-user"
                 id="check-user"
               />
-              {props.row.getCanExpand() ? (
+              {/* {props.row.getCanExpand() ? (
                 <button
                   {...{
                     onClick: props.row.getToggleExpandedHandler(),
@@ -111,7 +111,7 @@ export default function Table({
                 </button>
               ) : (
                 ''
-              )}
+              )} */}
             </div>
           );
         },
@@ -322,7 +322,7 @@ export default function Table({
       <FilterForPayment
         columnFilters={columnFilters}
         setColumnFilters={setColumnFilters}
-        table={table}
+        users={users}
       />
       <FilterAndSearch {...props} />
       <table className="w-full">
@@ -345,18 +345,16 @@ export default function Table({
         </thead>
         <tbody className="text-left">
           {table.getRowModel().rows.map((row) => (
-            <>
-              <tr
-                key={row.id}
-                className="bg-bg-table-primary border-border-clr border-[1px] "
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="p-4">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            </>
+            <tr
+              key={row.id}
+              className="bg-bg-table-primary border-border-clr border-[1px] "
+            >
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id} className="p-4">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
           ))}
         </tbody>
       </table>
