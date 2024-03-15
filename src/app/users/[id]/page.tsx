@@ -1,5 +1,7 @@
-import { updateUser } from '@/app/lib/actions';
 import { prisma } from '@/app/lib/prisma';
+import Image from 'next/image';
+import Link from 'next/link';
+import SubRowsTable from '@/components/SubRowsTable/SubRowsTable';
 
 export default async function User({ params }: { params: { id: string } }) {
   const id = +params.id;
@@ -8,98 +10,71 @@ export default async function User({ params }: { params: { id: string } }) {
       id,
     },
   });
-  const updateUserWithId = updateUser.bind(null, parseInt(params.id));
+
+  const users: {
+    id: number;
+    name: string;
+    email: string;
+    userStatus: string;
+    createdAt: Date;
+    paymentStatus: string;
+    amount: number;
+    subRows: {
+      id: number;
+      date: Date;
+      userActivity: string;
+      details: string;
+      usersId: number | null;
+    }[];
+  }[] = await prisma.users.findMany({
+    include: {
+      subRows: true,
+    },
+  });
 
   return (
-    <form
-      action={updateUserWithId}
-      className="flex flex-col h-[85%] p-[30px] justify-between"
-    >
-      <div className="grid grid-cols-2 gap-x-8 gap-y-6">
-        <label
-          htmlFor="name"
-          className="flex flex-col gap-2 text-sm font-semibold"
-        >
-          Name
-          <input
-            type="text"
-            id="name"
-            name="name"
-            className="p-4 outline-none opacity-50 rounded-md "
-            defaultValue={data?.name}
-          />
-        </label>
-
-        <label
-          htmlFor="email"
-          className="flex flex-col gap-2 text-sm font-semibold"
-        >
-          Email
-          <input
-            type="email"
-            id="email"
-            name="email"
-            className="p-4 outline-none opacity-50 rounded-md"
-            defaultValue={data?.login}
-          />
-        </label>
-
-        <label
-          htmlFor="password"
-          className="flex flex-col gap-2 text-sm font-semibold"
-        >
-          Password
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="p-4 outline-none opacity-50 rounded-md"
-            defaultValue={data?.password}
-          />
-        </label>
-        <label
-          htmlFor="role"
-          className="flex flex-col gap-2 text-sm font-semibold"
-        >
-          Role
-          <select
-            name="role"
-            id="role-sel"
-            className="p-4 outline-none opacity-50 rounded-md"
-            defaultValue={data?.role}
-          >
-            <option value="choose-role" selected>
-              Choose role
-            </option>
-            <option value="admin">Admin</option>
-            <option value="project manager">Project manager</option>
-          </select>
-        </label>
-        <label
-          htmlFor="status"
-          className="flex flex-col gap-2 text-sm font-semibold"
-        >
-          Status
-          <select
-            name="status"
-            id="status"
-            className="p-4 outline-none opacity-50 rounded-md"
-            defaultValue={data?.status}
-          >
-            <option value="choose-status" selected>
-              Choose status
-            </option>
-            <option value="active">Active</option>
-            <option value="blocked">Blocked</option>
-          </select>
-        </label>
+    <div>
+      <header className="flex flex-col gap-4">
+        <h1 className="text-text-header font-bold text-xl border-b-2  pt-4">
+          User profile
+        </h1>
+        <Link href={{ pathname: '/' }} className="text-text-btn-filter">
+          Back
+        </Link>
+      </header>
+      <div className="flex mt-10 gap-5 mb-5">
+        <Image
+          className="w-[250px] border-[2px] border-border-clr"
+          src={'/assets/avatar.svg'}
+          alt="avatar"
+          height={300}
+          width={250}
+        />
+        <ul className="flex flex-col [&_li]:text-sm py-1 text-text-btn-filter font-bold gap-5">
+          <li>
+            Name: <span className="font-medium">{data?.name}</span>
+          </li>
+          <li>
+            Email: <span className="font-medium">{data?.email}</span>
+          </li>
+          <li>
+            Phone: <span className="font-medium">+37534234354</span>
+          </li>
+          <li>
+            Status:{' '}
+            <span
+              className={`font-medium ${
+                data?.userStatus === 'Active'
+                  ? 'text-clr-active-status'
+                  : 'text-clr-overdue-status'
+              }`}
+            >
+              {data?.userStatus}
+            </span>
+          </li>
+        </ul>
       </div>
-      <button
-        type="submit"
-        className="bg-bg-btn-block text-bg-page font-bold p-5 rounded-md bg-bg-active-btn"
-      >
-        Save
-      </button>
-    </form>
+      <SubRowsTable users={users} id={id} />
+    </div>
   );
 }
