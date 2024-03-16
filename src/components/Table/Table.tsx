@@ -22,8 +22,6 @@ import {
   ColumnFilter,
   ColumnSort,
   ColumnDef,
-  getExpandedRowModel,
-  ExpandedState,
 } from '@tanstack/react-table';
 
 export default function Table({
@@ -46,7 +44,6 @@ export default function Table({
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const [openRowId, setOpenRowId] = useState<number | null>(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const handleOpenView = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>, id: number) => {
@@ -266,18 +263,15 @@ export default function Table({
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getExpandedRowModel: getExpandedRowModel(),
+
     state: {
       globalFilter: filtering,
       columnFilters: columnFilters,
       sorting,
-      expanded,
     },
     onGlobalFilterChange: setFiltering,
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
-    onExpandedChange: setExpanded,
-    getSubRows: (row) => row.subRows,
   });
 
   const props = {

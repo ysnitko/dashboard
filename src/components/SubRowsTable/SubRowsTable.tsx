@@ -10,63 +10,73 @@ import { useMemo } from 'react';
 import dateformat, { masks } from 'dateformat';
 
 export default function SubRowsTable({
-  users,
+  subRowsData,
   id,
 }: {
-  users: {
+  subRowsData: {
     id: number;
-    name: string;
-    email: string;
-    userStatus: string;
-    createdAt: Date;
-    paymentStatus: string;
-    amount: number;
-    subRows: any[];
+    date: Date;
+    userActivity: string;
+    details: string;
+    usersId: number | null;
   }[];
   id: number;
 }) {
-  const data = useMemo(() => users, [users]);
+  const data = useMemo(() => subRowsData, [subRowsData]);
+  console.log(data);
 
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
         header: 'DATE',
         accessorKey: 'date',
-        cell: ({ table }: any) => {
-          console.log(table.getRowModel());
-          console.log(id);
+        cell: (props: any) => {
+          const now = props.getValue().toString();
+          if (props.getValue().toString() === null) {
+            return null;
+          }
+          masks.hammerTime = 'dd/mmm/yyyy';
+          dateformat(now, 'hammerTime');
+          if (props.row.original.usersId === id) {
+            return dateformat(now, 'hammerTime');
+          } else {
+            return null;
+          }
+        },
+      },
 
-          // return table
-          //   .getRowModel()
-          //   .rows[].original.subRows.map((subRow: Date) => {
-          //     const now = subRow.date;
-          //     masks.hammerTime = 'dd/mmm/yyyy';
-          //     return dateformat(now, 'hammerTime');
-          //   });
+      {
+        header: 'USER ACTIVITY',
+        accessorKey: 'userActivity',
+        cell: (props: any) => {
+          console.log(props.getValue());
+          if (props.getValue() === null) {
+            return null;
+          }
+          if (props.row.original.usersId === id) {
+            return props.getValue();
+          } else {
+            return null;
+          }
         },
       },
       {
-        header: 'USER ACTIVITY',
-        accessorKey: 'useActivity',
-        // cell: ({ table }: any) => {
-        //   return table
-        //     .getCoreRowModel()
-        //     .rows[id].original.subRows.map(
-        //       (subRow: any) => subRow.userActivity
-        //     );
-        // },
-      },
-      {
         header: 'DETAIL',
-        accessorKey: 'detail',
-        // cell: ({ table }: any) => {
-        //   return table
-        //     .getCoreRowModel()
-        //     .rows[id].original.subRows.map((subRow: any) => subRow.detail);
-        // },
+        accessorKey: 'details',
+        cell: (props: any) => {
+          console.log(props.getValue());
+          if (props.getValue() === null) {
+            return null;
+          }
+          if (props.row.original.usersId === id) {
+            return props.getValue();
+          } else {
+            return null;
+          }
+        },
       },
     ],
-    []
+    [id]
   );
 
   const table = useReactTable({
@@ -101,7 +111,7 @@ export default function SubRowsTable({
             className="bg-bg-color border-border-clr border-[1px] "
           >
             {row.getVisibleCells().map((cell) => (
-              <td key={cell.id} className="p-4">
+              <td key={cell.id} className="p-4 text-clr-primary text-sm">
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}

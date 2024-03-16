@@ -161,3 +161,8 @@ export async function getUsers() {
   const users = await prisma.users.findMany();
   return users;
 }
+
+export async function getSubRowsData() {
+  const subRows = await prisma.subRows.findMany();
+  return subRows;
+}

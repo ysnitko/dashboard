@@ -11,6 +11,8 @@ export default async function User({ params }: { params: { id: string } }) {
     },
   });
 
+  const subRowsData = await prisma.subRows.findMany();
+
   const users: {
     id: number;
     name: string;
@@ -19,18 +21,13 @@ export default async function User({ params }: { params: { id: string } }) {
     createdAt: Date;
     paymentStatus: string;
     amount: number;
-    subRows: {
-      id: number;
-      date: Date;
-      userActivity: string;
-      details: string;
-      usersId: number | null;
-    }[];
   }[] = await prisma.users.findMany({
     include: {
       subRows: true,
     },
   });
+
+  console.log(users);
 
   return (
     <div>
@@ -74,7 +71,7 @@ export default async function User({ params }: { params: { id: string } }) {
           </li>
         </ul>
       </div>
-      <SubRowsTable users={users} id={id} />
+      <SubRowsTable subRowsData={subRowsData} id={id} />
     </div>
   );
 }
