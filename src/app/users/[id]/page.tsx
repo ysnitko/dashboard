@@ -50,7 +50,7 @@ export default async function User({ params }: { params: { id: string } }) {
           height={300}
           width={250}
         />
-        <ul className="flex flex-col [&_li]:text-sm py-1 text-text-btn-filter font-bold gap-5">
+        <ul className="flex flex-col [&_li]:text-base  py-1 text-text-btn-filter font-bold gap-5">
           <li>
             Name: <span className="font-medium">{data?.name}</span>
           </li>

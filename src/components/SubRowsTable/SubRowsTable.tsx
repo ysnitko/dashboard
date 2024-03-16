@@ -7,6 +7,7 @@ import {
   ColumnDef,
 } from '@tanstack/react-table';
 import { useMemo } from 'react';
+import dateformat, { masks } from 'dateformat';
 
 export default function SubRowsTable({
   users,
@@ -31,13 +32,18 @@ export default function SubRowsTable({
       {
         header: 'DATE',
         accessorKey: 'date',
-        // cell: ({ table }: any) => {
-        //   return table
-        //     .getCoreRowModel()
-        //     .rows[id].original.subRows.map((subRow: any) =>
-        //       subRow.date.toString()
-        //     );
-        // },
+        cell: ({ table }: any) => {
+          console.log(table.getRowModel());
+          console.log(id);
+
+          // return table
+          //   .getRowModel()
+          //   .rows[].original.subRows.map((subRow: Date) => {
+          //     const now = subRow.date;
+          //     masks.hammerTime = 'dd/mmm/yyyy';
+          //     return dateformat(now, 'hammerTime');
+          //   });
+        },
       },
       {
         header: 'USER ACTIVITY',
@@ -75,7 +81,7 @@ export default function SubRowsTable({
         {table.getHeaderGroups().map((headerGroup) => (
           <tr
             key={headerGroup.id}
-            className="text-base font-semibold text-text-header tracking-widest border-border-clr border-[1px]"
+            className="text-base font-semibold text-text-header tracking-widest border-border-clr border-[1px] bg-bg-header-user-profile"
           >
             {headerGroup.headers.map((header) => (
               <th key={header.id} className="p-4 text-left">
@@ -92,7 +98,7 @@ export default function SubRowsTable({
         {table.getRowModel().rows.map((row) => (
           <tr
             key={row.id}
-            className="bg-bg-table-primary border-border-clr border-[1px] "
+            className="bg-bg-color border-border-clr border-[1px] "
           >
             {row.getVisibleCells().map((cell) => (
               <td key={cell.id} className="p-4">

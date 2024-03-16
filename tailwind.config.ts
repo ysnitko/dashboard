@@ -18,6 +18,7 @@ const config: Config = {
         'bg-unsalaried-status': '#FFECCC',
         'bg-overdue-status': '#FFE0E0',
         'bg-btn-dues': '#6D5BD0',
+        'bg-header-user-profile': '#F2F0F9',
       },
       colors: {
         'bg-color': '#F4F2FF',

@@ -86,32 +86,6 @@ export default function Table({
                 name="check-user"
                 id="check-user"
               />
-              {/* {props.row.getCanExpand() ? (
-                <button
-                  {...{
-                    onClick: props.row.getToggleExpandedHandler(),
-                    style: { cursor: 'pointer' },
-                  }}
-                >
-                  {props.row.getIsExpanded() ? (
-                    <Image
-                      src={'/assets/open-menu.svg'}
-                      width={15}
-                      height={15}
-                      alt="toggle"
-                    />
-                  ) : (
-                    <Image
-                      src={'/assets/closed-menu.svg'}
-                      width={15}
-                      height={15}
-                      alt="toggle"
-                    />
-                  )}
-                </button>
-              ) : (
-                ''
-              )} */}
             </div>
           );
         },
