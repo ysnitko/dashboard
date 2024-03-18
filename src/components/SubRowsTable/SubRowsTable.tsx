@@ -22,8 +22,10 @@ export default function SubRowsTable({
   }[];
   id: number;
 }) {
-  const data = useMemo(() => subRowsData, [subRowsData]);
-  console.log(data);
+  const data = useMemo(
+    () => subRowsData.filter((row) => row.usersId === id),
+    [subRowsData, id]
+  );
 
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
@@ -32,16 +34,8 @@ export default function SubRowsTable({
         accessorKey: 'date',
         cell: (props: any) => {
           const now = props.getValue().toString();
-          if (props.getValue().toString() === null) {
-            return null;
-          }
           masks.hammerTime = 'dd/mmm/yyyy';
-          dateformat(now, 'hammerTime');
-          if (props.row.original.usersId === id) {
-            return dateformat(now, 'hammerTime');
-          } else {
-            return null;
-          }
+          return dateformat(now, 'hammerTime');
         },
       },
 
@@ -49,30 +43,14 @@ export default function SubRowsTable({
         header: 'USER ACTIVITY',
         accessorKey: 'userActivity',
         cell: (props: any) => {
-          console.log(props.getValue());
-          if (props.getValue() === null) {
-            return null;
-          }
-          if (props.row.original.usersId === id) {
-            return props.getValue();
-          } else {
-            return null;
-          }
+          return props.getValue();
         },
       },
       {
         header: 'DETAIL',
         accessorKey: 'details',
         cell: (props: any) => {
-          console.log(props.getValue());
-          if (props.getValue() === null) {
-            return null;
-          }
-          if (props.row.original.usersId === id) {
-            return props.getValue();
-          } else {
-            return null;
-          }
+          return props.getValue();
         },
       },
     ],
@@ -94,7 +72,7 @@ export default function SubRowsTable({
             className="text-base font-semibold text-text-header tracking-widest border-border-clr border-[1px] bg-bg-header-user-profile"
           >
             {headerGroup.headers.map((header) => (
-              <th key={header.id} className="p-4 text-left">
+              <th key={header.id} className="p-2 text-left">
                 {flexRender(
                   header.column.columnDef.header,
                   header.getContext()
@@ -111,7 +89,7 @@ export default function SubRowsTable({
             className="bg-bg-color border-border-clr border-[1px] "
           >
             {row.getVisibleCells().map((cell) => (
-              <td key={cell.id} className="p-4 text-clr-primary text-sm">
+              <td key={cell.id} className="p-2 text-clr-primary text-sm">
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}
