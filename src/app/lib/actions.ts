@@ -24,6 +24,7 @@ export async function createUser(formData: FormData) {
     createdAt: createdAt,
   };
   await prisma.users.create({ data: userData });
+  userLog(getData().id);
   revalidatePath('/');
 }
 
@@ -126,6 +127,33 @@ export async function userActivate(id: number) {
 
   revalidatePath('/');
   return true;
+}
+
+export async function userLog(id: number) {
+  // const title = formData.get('title') as string;
+  // const projectManagerName = formData.get('project-manager') as string;
+  // const progress = Number(formData.get('progress'));
+  // const status = formData.get('status') as string;
+  const user = await prisma.users.findFirst({
+    where: {
+      id: id,
+    },
+  });
+
+  const logData = {
+    date: Date.now(),
+    projectManager: {
+      connect: {
+        id: user?.id,
+      },
+    },
+    userActivity: 'created user',
+    details: 'user created',
+  };
+
+  await prisma.subRows.create({
+    data: logData,
+  });
 }
 
 // export async function updateProject(id: number, formData: FormData) {
