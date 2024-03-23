@@ -23,9 +23,34 @@ export async function createUser(formData: FormData) {
     amount: +amount,
     createdAt: createdAt,
   };
-  await prisma.users.create({ data: userData });
-  userLog(getData().id);
+  const user = await prisma.users.create({ data: userData });
+
+  await userCreateLog(user.id);
   revalidatePath('/');
+}
+
+export async function userCreateLog(id: number) {
+  const user = await prisma.users.findFirst({
+    where: {
+      id: id,
+    },
+  });
+  console.log(user);
+
+  const logData = {
+    date: new Date(),
+    Users: {
+      connect: {
+        id: user?.id,
+      },
+    },
+    userActivity: 'created user',
+    details: 'user created',
+  };
+
+  await prisma.subRows.create({
+    data: logData,
+  });
 }
 
 // export async function createProject(formData: FormData) {
@@ -95,11 +120,37 @@ export async function updateUser(id: number, formData: FormData) {
   const paymentStatus = formData.get('payment-status') as string;
   const amount = Number(formData.get('amount'));
   const createdAt = new Date().toISOString() as string;
-  await prisma.users.update({
+  const updatedUser = await prisma.users.update({
     where: { id },
     data: { name, email, userStatus, paymentStatus, amount, createdAt },
   });
+
+  await userEditedLog(updatedUser.id);
   revalidatePath('/');
+}
+
+export async function userEditedLog(id: number) {
+  const user = await prisma.users.findFirst({
+    where: {
+      id: id,
+    },
+  });
+  console.log(user);
+
+  const logData = {
+    date: new Date(),
+    Users: {
+      connect: {
+        id: user?.id,
+      },
+    },
+    userActivity: 'edited user',
+    details: 'edited user',
+  };
+
+  await prisma.subRows.create({
+    data: logData,
+  });
 }
 
 export async function userActivate(id: number) {
@@ -127,33 +178,6 @@ export async function userActivate(id: number) {
 
   revalidatePath('/');
   return true;
-}
-
-export async function userLog(id: number) {
-  // const title = formData.get('title') as string;
-  // const projectManagerName = formData.get('project-manager') as string;
-  // const progress = Number(formData.get('progress'));
-  // const status = formData.get('status') as string;
-  const user = await prisma.users.findFirst({
-    where: {
-      id: id,
-    },
-  });
-
-  const logData = {
-    date: Date.now(),
-    projectManager: {
-      connect: {
-        id: user?.id,
-      },
-    },
-    userActivity: 'created user',
-    details: 'user created',
-  };
-
-  await prisma.subRows.create({
-    data: logData,
-  });
 }
 
 // export async function updateProject(id: number, formData: FormData) {
