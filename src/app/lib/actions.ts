@@ -1,6 +1,7 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { prisma } from './prisma';
+import { use } from 'react';
 
 export async function getData() {
   const data = await prisma.users.findMany();
@@ -25,17 +26,16 @@ export async function createUser(formData: FormData) {
   };
   const user = await prisma.users.create({ data: userData });
 
-  await userCreateLog(user.id);
+  await userCreateLog(user.id, 'create');
   revalidatePath('/');
 }
 
-export async function userCreateLog(id: number) {
+export async function userCreateLog(id: number, action: string) {
   const user = await prisma.users.findFirst({
     where: {
       id: id,
     },
   });
-  console.log(user);
 
   const logData = {
     date: new Date(),
@@ -44,44 +44,33 @@ export async function userCreateLog(id: number) {
         id: user?.id,
       },
     },
-    userActivity: 'user created',
-    details: 'user created',
+    userActivity:
+      action === 'create'
+        ? 'user created'
+        : action === 'update'
+        ? 'user updated'
+        : action === 'activate'
+        ? 'user activated'
+        : action === 'block'
+        ? 'user blocked'
+        : '',
+
+    details:
+      action === 'create'
+        ? `user ${user?.name} was created`
+        : action === 'update'
+        ? `user ${user?.name} was updated`
+        : action === 'activate'
+        ? `user ${user?.name} was activated`
+        : action === 'block'
+        ? `user ${user?.name} was blocked`
+        : '',
   };
 
   await prisma.subRows.create({
     data: logData,
   });
 }
-
-// export async function createProject(formData: FormData) {
-//   const title = formData.get('title') as string;
-//   const projectManagerName = formData.get('project-manager') as string;
-//   // const dueDate = formData.get("due-date") as string;
-//   const progress = formData.get('progress') as string;
-//   const status = formData.get('status') as string;
-//   const createdAt = new Date().toISOString() as string;
-//   const manager = await prisma.users.findFirst({
-//     where: {
-//       name: projectManagerName,
-//     },
-//   });
-
-//   const projectData = {
-//     title: title,
-//     projectManager: {
-//       connect: {
-//         id: manager?.id,
-//       },
-//     },
-//     progress: +progress,
-//     status: status,
-//     createdAt: createdAt,
-//   };
-//   // dueDate: dueDate,
-
-//   await prisma.projects.create({ data: projectData });
-//   redirect('/projects');
-// }
 
 export async function deleteUser(id: number) {
   const userId = await findUser(id);
@@ -105,15 +94,6 @@ export async function clearLogs(usersId: number) {
     },
   });
 }
-
-// export async function deleteProject(id: number) {
-//   await prisma.projects.delete({
-//     where: {
-//       id,
-//     },
-//   });
-//   redirect('/projects');
-// }
 
 export async function findUser(id: number | null) {
   if (id === null) {
@@ -139,32 +119,14 @@ export async function updateUser(id: number, formData: FormData) {
     data: { name, email, userStatus, paymentStatus, amount, createdAt },
   });
 
-  await userEditedLog(updatedUser.id);
+  await userCreateLog(updatedUser.id, 'update');
+  if (updatedUser.userStatus === 'Blocked') {
+    await userCreateLog(updatedUser.id, 'block');
+  } else if (updatedUser.userStatus === 'Active') {
+    await userCreateLog(updatedUser.id, 'activate');
+  }
+
   revalidatePath('/');
-}
-
-export async function userEditedLog(id: number) {
-  const user = await prisma.users.findFirst({
-    where: {
-      id: id,
-    },
-  });
-  console.log(user);
-
-  const logData = {
-    date: new Date(),
-    Users: {
-      connect: {
-        id: user?.id,
-      },
-    },
-    userActivity: 'edited user',
-    details: 'edited user',
-  };
-
-  await prisma.subRows.create({
-    data: logData,
-  });
 }
 
 export async function userActivate(id: number) {
@@ -183,45 +145,16 @@ export async function userActivate(id: number) {
   if (user && user.userStatus === 'Active') {
     return false;
   }
-  await prisma.users.update({
+  const activateUser = await prisma.users.update({
     where: { id, userStatus: 'Blocked' },
     data: {
       userStatus: 'Active',
     },
   });
-
+  await userCreateLog(activateUser.id, 'activate');
   revalidatePath('/');
   return true;
 }
-
-// export async function updateProject(id: number, formData: FormData) {
-//   const title = formData.get('title') as string;
-//   const projectManagerName = formData.get('project-manager') as string;
-//   const progress = Number(formData.get('progress'));
-//   const status = formData.get('status') as string;
-//   const manager = await prisma.users.findFirst({
-//     where: {
-//       name: projectManagerName,
-//     },
-//   });
-
-//   const projectData = {
-//     title: title,
-//     projectManager: {
-//       connect: {
-//         id: manager?.id,
-//       },
-//     },
-//     progress: +progress,
-//     status: status,
-//   };
-
-//   await prisma.projects.update({
-//     where: { id },
-//     data: projectData,
-//   });
-//   redirect('/projects');
-// }
 
 export async function getUsers() {
   const users = await prisma.users.findMany();

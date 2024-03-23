@@ -32,6 +32,7 @@ export default function SubRowsTable({
       {
         header: 'DATE',
         accessorKey: 'date',
+        size: 70,
         cell: (props: any) => {
           const now = props.getValue().toString();
           masks.hammerTime = 'HH:MM:ss ddd mmm dd yyyy';
@@ -42,6 +43,7 @@ export default function SubRowsTable({
       {
         header: 'USER ACTIVITY',
         accessorKey: 'userActivity',
+        size: 100,
         cell: (props: any) => {
           return props.getValue();
         },
@@ -49,12 +51,13 @@ export default function SubRowsTable({
       {
         header: 'DETAIL',
         accessorKey: 'details',
+        size: 200,
         cell: (props: any) => {
           return props.getValue();
         },
       },
     ],
-    [id]
+    []
   );
 
   const table = useReactTable({
@@ -72,7 +75,11 @@ export default function SubRowsTable({
             className="text-base font-semibold text-text-header tracking-widest border-border-clr border-[1px] bg-bg-header-user-profile"
           >
             {headerGroup.headers.map((header) => (
-              <th key={header.id} className="p-2 text-left">
+              <th
+                key={header.id}
+                style={{ width: header.getSize() }}
+                className="p-2 text-left"
+              >
                 {flexRender(
                   header.column.columnDef.header,
                   header.getContext()
