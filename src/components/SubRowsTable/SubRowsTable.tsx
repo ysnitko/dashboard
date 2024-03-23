@@ -34,7 +34,7 @@ export default function SubRowsTable({
         accessorKey: 'date',
         cell: (props: any) => {
           const now = props.getValue().toString();
-          masks.hammerTime = 'dd/mmm/yyyy';
+          masks.hammerTime = 'HH:MM:ss ddd mmm dd yyyy';
           return dateformat(now, 'hammerTime');
         },
       },

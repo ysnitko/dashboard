@@ -44,7 +44,7 @@ export async function userCreateLog(id: number) {
         id: user?.id,
       },
     },
-    userActivity: 'created user',
+    userActivity: 'user created',
     details: 'user created',
   };
 
@@ -84,12 +84,26 @@ export async function userCreateLog(id: number) {
 // }
 
 export async function deleteUser(id: number) {
-  await prisma.users.delete({
+  const userId = await findUser(id);
+  if (userId) {
+    await clearLogs(userId.id);
+  }
+
+  const deleteUser = await prisma.users.delete({
     where: {
       id,
     },
   });
+
   revalidatePath('/');
+}
+
+export async function clearLogs(usersId: number) {
+  await prisma.subRows.deleteMany({
+    where: {
+      usersId: { in: [usersId] },
+    },
+  });
 }
 
 // export async function deleteProject(id: number) {
