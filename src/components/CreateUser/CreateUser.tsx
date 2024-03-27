@@ -43,6 +43,18 @@ export default function CreateUser({
             className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
           />
         </label>
+        <label
+          htmlFor="password"
+          className="flex flex-col gap-2 text-sm font-semibold text-text-header"
+        >
+          Password
+          <input
+            type="password"
+            id="password"
+            name="password"
+            className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
+          />
+        </label>
 
         <label
           htmlFor="user-status"

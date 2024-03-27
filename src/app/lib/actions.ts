@@ -11,6 +11,7 @@ export async function getData() {
 export async function createUser(formData: FormData) {
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
+  const userPassword = formData.get('password') as string;
   const userStatus = formData.get('user-status') as string;
   const paymentStatus = formData.get('payment-status') as string;
   const amount = formData.get('amount') as string;
@@ -19,6 +20,7 @@ export async function createUser(formData: FormData) {
   const userData = {
     name: name,
     email: email,
+    password: userPassword,
     userStatus: userStatus,
     paymentStatus: paymentStatus,
     amount: +amount,
