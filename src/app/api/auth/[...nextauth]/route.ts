@@ -16,34 +16,41 @@ interface User {
 }
 
 export const authOptions: AuthOptions = {
+  session: {
+    strategy: 'jwt',
+  },
+
   providers: [
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        username: {
+        email: {
           label: 'Email',
-          type: 'text',
+          type: 'email',
           placeholder: 'Your username',
         },
         password: {
           label: 'Password',
           type: 'password',
+          placeholder: 'Your password',
         },
       },
       async authorize(credentials) {
+        console.log(credentials);
+
         const user = await prisma.users.findUnique({
           where: {
-            email: credentials?.username,
+            email: credentials?.email,
           },
         });
+
+        console.log(user);
+
         if (!user) throw new Error('Email or password is incorrect');
 
         if (!credentials?.password)
           throw new Error('Please provide your password');
-        const isPasswordCorrect = await bcrypt.compare(
-          credentials.password,
-          user.password as string
-        );
+        const isPasswordCorrect = credentials?.password === user.password;
         if (!isPasswordCorrect)
           throw new Error('Email or password is incorrect');
         const { password, ...userWithoutPass } = user;

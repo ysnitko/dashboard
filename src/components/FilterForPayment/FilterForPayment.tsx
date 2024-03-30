@@ -6,8 +6,8 @@ interface Props {
   setColumnFilters: Dispatch<SetStateAction<ColumnFilter[]>>;
   users: {
     id: number;
-    name: string;
-    email: string;
+    name: string | null;
+    email: string | null;
     userStatus: string;
     createdAt: Date;
     paymentStatus: string;

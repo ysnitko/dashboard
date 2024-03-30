@@ -29,8 +29,8 @@ export default function Table({
 }: {
   users: {
     id: number;
-    name: string;
-    email: string;
+    name: string | null;
+    email: string | null;
     userStatus: string;
     createdAt: Date;
     paymentStatus: string;

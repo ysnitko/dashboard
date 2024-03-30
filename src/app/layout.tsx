@@ -1,5 +1,7 @@
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import SessionWrapper from '@/components/SessionWrapper/SessionWrapper';
+
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -17,12 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="bg-bg-color">
-        <main className={`${inter.className} my-0 mx-auto  max-w-5xl`}>
-          {children}
-        </main>
-      </body>
-    </html>
+    <SessionWrapper>
+      <html lang="en">
+        <body className="bg-bg-color">
+          <main className={`${inter.className} my-0 mx-auto  max-w-5xl`}>
+            {children}
+          </main>
+        </body>
+      </html>
+    </SessionWrapper>
   );
 }

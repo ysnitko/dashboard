@@ -15,10 +15,11 @@ export default async function User({ params }: { params: { id: string } }) {
 
   const users: {
     id: number;
-    name: string;
-    email: string;
+    name: string | null;
+    email: string | null;
     userStatus: string;
     createdAt: Date;
+    password: string | null;
     paymentStatus: string;
     amount: number;
   }[] = await prisma.users.findMany({

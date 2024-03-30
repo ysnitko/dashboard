@@ -5,11 +5,12 @@ import { prisma } from './lib/prisma';
 export default async function Home() {
   const users: {
     id: number;
-    name: string;
-    email: string;
+    name: string | null;
+    email: string | null;
     userStatus: string;
     createdAt: Date;
     paymentStatus: string;
+    password: string | null;
     amount: number;
     subRows: {
       id: number;

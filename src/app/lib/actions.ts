@@ -1,7 +1,6 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { prisma } from './prisma';
-import { use } from 'react';
 
 export async function getData() {
   const data = await prisma.users.findMany();
@@ -134,8 +133,8 @@ export async function updateUser(id: number, formData: FormData) {
 export async function userActivate(id: number) {
   const user: {
     id: number;
-    name: string;
-    email: string;
+    name: string | null;
+    email: string | null;
     userStatus: string;
     createdAt: Date;
     paymentStatus: string;
