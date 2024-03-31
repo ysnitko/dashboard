@@ -1,6 +1,7 @@
 import Header from '@/components/Header/Header';
 import Table from '@/components/Table/Table';
 import { prisma } from './lib/prisma';
+import { getServerSession } from 'next-auth';
 
 export default async function Home() {
   const users: {
@@ -24,6 +25,8 @@ export default async function Home() {
       subRows: true,
     },
   });
+  const session = await getServerSession();
+  console.log(session);
 
   return (
     <>
