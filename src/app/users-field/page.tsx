@@ -27,7 +27,7 @@ export default async function UsersField() {
 
   return (
     <>
-      <Header />
+      <Header users={users} />
       <Table users={users} />
     </>
   );

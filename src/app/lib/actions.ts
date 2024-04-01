@@ -54,6 +54,10 @@ export async function userCreateLog(id: number, action: string) {
         ? 'user activated'
         : action === 'block'
         ? 'user blocked'
+        : action === 'login'
+        ? 'user logged in'
+        : action === 'sign out'
+        ? 'user  is sign out'
         : '',
 
     details:
@@ -65,6 +69,10 @@ export async function userCreateLog(id: number, action: string) {
         ? `user ${user?.name} was activated`
         : action === 'block'
         ? `user ${user?.name} was blocked`
+        : action === 'login'
+        ? `user ${user?.name} logged in`
+        : action === 'sign out'
+        ? `user ${user?.name} is sign out`
         : '',
   };
 

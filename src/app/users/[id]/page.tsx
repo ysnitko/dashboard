@@ -36,7 +36,10 @@ export default async function User({ params }: { params: { id: string } }) {
         <h1 className="text-text-header font-bold text-xl border-b-2  pt-4">
           User profile
         </h1>
-        <Link href={{ pathname: '/' }} className="text-text-btn-filter flex">
+        <Link
+          href={{ pathname: '/users-field' }}
+          className="text-text-btn-filter flex"
+        >
           <Image src={'/assets/back.svg'} alt="back" width={20} height={20} />
           Back
         </Link>

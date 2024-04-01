@@ -1,12 +1,13 @@
 import { prisma } from '@/app/lib/prisma';
 import { AuthOptions } from 'next-auth';
+import { userCreateLog } from '@/app/lib/actions';
 import * as bcrypt from 'bcrypt';
 
 import CredentialsProvider from 'next-auth/providers/credentials';
 import NextAuth from 'next-auth/next';
 
 interface User {
-  id: string;
+  id: number;
   name: string | null;
   email: string | null;
   userStatus: string;
@@ -45,10 +46,11 @@ export const authOptions: AuthOptions = {
           },
         });
 
-        console.log(user);
+        console.log(user?.name);
 
         if (user) {
-          return user;
+          await userCreateLog(user.id, 'login');
+          return { ...user, id: user.id.toString() };
         } else {
           return null;
         }
