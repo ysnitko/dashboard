@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 export default function SignInPage() {
   const router = useRouter();
-
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -69,7 +68,7 @@ export default function SignInPage() {
         type="submit"
         className="bg-bg-color text-bg-page font-bold p-2 rounded-md w-1/2 text-text-header"
       >
-        Login
+        Sign in
       </button>
     </form>
   );

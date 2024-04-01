@@ -6,7 +6,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import NextAuth from 'next-auth/next';
 
 interface User {
-  id: number;
+  id: string;
   name: string | null;
   email: string | null;
   userStatus: string;
