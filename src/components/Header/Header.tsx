@@ -1,10 +1,15 @@
-"use client";
-import Image from "next/image";
-import { SetStateAction, useState } from "react";
-import CreateUser from "../CreateUser/CreateUser";
+'use client';
+import Image from 'next/image';
+import { SetStateAction, useState } from 'react';
+import CreateUser from '../CreateUser/CreateUser';
+
+import { useSession, signOut, signIn } from 'next-auth/react';
 
 export default function Header() {
   const [createUser, setCreateUser] = useState<SetStateAction<boolean>>(false);
+
+  const { data: session } = useSession();
+
   return (
     <header className="flex gap-3 items-center">
       <h1 className=" text-sm font-bold tracking-widest py-3 text-text-header">
@@ -16,7 +21,7 @@ export default function Header() {
           onClick={() => setCreateUser(true)}
         >
           <Image
-            src={"/assets/plus.svg"}
+            src={'/assets/plus.svg'}
             alt="create"
             width={15}
             height={15}
@@ -25,6 +30,12 @@ export default function Header() {
         </button>
         <span className="text-text-btn-filter text-sm">Create user</span>
       </div>
+      <span className="">{session?.user?.name}</span>
+      {session?.user ? (
+        <button onClick={() => signOut({ callbackUrl: '/' })}>SIGN OUT</button>
+      ) : (
+        <button onClick={() => signIn()}>SIGN IN</button>
+      )}
 
       {createUser && <CreateUser setCreateUser={setCreateUser} />}
     </header>

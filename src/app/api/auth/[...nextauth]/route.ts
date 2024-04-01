@@ -6,11 +6,12 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import NextAuth from 'next-auth/next';
 
 interface User {
-  id: string;
+  id: number;
   name: string | null;
   email: string | null;
   userStatus: string;
   createdAt: Date;
+  password: string | null;
   paymentStatus: string;
   amount: number;
 }
@@ -38,7 +39,7 @@ export const authOptions: AuthOptions = {
       async authorize(credentials) {
         console.log(credentials);
 
-        const user = await prisma.users.findUnique({
+        const user: User | null = await prisma.users.findUnique({
           where: {
             email: credentials?.email,
           },
@@ -46,24 +47,19 @@ export const authOptions: AuthOptions = {
 
         console.log(user);
 
-        if (!user) throw new Error('Email or password is incorrect');
-
-        if (!credentials?.password)
-          throw new Error('Please provide your password');
-        const isPasswordCorrect = credentials?.password === user.password;
-        if (!isPasswordCorrect)
-          throw new Error('Email or password is incorrect');
-        const { password, ...userWithoutPass } = user;
-        return {
-          ...userWithoutPass,
-          id: userWithoutPass.id.toString(),
-        } as User | null;
+        if (user) {
+          return user;
+        } else {
+          return null;
+        }
       },
     }),
   ],
   pages: {
     signIn: '/signin',
+    signOut: '/',
   },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);

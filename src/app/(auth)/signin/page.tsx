@@ -1,23 +1,36 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import { SetStateAction, useState } from 'react';
-import { SessionState } from 'http2';
+import { useState } from 'react';
 
 export default function SignInPage() {
   const router = useRouter();
 
-  const [valueInputEmail, setValueInputEmail] = useState<string>('');
-  const [valueInputPass, setValueInputPass] = useState<string>('');
-  console.log(valueInputEmail);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const onSubmitForm = (valueInputEmail: any, valueInputPass: any) => {
-    signIn({ ...valueInputEmail, ...valueInputPass, callbackUrl: '/' });
+  const onSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    })
+      .then((res) => {
+        console.log(res);
+        if (res?.ok) {
+          router.replace('/users-field');
+        } else {
+          router.replace('/register');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
   return (
     <form
-      onSubmit={() => onSubmitForm(valueInputEmail, valueInputPass)}
+      onSubmit={onSubmitForm}
       className="flex flex-col p-[30px] min-w-[350px] justify-between absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  bg-bg-table-primary border-[1px] rounded-md
     shadow-xl gap-3"
     >
@@ -31,8 +44,8 @@ export default function SignInPage() {
           className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
           name="email"
           placeholder="Email"
-          value={valueInputEmail}
-          onChange={(e) => setValueInputEmail(e.target.value as string)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value as string)}
           required
         />
       </label>
@@ -47,8 +60,8 @@ export default function SignInPage() {
           className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
           name="password"
           placeholder="Password"
-          value={valueInputPass}
-          onChange={(e) => setValueInputPass(e.target.value as string)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value as string)}
           required
         />
       </label>
