@@ -23,6 +23,7 @@ import {
   ColumnSort,
   ColumnDef,
 } from '@tanstack/react-table';
+import { boolean } from 'zod';
 
 export default function Table({
   users,
@@ -44,6 +45,7 @@ export default function Table({
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const [openRowId, setOpenRowId] = useState<number | null>(null);
   const [open, setOpen] = useState<boolean>(false);
+  const [selectUser, setSelectUser] = useState<boolean>(false);
 
   const handleOpenView = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>, id: number) => {
@@ -60,6 +62,16 @@ export default function Table({
     []
   );
 
+  const handleSelect = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: number
+  ) => {
+    const target = event.target.parentElement;
+    console.log(target);
+
+    setSelectUser((prev) => !prev);
+  };
+  console.log(selectUser);
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
@@ -68,20 +80,22 @@ export default function Table({
             <input
               className="w-5 h-5"
               type="checkbox"
-              name="check-user"
-              id="check-user"
+              name="check-user-header"
             />
           );
         },
         accessorKey: 'id',
         cell: (props) => {
+          console.log(props.row.id);
+
           return (
             <div className="flex gap-3 justify-between">
               <input
                 className="w-5 h-5"
                 type="checkbox"
                 name="check-user"
-                id="check-user"
+                onChange={(e) => handleSelect(e, 1)}
+                checked={selectUser}
               />
             </div>
           );
@@ -252,7 +266,7 @@ export default function Table({
         },
       },
     ],
-    [openRowId, handleOpenView, open]
+    [openRowId, handleOpenView, open, selectUser]
   );
 
   const table = useReactTable({
@@ -315,6 +329,7 @@ export default function Table({
           {table.getRowModel().rows.map((row) => (
             <tr
               key={row.id}
+              id={row.id}
               className="bg-bg-table-primary border-border-clr border-[1px] "
             >
               {row.getVisibleCells().map((cell) => (
