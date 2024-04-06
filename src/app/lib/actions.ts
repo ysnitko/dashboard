@@ -1,6 +1,7 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { prisma } from './prisma';
+import { number } from 'zod';
 
 export async function getData() {
   const data = await prisma.users.findMany();
@@ -81,6 +82,37 @@ export async function userCreateLog(id: number, action: string) {
   });
 }
 
+export async function userCreateGroupLogUpdate(
+  usersId: number[],
+  action: string
+) {
+  const user = await prisma.users.findMany({
+    where: {
+      id: { in: usersId },
+    },
+  });
+  console.log(user);
+
+  const logData = {
+    date: new Date(),
+    Users: {
+      connect: {
+        connect: user?.map((userId) => ({ id: +userId })),
+      },
+    },
+    userActivity: action === 'update' ? 'user update' : '',
+
+    details:
+      action === 'update'
+        ? `users ${user.map((user) => user.name).join(', ')} were updated`
+        : '',
+  };
+
+  await prisma.subRows.create({
+    data: logData,
+  });
+}
+
 export async function deleteUser(id: number) {
   const userId = await findUser(id);
   if (userId) {
@@ -136,6 +168,17 @@ export async function updateUser(id: number, formData: FormData) {
   }
 
   revalidatePath('/');
+}
+
+export async function updateSetUserPaid(usersId: number[]) {
+  await prisma.users.updateMany({
+    where: { id: { in: usersId } },
+    data: { paymentStatus: 'Paid' },
+  });
+
+  await userCreateGroupLogUpdate(usersId, 'update');
+
+  revalidatePath('/users-field');
 }
 
 export async function userActivate(id: number) {

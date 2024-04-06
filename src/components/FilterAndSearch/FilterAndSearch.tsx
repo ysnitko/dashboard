@@ -1,8 +1,10 @@
+'use client';
 import Image from 'next/image';
 import Filter from '../Filter/Filter';
 import { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 import { listenForOutsideClicks } from '../listenForOutsideClicks/listenForOutsideClicks';
 import { ColumnSort, ColumnFilter } from '@tanstack/react-table';
+import { updateSetUserPaid } from '@/app/lib/actions';
 
 interface Props {
   filtering: string;
@@ -11,16 +13,25 @@ interface Props {
   setColumnFilters: Dispatch<SetStateAction<ColumnFilter[]>>;
   sorting: ColumnSort[];
   setSorting: Dispatch<SetStateAction<ColumnSort[]>>;
+  table: any;
 }
 
 export default function FilterAndSearch(props: Props) {
-  const { filtering, setFiltering } = props;
+  const { filtering, setFiltering, table } = props;
   const [toggledFilter, setToggleFilter] = useState(false);
   const [listening, setListening] = useState(false);
   const menuRef = useRef(null);
 
   const toggle = () => {
     setToggleFilter(!toggledFilter);
+  };
+
+  const handlePayDues = async () => {
+    const changedId: number[] = table
+      .getSelectedRowModel()
+      .rows.map((targetId: any) => targetId.original.id);
+
+    await updateSetUserPaid(changedId);
   };
 
   useEffect(
@@ -58,7 +69,10 @@ export default function FilterAndSearch(props: Props) {
           />
         </label>
       </div>
-      <button className="bg-bg-btn-dues text-bg-color px-4 py-1 rounded-md font-semibold  text-base">
+      <button
+        className="bg-bg-btn-dues text-bg-color px-4 py-1 rounded-md font-semibold  text-base"
+        onClick={handlePayDues}
+      >
         PAY DUES
       </button>
     </div>

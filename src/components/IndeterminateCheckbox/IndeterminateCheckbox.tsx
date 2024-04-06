@@ -5,7 +5,6 @@ export default function IndeterminateCheckbox({
   ...rest
 }: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) {
   const ref = React.useRef<HTMLInputElement>(null!);
-  console.log(rest.checked);
 
   React.useEffect(() => {
     if (typeof indeterminate === 'boolean') {
