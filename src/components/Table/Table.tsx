@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React, { useMemo, useState, useCallback } from 'react';
 import FilterAndSearch from '../FilterAndSearch/FilterAndSearch';
 import FilterForPayment from '../FilterForPayment/FilterForPayment';
+import IndeterminateCheckbox from '../IndeterminateCheckbox/IndeterminateCheckbox';
 import Footer from '../Footer/Footer';
 import UserMenu from '../UserMenu/UserMenu';
 import dateformat, { masks } from 'dateformat';
@@ -45,7 +46,6 @@ export default function Table({
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const [openRowId, setOpenRowId] = useState<number | null>(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [selectUser, setSelectUser] = useState<boolean>(false);
 
   const handleOpenView = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>, id: number) => {
@@ -62,40 +62,30 @@ export default function Table({
     []
   );
 
-  const handleSelect = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    id: number
-  ) => {
-    const target = event.target.parentElement;
-    console.log(target);
-
-    setSelectUser((prev) => !prev);
-  };
-  console.log(selectUser);
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
-        header: () => {
+        header: ({ table }) => {
           return (
-            <input
-              className="w-5 h-5"
-              type="checkbox"
-              name="check-user-header"
+            <IndeterminateCheckbox
+              {...{
+                checked: table.getIsAllRowsSelected(),
+                indeterminate: table.getIsSomeRowsSelected(),
+                onChange: table.getToggleAllRowsSelectedHandler(),
+              }}
             />
           );
         },
         accessorKey: 'id',
-        cell: (props) => {
-          console.log(props.row.id);
-
+        cell: ({ row }) => {
           return (
             <div className="flex gap-3 justify-between">
-              <input
-                className="w-5 h-5"
-                type="checkbox"
-                name="check-user"
-                onChange={(e) => handleSelect(e, 1)}
-                checked={selectUser}
+              <IndeterminateCheckbox
+                {...{
+                  checked: row.getIsSelected(),
+                  indeterminate: row.getIsSomeSelected(),
+                  onChange: row.getToggleSelectedHandler(),
+                }}
               />
             </div>
           );
@@ -266,7 +256,7 @@ export default function Table({
         },
       },
     ],
-    [openRowId, handleOpenView, open, selectUser]
+    [openRowId, handleOpenView, open]
   );
 
   const table = useReactTable({
@@ -331,6 +321,7 @@ export default function Table({
               key={row.id}
               id={row.id}
               className="bg-bg-table-primary border-border-clr border-[1px] "
+              style={{ background: row.getIsSelected() ? '#F4F2FF' : '' }}
             >
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id} className="p-4">
