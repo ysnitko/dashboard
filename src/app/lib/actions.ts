@@ -1,7 +1,9 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { prisma } from './prisma';
+import { Prisma } from '@prisma/client';
 import { number } from 'zod';
+import { use } from 'react';
 
 export async function getData() {
   const data = await prisma.users.findMany();
@@ -86,26 +88,13 @@ export async function userCreateGroupLogUpdate(
   usersId: number[],
   action: string
 ) {
-  const user = await prisma.users.findMany({
-    where: {
-      id: { in: usersId },
-    },
-  });
-  console.log(user);
-
   const logData = {
     date: new Date(),
-    Users: {
-      connect: {
-        connect: user?.map((userId) => ({ id: +userId })),
-      },
-    },
     userActivity: action === 'update' ? 'user update' : '',
-
-    details:
-      action === 'update'
-        ? `users ${user.map((user) => user.name).join(', ')} were updated`
-        : '',
+    details: '',
+    Users: {
+      connect: { id: usersId.find((user) => ({ id: user })) },
+    },
   };
 
   await prisma.subRows.create({
