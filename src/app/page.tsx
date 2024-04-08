@@ -1,7 +1,8 @@
 'use client';
-import { signIn } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import Image from 'next/image';
 
 export default function Home() {
   const router = useRouter();
@@ -11,25 +12,37 @@ export default function Home() {
     router.push('/signin');
   } else {
     return (
-      <div
-        className="flex flex-col p-[30px] min-w-[350px] justify-between absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  bg-bg-table-primary border-[1px] rounded-md
-    shadow-xl gap-3 items-center"
-      >
-        <h1 className="text-text-header text-xl">Hi, you are not sign in!</h1>
-        <div className="flex justify-between gap-2 items-center">
-          <button
-            className="bg-bg-color text-bg-page font-bold px-3 py-2 rounded-md w-1/2 text-text-header"
-            onClick={() => signIn()}
-          >
-            Sign in
-          </button>
-          <span className="text-text-header">or</span>
-          <button
-            className="bg-bg-color text-bg-page font-bold px-3 py-2 rounded-md w-1/2 text-text-header"
-            onClick={() => signIn()}
-          >
-            Register
-          </button>
+      <div className=" flex items-center flex-col ">
+        <h1 className="text-text-header text-5xl pt-10">
+          Data table application
+        </h1>
+        <div className="flex w-full">
+          <Image
+            src="/assets/desktop-bg.png"
+            width={2000}
+            height={0}
+            alt="image"
+            style={{ width: '80%', height: 'auto' }}
+          />
+
+          <div className="flex flex-col gap-2 items-start justify-center">
+            <button
+              className="bg-bg-color text-bg-page font-bold text-text-header"
+              onClick={() => signIn()}
+            >
+              Sign in
+            </button>
+
+            <div className="flex flex-row gap-1 min-w-full  text-xs text-text-header flex-nowrap">
+              <span className="text-nowrap">Don&apos;t have an account?</span>
+              <button
+                className="bg-bg-color text-bg-page underline"
+                onClick={() => signIn()}
+              >
+                Register
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );

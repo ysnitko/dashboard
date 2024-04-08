@@ -7,11 +7,12 @@ export default function SignInPage() {
   const router = useRouter();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [errorValiadation, setErrorValiadation] = useState<string>('');
 
   const onSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await signIn('credentials', {
-      redirect: false,
+      redirect: true,
       email,
       password,
     })
@@ -20,7 +21,9 @@ export default function SignInPage() {
         if (res?.ok) {
           router.replace('/users-field');
         } else {
-          router.replace('/register');
+          // router.replace('/register');
+          setErrorValiadation('Email or password is incorrect');
+          return;
         }
       })
       .catch((err) => {
@@ -64,6 +67,7 @@ export default function SignInPage() {
           required
         />
       </label>
+      {errorValiadation && <span>{errorValiadation}</span>}
       <button
         type="submit"
         className="bg-bg-color text-bg-page font-bold p-2 rounded-md w-1/2 text-text-header"
