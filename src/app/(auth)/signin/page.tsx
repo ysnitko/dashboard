@@ -12,18 +12,16 @@ export default function SignInPage() {
   const onSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await signIn('credentials', {
-      redirect: true,
+      redirect: false,
       email,
       password,
     })
       .then((res) => {
         console.log(res);
-        if (res?.ok) {
+        if (res && res?.ok) {
           router.replace('/users-field');
         } else {
-          // router.replace('/register');
           setErrorValiadation('Email or password is incorrect');
-          return;
         }
       })
       .catch((err) => {

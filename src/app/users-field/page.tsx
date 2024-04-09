@@ -1,6 +1,9 @@
 import Header from '@/components/Header/Header';
 import Table from '@/components/Table/Table';
 import { prisma } from '../lib/prisma';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation';
 
 export default async function UsersField() {
   const users: {
@@ -25,10 +28,18 @@ export default async function UsersField() {
     },
   });
 
+  const session = await getServerSession(authOptions);
+
   return (
     <>
-      <Header users={users} />
-      <Table users={users} />
+      {session ? (
+        <>
+          <Header users={users} />
+          <Table users={users} />
+        </>
+      ) : (
+        redirect('/')
+      )}
     </>
   );
 }

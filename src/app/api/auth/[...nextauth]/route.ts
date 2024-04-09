@@ -48,12 +48,12 @@ export const authOptions: AuthOptions = {
 
         console.log(user?.name);
 
-        if (user) {
+        if (user && user.password === credentials?.password) {
           await userCreateLog(user.id, 'login');
-          return { ...user, id: user.id.toString() };
-        } else {
-          return null;
+          const { password, ...userWithoutPassword } = user;
+          return { ...(userWithoutPassword as User), id: user.id.toString() };
         }
+        return null;
       },
     }),
   ],
