@@ -28,6 +28,17 @@ export default function SignInPage() {
         console.log(err);
       });
   };
+
+  const onChangeInputEmail = (e: any) => {
+    setErrorValiadation('');
+    setEmail(e.target.value as string);
+  };
+
+  const onChangeInputPassword = (e: any) => {
+    setErrorValiadation('');
+    setPassword(e.target.value as string);
+  };
+
   return (
     <form
       onSubmit={onSubmitForm}
@@ -45,7 +56,7 @@ export default function SignInPage() {
           name="email"
           placeholder="Email"
           value={email}
-          onChange={(e) => setEmail(e.target.value as string)}
+          onChange={(e) => onChangeInputEmail(e)}
           required
         />
       </label>
@@ -61,11 +72,13 @@ export default function SignInPage() {
           name="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value as string)}
+          onChange={(e) => onChangeInputPassword(e)}
           required
         />
       </label>
-      {errorValiadation && <span>{errorValiadation}</span>}
+      {errorValiadation && (
+        <span className="text-clr-overdue-status ">{errorValiadation}</span>
+      )}
       <button
         type="submit"
         className="bg-bg-color text-bg-page font-bold p-2 rounded-md w-1/2 text-text-header"

@@ -1,50 +1,41 @@
 'use client';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 
 export default function Home() {
-  const router = useRouter();
-  const session = useSession();
+  return (
+    <div className=" flex items-center flex-col ">
+      <h1 className="text-text-header text-5xl pt-10">
+        Data table application
+      </h1>
+      <div className="flex w-full">
+        <Image
+          src="/assets/desktop-bg.png"
+          width={2000}
+          height={0}
+          alt="image"
+          style={{ width: '80%', height: 'auto' }}
+        />
 
-  if (session?.data) {
-    router.push('/signin');
-  } else {
-    return (
-      <div className=" flex items-center flex-col ">
-        <h1 className="text-text-header text-5xl pt-10">
-          Data table application
-        </h1>
-        <div className="flex w-full">
-          <Image
-            src="/assets/desktop-bg.png"
-            width={2000}
-            height={0}
-            alt="image"
-            style={{ width: '80%', height: 'auto' }}
-          />
+        <div className="flex flex-col gap-2 items-start justify-center">
+          <button
+            className="bg-bg-color text-bg-page font-bold text-text-header"
+            onClick={() => signIn()}
+          >
+            Sign in
+          </button>
 
-          <div className="flex flex-col gap-2 items-start justify-center">
+          <div className="flex flex-row gap-1 min-w-full  text-xs text-text-header flex-nowrap">
+            <span className="text-nowrap">Don&apos;t have an account?</span>
             <button
-              className="bg-bg-color text-bg-page font-bold text-text-header"
+              className="bg-bg-color text-bg-page underline"
               onClick={() => signIn()}
             >
-              Sign in
+              Register
             </button>
-
-            <div className="flex flex-row gap-1 min-w-full  text-xs text-text-header flex-nowrap">
-              <span className="text-nowrap">Don&apos;t have an account?</span>
-              <button
-                className="bg-bg-color text-bg-page underline"
-                onClick={() => signIn()}
-              >
-                Register
-              </button>
-            </div>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
