@@ -1,6 +1,7 @@
 'use client';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -27,12 +28,12 @@ export default function Home() {
 
           <div className="flex flex-row gap-1 min-w-full  text-xs text-text-header flex-nowrap">
             <span className="text-nowrap">Don&apos;t have an account?</span>
-            <button
+            <Link
               className="bg-bg-color text-bg-page underline"
-              onClick={() => signIn()}
+              href={'/register'}
             >
               Register
-            </button>
+            </Link>
           </div>
         </div>
       </div>

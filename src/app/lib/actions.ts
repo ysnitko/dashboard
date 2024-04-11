@@ -3,7 +3,6 @@ import { revalidatePath } from 'next/cache';
 import { prisma } from './prisma';
 import { Prisma } from '@prisma/client';
 import { number } from 'zod';
-import { use } from 'react';
 
 export async function getData() {
   const data = await prisma.users.findMany();
@@ -32,6 +31,33 @@ export async function createUser(formData: FormData) {
 
   await userCreateLog(user.id, 'create');
   revalidatePath('/');
+}
+
+export async function registerUser(
+  userName: string,
+  userEmail: string,
+  newUserPassword: string
+) {
+  const name = userName;
+  const email = userEmail;
+  const userPassword = newUserPassword;
+  const userStatus = 'Active';
+  const paymentStatus = 'Unsalaried';
+  const amount = '0';
+  const createdAt = new Date().toISOString() as string;
+
+  const userData = {
+    name: name,
+    email: email,
+    password: userPassword,
+    userStatus: userStatus,
+    paymentStatus: paymentStatus,
+    amount: +amount,
+    createdAt: createdAt,
+  };
+  const user = await prisma.users.create({ data: userData });
+
+  await userCreateLog(user.id, 'create');
 }
 
 export async function userCreateLog(id: number, action: string) {

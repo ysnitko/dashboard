@@ -29,14 +29,14 @@ export default function SignInPage() {
       });
   };
 
-  const onChangeInputEmail = (e: any) => {
+  const onChangeInputEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrorValiadation('');
-    setEmail(e.target.value as string);
+    setEmail((e.target as HTMLInputElement).value as string);
   };
 
-  const onChangeInputPassword = (e: any) => {
+  const onChangeInputPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrorValiadation('');
-    setPassword(e.target.value as string);
+    setPassword((e.target as HTMLInputElement).value as string);
   };
 
   return (
@@ -79,12 +79,21 @@ export default function SignInPage() {
       {errorValiadation && (
         <span className="text-clr-overdue-status ">{errorValiadation}</span>
       )}
-      <button
-        type="submit"
-        className="bg-bg-color text-bg-page font-bold p-2 rounded-md w-1/2 text-text-header"
-      >
-        Sign in
-      </button>
+      <div className="flex w-full gap-3 justify-start mt-10">
+        <button
+          type="submit"
+          className="bg-bg-color text-bg-page font-bold p-2 rounded-md w-1/2  text-text-header"
+        >
+          Sign in
+        </button>
+        <button
+          type="button"
+          className="bg-bg-color text-bg-page font-bold p-2 rounded-md  w-1/3  text-text-header opacity-50 hover:opacity-100"
+          onClick={() => router.back()}
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }
