@@ -42,7 +42,7 @@ export default function RegisterPage() {
 
   return (
     <>
-      {!registrationSuccess ? (
+      {registrationSuccess ? (
         <SuccessfulReg />
       ) : (
         <form
