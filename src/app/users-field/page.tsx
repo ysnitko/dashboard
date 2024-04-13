@@ -2,8 +2,6 @@ import Header from '@/components/Header/Header';
 import Table from '@/components/Table/Table';
 import { prisma } from '../lib/prisma';
 import Loading from '@/components/Loading/Loading';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]/route';
 
 export default async function UsersField() {
   const users: {
@@ -27,13 +25,11 @@ export default async function UsersField() {
       subRows: true,
     },
   });
-  const session = await getServerSession(authOptions);
 
   return (
     <>
       {users ? (
         <>
-          {' '}
           <Header users={users} />
           <Table users={users} />
         </>

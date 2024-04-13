@@ -1,16 +1,27 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { registerUser } from '@/app/lib/actions';
 import SuccessfulReg from '@/components/SuccessfulReg/SuccessfulReg';
+import { Blocks } from 'react-loader-spinner';
 
 export default function RegisterPage() {
   const router = useRouter();
+  const session = useSession();
   const [emailRegister, setEmailRegister] = useState<string>('');
   const [passwordRegister, setPasswordRegister] = useState<string>('');
   const [nameRegister, setNameRegister] = useState<string>('');
   const [registrationSuccess, setRegistrationSuccess] =
     useState<boolean>(false);
+
+  if (session.status === 'loading') {
+    return (
+      <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4">
+        <Blocks />
+      </div>
+    );
+  }
 
   const onSubmitForm = async (
     event: React.FormEvent<HTMLFormElement>,

@@ -1,9 +1,21 @@
 'use client';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Blocks } from 'react-loader-spinner';
 
 export default function Home() {
+  const session = useSession();
+  console.log(session);
+
+  if (session.status === 'loading') {
+    return (
+      <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4">
+        <Blocks />
+      </div>
+    );
+  }
+
   return (
     <div className=" flex items-center flex-col ">
       <h1 className="text-text-header text-5xl pt-10">
@@ -25,7 +37,6 @@ export default function Home() {
           >
             Sign in
           </button>
-
           <div className="flex flex-row gap-1 min-w-full  text-xs text-text-header flex-nowrap">
             <span className="text-nowrap">Don&apos;t have an account?</span>
             <Link
