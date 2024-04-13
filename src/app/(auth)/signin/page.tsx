@@ -67,6 +67,7 @@ export default function SignInPage() {
         <input
           type="email"
           className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
+          style={{ outlineColor: errorValiadation ? '#D30000' : '' }}
           name="email"
           placeholder="Email"
           value={email}
@@ -74,7 +75,6 @@ export default function SignInPage() {
           required
         />
       </label>
-
       <label
         htmlFor="password"
         className="flex flex-col gap-2 text-sm font-semibold text-text-header"
@@ -83,6 +83,7 @@ export default function SignInPage() {
         <input
           type="password"
           className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
+          style={{ outlineColor: errorValiadation ? '#D30000' : '' }}
           name="password"
           placeholder="Password"
           value={password}
@@ -90,16 +91,13 @@ export default function SignInPage() {
           required
         />
       </label>
-      <div className="h-[40px]">
-        <span
-          className="text-clr-overdue-status h-4"
-          style={{ display: errorValiadation ? 'visible' : 'invisible' }}
-        >
-          {errorValiadation}
-        </span>
-      </div>
-
-      <div className="flex w-full gap-3 justify-start">
+      <span
+        className="text-clr-overdue-status h-[10px]"
+        style={{ display: errorValiadation ? 'visible' : 'invisible' }}
+      >
+        {errorValiadation}
+      </span>
+      <div className="flex w-full gap-3 justify-start mt-3">
         <button
           type="submit"
           className="bg-bg-color text-bg-page font-bold p-2 rounded-md w-1/2  text-text-header"

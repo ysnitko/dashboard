@@ -5,12 +5,14 @@ import { useSession } from 'next-auth/react';
 import { registerUser } from '@/app/lib/actions';
 import SuccessfulReg from '@/components/SuccessfulReg/SuccessfulReg';
 import { Blocks } from 'react-loader-spinner';
+import { ERRORS } from '@/app/lib/errors';
 
 export default function RegisterPage() {
   const router = useRouter();
   const session = useSession();
   const [emailRegister, setEmailRegister] = useState<string>('');
   const [passwordRegister, setPasswordRegister] = useState<string>('');
+  const [errorValiadation, setErrorValiadation] = useState<string>('');
   const [nameRegister, setNameRegister] = useState<string>('');
   const [registrationSuccess, setRegistrationSuccess] =
     useState<boolean>(false);
@@ -35,11 +37,12 @@ export default function RegisterPage() {
       await registerUser(name, email, password);
       setRegistrationSuccess(true);
     } catch (error) {
-      console.error(error);
+      setErrorValiadation(ERRORS.user_exist);
     }
   };
 
   const onChangeInputEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorValiadation('');
     setEmailRegister(e.target.value as string);
   };
 
@@ -87,6 +90,7 @@ export default function RegisterPage() {
             <input
               type="email"
               className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
+              style={{ outlineColor: errorValiadation ? '#D30000' : '' }}
               name="email"
               placeholder="Email"
               value={emailRegister}
@@ -110,7 +114,15 @@ export default function RegisterPage() {
               required
             />
           </label>
-          <div className="flex w-full gap-3 justify-start mt-10">
+
+          <span
+            className="text-clr-overdue-status h-[10px]"
+            style={{ display: errorValiadation ? 'visible' : 'invisible' }}
+          >
+            {errorValiadation}
+          </span>
+
+          <div className="flex w-full gap-3 justify-start mt-3">
             <button
               type="submit"
               className="bg-bg-color text-bg-page font-bold p-2 rounded-md w-1/2 text-text-header"
