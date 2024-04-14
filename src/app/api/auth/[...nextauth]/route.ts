@@ -1,8 +1,6 @@
 import { prisma } from '@/app/lib/prisma';
 import { AuthOptions } from 'next-auth';
 import { userCreateLog } from '@/app/lib/actions';
-import * as bcrypt from 'bcrypt';
-
 import CredentialsProvider from 'next-auth/providers/credentials';
 import NextAuth from 'next-auth/next';
 
