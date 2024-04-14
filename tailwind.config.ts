@@ -21,7 +21,7 @@ const config: Config = {
         'bg-header-user-profile': '#F2F0F9',
       },
       colors: {
-        'bg-color': '#F4F2FF',
+        'bg-color': '#f2f1fa',
         'table-border-clr': '#D9D5EC',
         'text-header': '#6E6893',
         'text-btn-filter': '#6E6893',

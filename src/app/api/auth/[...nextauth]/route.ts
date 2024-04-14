@@ -36,16 +36,11 @@ export const authOptions: AuthOptions = {
         },
       },
       async authorize(credentials) {
-        console.log(credentials);
-
         const user: User | null = await prisma.users.findUnique({
           where: {
             email: credentials?.email,
           },
         });
-
-        console.log(user?.name);
-
         if (user && user.password === credentials?.password) {
           await userCreateLog(user.id, 'login');
           const { password, ...userWithoutPassword } = user;
