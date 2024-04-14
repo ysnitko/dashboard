@@ -30,7 +30,9 @@ export default function FilterAndSearch(props: Props) {
     const changedId: number[] = table
       .getSelectedRowModel()
       .rows.map((targetId: any) => targetId.original.id);
-
+    if (changedId.length === 0) {
+      return;
+    }
     await updateSetUserPaid(changedId);
   };
 

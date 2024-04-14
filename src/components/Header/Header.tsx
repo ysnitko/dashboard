@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import { SetStateAction, useState } from 'react';
 import CreateUser from '../CreateUser/CreateUser';
-import { userCreateLog } from '@/app/lib/actions';
 import { useSession, signOut } from 'next-auth/react';
 
 export default function Header({
@@ -21,12 +20,6 @@ export default function Header({
 }) {
   const [createUser, setCreateUser] = useState<SetStateAction<boolean>>(false);
   const { data: session } = useSession();
-
-  const handleSignOut = async () => {
-    const user = users?.find((user) => user.email === session?.user?.email);
-    await userCreateLog(user?.id ?? 0, 'sign out');
-    signOut({ callbackUrl: '/' });
-  };
 
   return (
     <header className="flex gap-3 items-center  justify-between">
