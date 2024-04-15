@@ -1,8 +1,6 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { prisma } from './prisma';
-import { Prisma } from '@prisma/client';
-import { number } from 'zod';
 
 export async function getData() {
   const data = await prisma.users.findMany();
@@ -231,4 +229,13 @@ export async function getUsers() {
 export async function getSubRowsData() {
   const subRows = await prisma.subRows.findMany();
   return subRows;
+}
+
+export async function getUsersByEmail(email: string) {
+  const user = await prisma.users.findUnique({
+    where: {
+      email: email,
+    },
+  });
+  return user;
 }

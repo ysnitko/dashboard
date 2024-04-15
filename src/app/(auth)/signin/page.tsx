@@ -4,6 +4,7 @@ import { signIn, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { ERRORS } from '@/app/lib/errors';
 import { Blocks } from 'react-loader-spinner';
+import { getUsersByEmail } from '@/app/lib/actions';
 
 export default function SignInPage() {
   const router = useRouter();
@@ -22,6 +23,7 @@ export default function SignInPage() {
 
   const onSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const user = await getUsersByEmail(email);
 
     await signIn('credentials', {
       redirect: false,
@@ -29,7 +31,11 @@ export default function SignInPage() {
       password,
     })
       .then((res) => {
-        console.log(res);
+        console.log(user);
+        if (user?.userStatus === 'Blocked') {
+          setErrorValiadation(ERRORS.user_blocked);
+          return;
+        }
         if (res && res?.ok) {
           router.replace('/users-field');
         } else {
@@ -67,7 +73,10 @@ export default function SignInPage() {
         <input
           type="email"
           className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
-          style={{ outlineColor: errorValiadation ? '#D30000' : '' }}
+          style={{
+            outlineColor:
+              errorValiadation === ERRORS.wrong_auth_data ? '#D30000' : '',
+          }}
           name="email"
           placeholder="Email"
           value={email}
@@ -83,7 +92,10 @@ export default function SignInPage() {
         <input
           type="password"
           className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
-          style={{ outlineColor: errorValiadation ? '#D30000' : '' }}
+          style={{
+            outlineColor:
+              errorValiadation === ERRORS.wrong_auth_data ? '#D30000' : '',
+          }}
           name="password"
           placeholder="Password"
           value={password}

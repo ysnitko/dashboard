@@ -1,5 +1,5 @@
 'use client';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { updateUser } from '@/app/lib/actions';
 
 export default function UpdateUser({
@@ -12,6 +12,13 @@ export default function UpdateUser({
   user: any;
 }) {
   const updateUserWithId = updateUser.bind(null, parseInt(id));
+  const [selectPayDues, setSelectPayDues] = useState<string>('');
+
+  const handleSelectDues = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectPayDues(e.target.value);
+  };
+
+  console.log(selectPayDues);
 
   return (
     <form
@@ -79,6 +86,7 @@ export default function UpdateUser({
             className="p-3 outline-none opacity-50 rounded-md bg-bg-color font-semibold
             [&_option]:font-medium"
             defaultValue={user?.paymentStatus}
+            onChange={handleSelectDues}
           >
             <option value="Paid">Paid</option>
             <option value="Unsalaried">Unsalaried</option>
@@ -98,6 +106,22 @@ export default function UpdateUser({
             defaultValue={user?.amount}
           />
         </label>
+        {selectPayDues === 'Unsalaried' ? (
+          <label
+            htmlFor="duesDate"
+            className="flex flex-col gap-2 text-sm font-semibold text-text-header"
+          >
+            Dues to:
+            <input
+              type="date"
+              id="duesDate"
+              name="duesDate"
+              className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
+            />
+          </label>
+        ) : (
+          ''
+        )}
       </div>
       <div className="flex w-full gap-3 justify-center">
         <button

@@ -12,7 +12,6 @@ import {
   bgStatusPayment,
   srcStatusPayment,
 } from '@/app/lib/table';
-
 import {
   flexRender,
   getCoreRowModel,
@@ -24,7 +23,6 @@ import {
   ColumnSort,
   ColumnDef,
 } from '@tanstack/react-table';
-import { boolean } from 'zod';
 
 export default function Table({
   users,

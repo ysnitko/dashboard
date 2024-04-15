@@ -52,7 +52,9 @@ export default function UserMenu({
       </li>
 
       <li className="p-1 rounded-[4px]">
-        <Link href={{ pathname: `users/${rowId}` }}>View Profile</Link>
+        <Link href={{ pathname: `users-field/users/${rowId}` }}>
+          View Profile
+        </Link>
       </li>
       <li className="p-1 rounded-[4px]">
         <button

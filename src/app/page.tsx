@@ -2,19 +2,10 @@
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Blocks } from 'react-loader-spinner';
 
 export default function Home() {
   const session = useSession();
   console.log(session);
-
-  if (session.status === 'loading') {
-    return (
-      <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4">
-        <Blocks />
-      </div>
-    );
-  }
 
   return (
     <div className=" flex items-center flex-col ">
