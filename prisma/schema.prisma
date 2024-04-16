@@ -18,7 +18,7 @@ model Users {
   userStatus    String
   createdAt     DateTime  @default(now())
   paymentStatus String
-  duesDate      DateTime?
+  duesDate      String?
   amount        Int
   subRows       SubRows[]
 }

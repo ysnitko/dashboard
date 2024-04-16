@@ -167,10 +167,19 @@ export async function updateUser(id: number, formData: FormData) {
   const userStatus = formData.get('user-status') as string;
   const paymentStatus = formData.get('payment-status') as string;
   const amount = Number(formData.get('amount'));
+  const duesDate = formData.get('duesDate') as string;
   const createdAt = new Date().toISOString() as string;
   const updatedUser = await prisma.users.update({
     where: { id },
-    data: { name, email, userStatus, paymentStatus, amount, createdAt },
+    data: {
+      name,
+      email,
+      userStatus,
+      paymentStatus,
+      amount,
+      createdAt,
+      duesDate,
+    },
   });
 
   await userCreateLog(updatedUser.id, 'update');

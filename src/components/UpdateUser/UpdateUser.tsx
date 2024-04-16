@@ -18,8 +18,6 @@ export default function UpdateUser({
     setSelectPayDues(e.target.value);
   };
 
-  console.log(selectPayDues);
-
   return (
     <form
       action={updateUserWithId}
@@ -114,9 +112,11 @@ export default function UpdateUser({
             Dues to:
             <input
               type="date"
+              min={new Date().toISOString().split('T')[0]}
               id="duesDate"
               name="duesDate"
               className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
+              defaultValue={user?.duesDate}
             />
           </label>
         ) : (

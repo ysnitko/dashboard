@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-
 import { Dispatch, SetStateAction, useRef, useState, useEffect } from 'react';
 import { listenForOutsideClicks } from '../listenForOutsideClicks/listenForOutsideClicks';
 import { deleteUser, userActivate, findUser } from '@/app/lib/actions';

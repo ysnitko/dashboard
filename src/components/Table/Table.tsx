@@ -158,6 +158,9 @@ export default function Table({
         accessorKey: 'paymentStatus',
         cell: (props: any) => {
           const now = props.row.original.createdAt;
+          const duesTime = props.row.original.duesDate;
+          console.log(props.row.original);
+
           masks.hammerTime = 'dd/mmm/yyyy';
           dateformat(now, 'hammerTime');
 
@@ -179,11 +182,19 @@ export default function Table({
                   {props.getValue()}
                 </span>
               </p>
-              <span className="text-xs font-medium text-text-header">
+              <span
+                className="text-xs font-medium text-text-header"
+                style={{
+                  color:
+                    props.row.original.paymentStatus === 'Unsalaried'
+                      ? '#D30000'
+                      : '',
+                }}
+              >
                 {props.row.original.paymentStatus === 'Paid'
                   ? `Paid on ${dateformat(now, 'hammerTime')}`
                   : props.row.original.paymentStatus === 'Unsalaried'
-                  ? `Dues on ${dateformat(now, 'hammerTime')}`
+                  ? `Dues on ${dateformat(duesTime, 'hammerTime')}`
                   : props.row.original.paymentStatus === 'Overdue'
                   ? `Dued on ${dateformat(now, 'hammerTime')}`
                   : ''}
