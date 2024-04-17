@@ -66,6 +66,9 @@ export default function RegisterPage() {
           className="flex flex-col p-[30px] min-w-[350px] justify-between absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  bg-bg-table-primary border-[1px] rounded-md
     shadow-xl gap-3"
         >
+          <h2 className="text-text-header font-bold text-xl border-b-2 mb-4">
+            Registration
+          </h2>
           <label
             htmlFor="name"
             className="flex flex-col gap-2 text-sm font-semibold text-text-header"
@@ -75,7 +78,7 @@ export default function RegisterPage() {
               type="text"
               className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
               name="name"
-              placeholder="Name"
+              placeholder="name"
               value={nameRegister}
               onChange={(e) => onChangeInputName(e)}
               required
@@ -92,7 +95,7 @@ export default function RegisterPage() {
               className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
               style={{ outlineColor: errorValiadation ? '#D30000' : '' }}
               name="email"
-              placeholder="Email"
+              placeholder="email"
               value={emailRegister}
               onChange={(e) => onChangeInputEmail(e)}
               required
@@ -108,7 +111,7 @@ export default function RegisterPage() {
               type="password"
               className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
               name="password"
-              placeholder="Password"
+              placeholder="password"
               value={passwordRegister}
               onChange={(e) => onChangeInputPassword(e)}
               required
@@ -127,7 +130,7 @@ export default function RegisterPage() {
               type="submit"
               className="bg-bg-color text-bg-page font-bold p-2 rounded-md w-1/2 text-text-header"
             >
-              Registration
+              Register
             </button>
             <button
               type="button"

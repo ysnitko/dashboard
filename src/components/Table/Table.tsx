@@ -333,7 +333,7 @@ export default function Table({
               style={{ background: row.getIsSelected() ? '#F4F2FF' : '' }}
             >
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="p-4">
+                <td key={cell.id} className="px-4 py-3">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}

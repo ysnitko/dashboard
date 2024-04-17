@@ -65,6 +65,9 @@ export default function SignInPage() {
           bg-bg-table-primary border-[1px] rounded-md
     shadow-xl gap-3"
     >
+      <h2 className="text-text-header font-bold text-xl border-b-2 mb-4">
+        Sign in
+      </h2>
       <label
         htmlFor="password"
         className="flex flex-col gap-2 text-sm font-semibold text-text-header"
