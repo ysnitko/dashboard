@@ -112,8 +112,8 @@ export default function SignInPage() {
             onChange={(e) => onChangeInputPassword(e)}
             required
           />
-          <button
-            className="absolute right-3"
+          <span
+            className="absolute right-3 cursor-pointer"
             onClick={handleToggleShowPassword}
           >
             <Image
@@ -122,7 +122,7 @@ export default function SignInPage() {
               width={20}
               height={20}
             />
-          </button>
+          </span>
         </div>
       </label>
 
