@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { ERRORS } from '@/app/lib/errors';
 import { Blocks } from 'react-loader-spinner';
 import { getUsersByEmail } from '@/app/lib/actions';
+import Image from 'next/image';
 
 export default function SignInPage() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function SignInPage() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorValiadation, setErrorValiadation] = useState<string>('');
+  const [toggleShowPassword, setToggleShowPassword] = useState<boolean>(false);
 
   if (session.status === 'loading') {
     return (
@@ -20,6 +22,10 @@ export default function SignInPage() {
       </div>
     );
   }
+
+  const handleToggleShowPassword = () => {
+    setToggleShowPassword((prev) => !prev);
+  };
 
   const onSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -92,20 +98,34 @@ export default function SignInPage() {
         className="flex flex-col gap-2 text-sm font-semibold text-text-header"
       >
         Password
-        <input
-          type="password"
-          className="p-3 outline-none opacity-50 rounded-md bg-bg-color"
-          style={{
-            outlineColor:
-              errorValiadation === ERRORS.wrong_auth_data ? '#D30000' : '',
-          }}
-          name="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => onChangeInputPassword(e)}
-          required
-        />
+        <div className="relative flex items-center justify-around">
+          <input
+            type={toggleShowPassword ? 'text' : 'password'}
+            className="p-3 outline-none opacity-50 rounded-md bg-bg-color w-full"
+            style={{
+              outlineColor:
+                errorValiadation === ERRORS.wrong_auth_data ? '#D30000' : '',
+            }}
+            name="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => onChangeInputPassword(e)}
+            required
+          />
+          <button
+            className="absolute right-3"
+            onClick={handleToggleShowPassword}
+          >
+            <Image
+              src={toggleShowPassword ? '/assets/show.svg' : '/assets/hide.svg'}
+              alt="toggle-password"
+              width={20}
+              height={20}
+            />
+          </button>
+        </div>
       </label>
+
       <span
         className="text-clr-overdue-status h-[10px]"
         style={{ display: errorValiadation ? 'visible' : 'invisible' }}
