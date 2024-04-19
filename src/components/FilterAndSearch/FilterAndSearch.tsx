@@ -22,14 +22,15 @@ export default function FilterAndSearch(props: Props) {
   const [listening, setListening] = useState(false);
   const menuRef = useRef(null);
 
+  const changedId: number[] = table
+    .getSelectedRowModel()
+    .rows.map((targetId: any) => targetId.original.id);
+
   const toggle = () => {
     setToggleFilter(!toggledFilter);
   };
 
   const handlePayDues = async () => {
-    const changedId: number[] = table
-      .getSelectedRowModel()
-      .rows.map((targetId: any) => targetId.original.id);
     if (changedId.length === 0) {
       return;
     }
@@ -73,6 +74,10 @@ export default function FilterAndSearch(props: Props) {
       </div>
       <button
         className="bg-bg-btn-dues text-bg-color px-4 py-1 rounded-md font-semibold  text-base"
+        style={{
+          opacity: changedId.length === 0 ? '0.5' : '1',
+          cursor: changedId.length === 0 ? 'not-allowed' : '',
+        }}
         onClick={handlePayDues}
       >
         PAY DUES
