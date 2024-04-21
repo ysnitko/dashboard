@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "netlify": "netlify"
+    "export": "export"
   },
   "dependencies": {
     "@prisma/client": "^5.11.0",
