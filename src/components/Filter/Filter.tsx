@@ -41,7 +41,6 @@ export default function Filter(props: Props) {
       setSorting(updateSorting);
     }
     setSelectedSort(columnName);
-    console.log(selectedSort);
   };
 
   const onChangeFilter = (value: string) => {
@@ -60,7 +59,6 @@ export default function Filter(props: Props) {
     ];
     setColumnFilters(updatedFilters);
     setSelectedFilter(value);
-    console.log(selectedFilter);
   };
 
   return (

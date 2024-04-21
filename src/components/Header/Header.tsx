@@ -4,20 +4,7 @@ import { SetStateAction, useState } from 'react';
 import CreateUser from '../CreateUser/CreateUser';
 import { useSession, signOut } from 'next-auth/react';
 
-export default function Header({
-  users,
-}: {
-  users: {
-    id: number;
-    name: string | null;
-    email: string | null | undefined;
-    userStatus: string;
-    createdAt: Date;
-    paymentStatus: string;
-    amount: number;
-    subRows: any[];
-  }[];
-}) {
+export default function Header() {
   const [createUser, setCreateUser] = useState<SetStateAction<boolean>>(false);
   const { data: session } = useSession();
 

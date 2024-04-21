@@ -30,7 +30,7 @@ export default async function UsersField() {
     <>
       {users ? (
         <>
-          <Header users={users} />
+          <Header />
           <Table users={users} />
         </>
       ) : (

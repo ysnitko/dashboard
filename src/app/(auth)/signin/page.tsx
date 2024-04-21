@@ -87,7 +87,7 @@ export default function SignInPage() {
               errorValiadation === ERRORS.wrong_auth_data ? '#D30000' : '',
           }}
           name="email"
-          placeholder="Email"
+          placeholder="email"
           value={email}
           onChange={(e) => onChangeInputEmail(e)}
           required
@@ -107,7 +107,7 @@ export default function SignInPage() {
                 errorValiadation === ERRORS.wrong_auth_data ? '#D30000' : '',
             }}
             name="password"
-            placeholder="Password"
+            placeholder="password"
             value={password}
             onChange={(e) => onChangeInputPassword(e)}
             required
@@ -125,7 +125,6 @@ export default function SignInPage() {
           </span>
         </div>
       </label>
-
       <span
         className="text-clr-overdue-status h-[10px]"
         style={{ display: errorValiadation ? 'visible' : 'invisible' }}

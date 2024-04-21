@@ -75,7 +75,6 @@ export default function FilterForPayment(props: Props) {
           );
         })}
       </div>
-
       <span className="text-sm py-1 text-text-btn-filter w-full text-right ">
         Total payable amount:
         <span className="text-lg font-bold text-text-total-prise">

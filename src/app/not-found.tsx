@@ -1,3 +1,15 @@
+'use client';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+
 export default function NotFound() {
-  return <h1>Not Found</h1>;
+  const route = useRouter();
+  return (
+    <div className="flex flex-col justify-center items-center h-screen text-text-header gap-3">
+      <h1 className="text-5xl">Sorry! Page not found...</h1>
+      <button className="underline text-xl" onClick={() => route.back()}>
+        Tap to return
+      </button>
+    </div>
+  );
 }

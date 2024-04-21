@@ -52,7 +52,6 @@ export default function FilterAndSearch(props: Props) {
           Filter
         </button>
         {toggledFilter && <Filter {...props} />}
-
         <label htmlFor="search" className="flex relative">
           <Image
             src="/assets/Search.svg"

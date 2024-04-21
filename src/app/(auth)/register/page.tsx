@@ -84,7 +84,6 @@ export default function RegisterPage() {
               required
             />
           </label>
-
           <label
             htmlFor="email"
             className="flex flex-col gap-2 text-sm font-semibold text-text-header"
@@ -101,7 +100,6 @@ export default function RegisterPage() {
               required
             />
           </label>
-
           <label
             htmlFor="password"
             className="flex flex-col gap-2 text-sm font-semibold text-text-header"
@@ -117,7 +115,6 @@ export default function RegisterPage() {
               required
             />
           </label>
-
           <span
             className="text-clr-overdue-status h-[10px]"
             style={{ display: errorValiadation ? 'visible' : 'invisible' }}

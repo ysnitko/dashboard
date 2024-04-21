@@ -1,5 +1,5 @@
 {
-  "name": "dashboard",
+  "name": "data-table",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -19,8 +19,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-loader-spinner": "^6.1.6",
-    "react-onclickoutside": "^6.13.0",
-    "zod": "^3.22.4"
+    "react-onclickoutside": "^6.13.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
