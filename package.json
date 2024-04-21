@@ -10,6 +10,7 @@
     "export": "export"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^5.1.2",
     "@prisma/client": "^5.11.0",
     "@tanstack/match-sorter-utils": "^8.11.8",
     "@tanstack/react-table": "^8.12.0",
