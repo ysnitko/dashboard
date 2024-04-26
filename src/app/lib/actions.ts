@@ -107,6 +107,7 @@ export async function userCreateLog(id: number, action: string) {
   await prisma.subRows.create({
     data: logData,
   });
+  revalidatePath('/');
 }
 
 export async function userCreateGroupLogUpdate(
@@ -125,6 +126,7 @@ export async function userCreateGroupLogUpdate(
   await prisma.subRows.create({
     data: logData,
   });
+  revalidatePath('/');
 }
 
 export async function deleteUser(id: number) {
@@ -138,7 +140,6 @@ export async function deleteUser(id: number) {
       id,
     },
   });
-
   revalidatePath('/');
 }
 
@@ -148,6 +149,7 @@ export async function clearLogs(usersId: number) {
       usersId: { in: [usersId] },
     },
   });
+  revalidatePath('/');
 }
 
 export async function findUser(id: number | null) {
