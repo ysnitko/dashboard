@@ -56,6 +56,7 @@ export async function registerUser(
   const user = await prisma.users.create({ data: userData });
 
   await userCreateLog(user.id, 'create');
+  revalidatePath('/');
 }
 
 export async function userCreateLog(id: number, action: string) {
