@@ -198,8 +198,6 @@ export async function updateSetUserPaid(usersId: number[]) {
     data: { paymentStatus: 'Paid' },
   });
 
-  await userCreateGroupLogUpdate(usersId, 'update');
-
   revalidatePath('/users-field');
 }
 
