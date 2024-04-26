@@ -222,8 +222,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.11.0
-   * Query Engine version: efd2449663b3d73d637ea1fd226bafbcf45b3102
+   * Prisma Client JS version: 5.13.0
+   * Query Engine version: b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b
    */
   export type PrismaVersion = {
     client: string
@@ -350,6 +350,11 @@ export namespace Prisma {
     include: any
   }
 
+  type SelectAndOmit = {
+    select: any
+    omit: any
+  }
+
   /**
    * Get the type of the value, that the Promise holds.
    */
@@ -398,7 +403,9 @@ export namespace Prisma {
   } &
     (T extends SelectAndInclude
       ? 'Please either choose `select` or `include`.'
-      : {})
+      : T extends SelectAndOmit
+        ? 'Please either choose `select` or `omit`.'
+        : {})
 
   /**
    * Subset + Intersection
@@ -685,6 +692,10 @@ export namespace Prisma {
             args: Prisma.UsersCreateArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$UsersPayload>
           }
+          createMany: {
+            args: Prisma.UsersCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
           delete: {
             args: Prisma.UsersDeleteArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$UsersPayload>
@@ -746,6 +757,10 @@ export namespace Prisma {
           create: {
             args: Prisma.SubRowsCreateArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$SubRowsPayload>
+          }
+          createMany: {
+            args: Prisma.SubRowsCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
           }
           delete: {
             args: Prisma.SubRowsDeleteArgs<ExtArgs>,
@@ -948,7 +963,6 @@ export namespace Prisma {
   }
 
   // Custom InputTypes
-
   /**
    * UsersCountOutputType without action
    */
@@ -959,14 +973,12 @@ export namespace Prisma {
     select?: UsersCountOutputTypeSelect<ExtArgs> | null
   }
 
-
   /**
    * UsersCountOutputType without action
    */
   export type UsersCountOutputTypeCountSubRowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SubRowsWhereInput
   }
-
 
 
   /**
@@ -1223,6 +1235,7 @@ export namespace Prisma {
     amount?: boolean
   }
 
+
   export type UsersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subRows?: boolean | Users$subRowsArgs<ExtArgs>
     _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
@@ -1359,6 +1372,22 @@ export namespace Prisma {
     create<T extends UsersCreateArgs<ExtArgs>>(
       args: SelectSubset<T, UsersCreateArgs<ExtArgs>>
     ): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many Users.
+     *     @param {UsersCreateManyArgs} args - Arguments to create many Users.
+     *     @example
+     *     // Create many Users
+     *     const users = await prisma.users.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends UsersCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, UsersCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Delete a Users.
@@ -1636,7 +1665,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * Users findUnique
    */
@@ -1646,7 +1674,7 @@ export namespace Prisma {
      */
     select?: UsersSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UsersInclude<ExtArgs> | null
     /**
@@ -1654,7 +1682,6 @@ export namespace Prisma {
      */
     where: UsersWhereUniqueInput
   }
-
 
   /**
    * Users findUniqueOrThrow
@@ -1665,7 +1692,7 @@ export namespace Prisma {
      */
     select?: UsersSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UsersInclude<ExtArgs> | null
     /**
@@ -1673,7 +1700,6 @@ export namespace Prisma {
      */
     where: UsersWhereUniqueInput
   }
-
 
   /**
    * Users findFirst
@@ -1684,7 +1710,7 @@ export namespace Prisma {
      */
     select?: UsersSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UsersInclude<ExtArgs> | null
     /**
@@ -1722,7 +1748,6 @@ export namespace Prisma {
      */
     distinct?: UsersScalarFieldEnum | UsersScalarFieldEnum[]
   }
-
 
   /**
    * Users findFirstOrThrow
@@ -1733,7 +1758,7 @@ export namespace Prisma {
      */
     select?: UsersSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UsersInclude<ExtArgs> | null
     /**
@@ -1772,7 +1797,6 @@ export namespace Prisma {
     distinct?: UsersScalarFieldEnum | UsersScalarFieldEnum[]
   }
 
-
   /**
    * Users findMany
    */
@@ -1782,7 +1806,7 @@ export namespace Prisma {
      */
     select?: UsersSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UsersInclude<ExtArgs> | null
     /**
@@ -1816,7 +1840,6 @@ export namespace Prisma {
     distinct?: UsersScalarFieldEnum | UsersScalarFieldEnum[]
   }
 
-
   /**
    * Users create
    */
@@ -1826,7 +1849,7 @@ export namespace Prisma {
      */
     select?: UsersSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UsersInclude<ExtArgs> | null
     /**
@@ -1835,6 +1858,16 @@ export namespace Prisma {
     data: XOR<UsersCreateInput, UsersUncheckedCreateInput>
   }
 
+  /**
+   * Users createMany
+   */
+  export type UsersCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: UsersCreateManyInput | UsersCreateManyInput[]
+    skipDuplicates?: boolean
+  }
 
   /**
    * Users update
@@ -1845,7 +1878,7 @@ export namespace Prisma {
      */
     select?: UsersSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UsersInclude<ExtArgs> | null
     /**
@@ -1857,7 +1890,6 @@ export namespace Prisma {
      */
     where: UsersWhereUniqueInput
   }
-
 
   /**
    * Users updateMany
@@ -1873,7 +1905,6 @@ export namespace Prisma {
     where?: UsersWhereInput
   }
 
-
   /**
    * Users upsert
    */
@@ -1883,7 +1914,7 @@ export namespace Prisma {
      */
     select?: UsersSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UsersInclude<ExtArgs> | null
     /**
@@ -1900,7 +1931,6 @@ export namespace Prisma {
     update: XOR<UsersUpdateInput, UsersUncheckedUpdateInput>
   }
 
-
   /**
    * Users delete
    */
@@ -1910,7 +1940,7 @@ export namespace Prisma {
      */
     select?: UsersSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UsersInclude<ExtArgs> | null
     /**
@@ -1918,7 +1948,6 @@ export namespace Prisma {
      */
     where: UsersWhereUniqueInput
   }
-
 
   /**
    * Users deleteMany
@@ -1930,7 +1959,6 @@ export namespace Prisma {
     where?: UsersWhereInput
   }
 
-
   /**
    * Users.subRows
    */
@@ -1940,7 +1968,7 @@ export namespace Prisma {
      */
     select?: SubRowsSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SubRowsInclude<ExtArgs> | null
     where?: SubRowsWhereInput
@@ -1951,7 +1979,6 @@ export namespace Prisma {
     distinct?: SubRowsScalarFieldEnum | SubRowsScalarFieldEnum[]
   }
 
-
   /**
    * Users without action
    */
@@ -1961,11 +1988,10 @@ export namespace Prisma {
      */
     select?: UsersSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UsersInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -2181,6 +2207,7 @@ export namespace Prisma {
     usersId?: boolean
   }
 
+
   export type SubRowsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Users?: boolean | SubRows$UsersArgs<ExtArgs>
   }
@@ -2312,6 +2339,22 @@ export namespace Prisma {
     create<T extends SubRowsCreateArgs<ExtArgs>>(
       args: SelectSubset<T, SubRowsCreateArgs<ExtArgs>>
     ): Prisma__SubRowsClient<$Result.GetResult<Prisma.$SubRowsPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many SubRows.
+     *     @param {SubRowsCreateManyArgs} args - Arguments to create many SubRows.
+     *     @example
+     *     // Create many SubRows
+     *     const subRows = await prisma.subRows.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends SubRowsCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, SubRowsCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Delete a SubRows.
@@ -2585,7 +2628,6 @@ export namespace Prisma {
     
 
   // Custom InputTypes
-
   /**
    * SubRows findUnique
    */
@@ -2595,7 +2637,7 @@ export namespace Prisma {
      */
     select?: SubRowsSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SubRowsInclude<ExtArgs> | null
     /**
@@ -2603,7 +2645,6 @@ export namespace Prisma {
      */
     where: SubRowsWhereUniqueInput
   }
-
 
   /**
    * SubRows findUniqueOrThrow
@@ -2614,7 +2655,7 @@ export namespace Prisma {
      */
     select?: SubRowsSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SubRowsInclude<ExtArgs> | null
     /**
@@ -2622,7 +2663,6 @@ export namespace Prisma {
      */
     where: SubRowsWhereUniqueInput
   }
-
 
   /**
    * SubRows findFirst
@@ -2633,7 +2673,7 @@ export namespace Prisma {
      */
     select?: SubRowsSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SubRowsInclude<ExtArgs> | null
     /**
@@ -2671,7 +2711,6 @@ export namespace Prisma {
      */
     distinct?: SubRowsScalarFieldEnum | SubRowsScalarFieldEnum[]
   }
-
 
   /**
    * SubRows findFirstOrThrow
@@ -2682,7 +2721,7 @@ export namespace Prisma {
      */
     select?: SubRowsSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SubRowsInclude<ExtArgs> | null
     /**
@@ -2721,7 +2760,6 @@ export namespace Prisma {
     distinct?: SubRowsScalarFieldEnum | SubRowsScalarFieldEnum[]
   }
 
-
   /**
    * SubRows findMany
    */
@@ -2731,7 +2769,7 @@ export namespace Prisma {
      */
     select?: SubRowsSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SubRowsInclude<ExtArgs> | null
     /**
@@ -2765,7 +2803,6 @@ export namespace Prisma {
     distinct?: SubRowsScalarFieldEnum | SubRowsScalarFieldEnum[]
   }
 
-
   /**
    * SubRows create
    */
@@ -2775,7 +2812,7 @@ export namespace Prisma {
      */
     select?: SubRowsSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SubRowsInclude<ExtArgs> | null
     /**
@@ -2784,6 +2821,16 @@ export namespace Prisma {
     data: XOR<SubRowsCreateInput, SubRowsUncheckedCreateInput>
   }
 
+  /**
+   * SubRows createMany
+   */
+  export type SubRowsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SubRows.
+     */
+    data: SubRowsCreateManyInput | SubRowsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
 
   /**
    * SubRows update
@@ -2794,7 +2841,7 @@ export namespace Prisma {
      */
     select?: SubRowsSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SubRowsInclude<ExtArgs> | null
     /**
@@ -2806,7 +2853,6 @@ export namespace Prisma {
      */
     where: SubRowsWhereUniqueInput
   }
-
 
   /**
    * SubRows updateMany
@@ -2822,7 +2868,6 @@ export namespace Prisma {
     where?: SubRowsWhereInput
   }
 
-
   /**
    * SubRows upsert
    */
@@ -2832,7 +2877,7 @@ export namespace Prisma {
      */
     select?: SubRowsSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SubRowsInclude<ExtArgs> | null
     /**
@@ -2849,7 +2894,6 @@ export namespace Prisma {
     update: XOR<SubRowsUpdateInput, SubRowsUncheckedUpdateInput>
   }
 
-
   /**
    * SubRows delete
    */
@@ -2859,7 +2903,7 @@ export namespace Prisma {
      */
     select?: SubRowsSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SubRowsInclude<ExtArgs> | null
     /**
@@ -2867,7 +2911,6 @@ export namespace Prisma {
      */
     where: SubRowsWhereUniqueInput
   }
-
 
   /**
    * SubRows deleteMany
@@ -2879,7 +2922,6 @@ export namespace Prisma {
     where?: SubRowsWhereInput
   }
 
-
   /**
    * SubRows.Users
    */
@@ -2889,12 +2931,11 @@ export namespace Prisma {
      */
     select?: UsersSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: UsersInclude<ExtArgs> | null
     where?: UsersWhereInput
   }
-
 
   /**
    * SubRows without action
@@ -2905,11 +2946,10 @@ export namespace Prisma {
      */
     select?: SubRowsSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
+     * Choose, which related nodes to fetch as well
      */
     include?: SubRowsInclude<ExtArgs> | null
   }
-
 
 
   /**
@@ -2917,6 +2957,9 @@ export namespace Prisma {
    */
 
   export const TransactionIsolationLevel: {
+    ReadUncommitted: 'ReadUncommitted',
+    ReadCommitted: 'ReadCommitted',
+    RepeatableRead: 'RepeatableRead',
     Serializable: 'Serializable'
   };
 
@@ -2957,6 +3000,14 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const QueryMode: {
+    default: 'default',
+    insensitive: 'insensitive'
+  };
+
+  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
   export const NullsOrder: {
     first: 'first',
     last: 'last'
@@ -2978,9 +3029,23 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+  /**
+   * Reference to a field of type 'String[]'
+   */
+  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
     
 
 
@@ -2992,9 +3057,23 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -3185,6 +3264,18 @@ export namespace Prisma {
     subRows?: SubRowsUncheckedUpdateManyWithoutUsersNestedInput
   }
 
+  export type UsersCreateManyInput = {
+    id?: number
+    name?: string | null
+    email?: string | null
+    password?: string | null
+    userStatus: string
+    createdAt?: Date | string
+    paymentStatus: string
+    duesDate?: string | null
+    amount: number
+  }
+
   export type UsersUpdateManyMutationInput = {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3238,6 +3329,14 @@ export namespace Prisma {
     usersId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
+  export type SubRowsCreateManyInput = {
+    id?: number
+    date: Date | string
+    userActivity: string
+    details: string
+    usersId?: number | null
+  }
+
   export type SubRowsUpdateManyMutationInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     userActivity?: StringFieldUpdateOperationsInput | string
@@ -3254,8 +3353,8 @@ export namespace Prisma {
 
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -3265,8 +3364,8 @@ export namespace Prisma {
 
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -3274,13 +3373,14 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[]
-    notIn?: string[]
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -3288,13 +3388,14 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -3365,8 +3466,8 @@ export namespace Prisma {
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -3381,8 +3482,8 @@ export namespace Prisma {
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -3390,6 +3491,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
     not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
@@ -3398,8 +3500,8 @@ export namespace Prisma {
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[]
-    notIn?: string[]
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -3407,6 +3509,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
     not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
@@ -3415,8 +3518,8 @@ export namespace Prisma {
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -3429,8 +3532,8 @@ export namespace Prisma {
 
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -3479,8 +3582,8 @@ export namespace Prisma {
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -3496,12 +3599,14 @@ export namespace Prisma {
   export type SubRowsCreateNestedManyWithoutUsersInput = {
     create?: XOR<SubRowsCreateWithoutUsersInput, SubRowsUncheckedCreateWithoutUsersInput> | SubRowsCreateWithoutUsersInput[] | SubRowsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: SubRowsCreateOrConnectWithoutUsersInput | SubRowsCreateOrConnectWithoutUsersInput[]
+    createMany?: SubRowsCreateManyUsersInputEnvelope
     connect?: SubRowsWhereUniqueInput | SubRowsWhereUniqueInput[]
   }
 
   export type SubRowsUncheckedCreateNestedManyWithoutUsersInput = {
     create?: XOR<SubRowsCreateWithoutUsersInput, SubRowsUncheckedCreateWithoutUsersInput> | SubRowsCreateWithoutUsersInput[] | SubRowsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: SubRowsCreateOrConnectWithoutUsersInput | SubRowsCreateOrConnectWithoutUsersInput[]
+    createMany?: SubRowsCreateManyUsersInputEnvelope
     connect?: SubRowsWhereUniqueInput | SubRowsWhereUniqueInput[]
   }
 
@@ -3529,6 +3634,7 @@ export namespace Prisma {
     create?: XOR<SubRowsCreateWithoutUsersInput, SubRowsUncheckedCreateWithoutUsersInput> | SubRowsCreateWithoutUsersInput[] | SubRowsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: SubRowsCreateOrConnectWithoutUsersInput | SubRowsCreateOrConnectWithoutUsersInput[]
     upsert?: SubRowsUpsertWithWhereUniqueWithoutUsersInput | SubRowsUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: SubRowsCreateManyUsersInputEnvelope
     set?: SubRowsWhereUniqueInput | SubRowsWhereUniqueInput[]
     disconnect?: SubRowsWhereUniqueInput | SubRowsWhereUniqueInput[]
     delete?: SubRowsWhereUniqueInput | SubRowsWhereUniqueInput[]
@@ -3542,6 +3648,7 @@ export namespace Prisma {
     create?: XOR<SubRowsCreateWithoutUsersInput, SubRowsUncheckedCreateWithoutUsersInput> | SubRowsCreateWithoutUsersInput[] | SubRowsUncheckedCreateWithoutUsersInput[]
     connectOrCreate?: SubRowsCreateOrConnectWithoutUsersInput | SubRowsCreateOrConnectWithoutUsersInput[]
     upsert?: SubRowsUpsertWithWhereUniqueWithoutUsersInput | SubRowsUpsertWithWhereUniqueWithoutUsersInput[]
+    createMany?: SubRowsCreateManyUsersInputEnvelope
     set?: SubRowsWhereUniqueInput | SubRowsWhereUniqueInput[]
     disconnect?: SubRowsWhereUniqueInput | SubRowsWhereUniqueInput[]
     delete?: SubRowsWhereUniqueInput | SubRowsWhereUniqueInput[]
@@ -3577,8 +3684,8 @@ export namespace Prisma {
 
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -3588,8 +3695,8 @@ export namespace Prisma {
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -3602,8 +3709,8 @@ export namespace Prisma {
 
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[]
-    notIn?: string[]
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -3616,8 +3723,8 @@ export namespace Prisma {
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -3627,8 +3734,8 @@ export namespace Prisma {
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -3643,8 +3750,8 @@ export namespace Prisma {
 
   export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
@@ -3654,8 +3761,8 @@ export namespace Prisma {
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | null
-    notIn?: string[] | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -3671,8 +3778,8 @@ export namespace Prisma {
 
   export type NestedIntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -3682,8 +3789,8 @@ export namespace Prisma {
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[]
-    notIn?: string[]
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -3699,8 +3806,8 @@ export namespace Prisma {
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -3713,8 +3820,8 @@ export namespace Prisma {
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -3729,8 +3836,8 @@ export namespace Prisma {
 
   export type NestedFloatNullableFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
@@ -3754,6 +3861,11 @@ export namespace Prisma {
   export type SubRowsCreateOrConnectWithoutUsersInput = {
     where: SubRowsWhereUniqueInput
     create: XOR<SubRowsCreateWithoutUsersInput, SubRowsUncheckedCreateWithoutUsersInput>
+  }
+
+  export type SubRowsCreateManyUsersInputEnvelope = {
+    data: SubRowsCreateManyUsersInput | SubRowsCreateManyUsersInput[]
+    skipDuplicates?: boolean
   }
 
   export type SubRowsUpsertWithWhereUniqueWithoutUsersInput = {
@@ -3843,6 +3955,13 @@ export namespace Prisma {
     paymentStatus?: StringFieldUpdateOperationsInput | string
     duesDate?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type SubRowsCreateManyUsersInput = {
+    id?: number
+    date: Date | string
+    userActivity: string
+    details: string
   }
 
   export type SubRowsUpdateWithoutUsersInput = {

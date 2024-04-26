@@ -31,12 +31,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 5.11.0
- * Query Engine version: efd2449663b3d73d637ea1fd226bafbcf45b3102
+ * Prisma Client JS version: 5.13.0
+ * Query Engine version: b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b
  */
 Prisma.prismaVersion = {
-  client: "5.11.0",
-  engine: "efd2449663b3d73d637ea1fd226bafbcf45b3102"
+  client: "5.13.0",
+  engine: "b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -81,6 +81,9 @@ Prisma.NullTypes = {
  * Enums
  */
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 });
 
@@ -109,6 +112,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
@@ -130,7 +138,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/yuri_sn/Projects/dashboard/dashboard/prisma/generated/client",
+      "value": "/Users/yuri_sn/Projects/test_/dashboard/prisma/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -151,23 +159,24 @@ const config = {
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
-  "clientVersion": "5.11.0",
-  "engineVersion": "efd2449663b3d73d637ea1fd226bafbcf45b3102",
+  "clientVersion": "5.13.0",
+  "engineVersion": "b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b",
   "datasourceNames": [
     "db"
   ],
-  "activeProvider": "sqlite",
+  "activeProvider": "postgresql",
   "postinstall": false,
+  "ciName": "Vercel",
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "DATABASE_URL",
+        "fromEnvVar": "POSTGRES_PRISMA_URL",
         "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Users {\n  id            Int       @id @default(autoincrement())\n  name          String?\n  email         String?   @unique\n  password      String?\n  userStatus    String\n  createdAt     DateTime  @default(now())\n  paymentStatus String\n  duesDate      String?\n  amount        Int\n  subRows       SubRows[]\n}\n\nmodel SubRows {\n  id           Int      @id @default(autoincrement())\n  date         DateTime\n  userActivity String\n  details      String\n  Users        Users?   @relation(fields: [usersId], references: [id])\n  usersId      Int?\n}\n",
-  "inlineSchemaHash": "50c661910b5ba49d27d4f1db3b1a45d8ef7a0d4df192d21cdf3c13bf7c3ff4ea",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/client\"\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"POSTGRES_PRISMA_URL\")\n  directUrl = env(\"POSTGRES_URL_NON_POOLING\")\n}\n\nmodel Users {\n  id            Int       @id @default(autoincrement())\n  name          String?\n  email         String?   @unique\n  password      String?\n  userStatus    String\n  createdAt     DateTime  @default(now())\n  paymentStatus String\n  duesDate      String?\n  amount        Int\n  subRows       SubRows[]\n}\n\nmodel SubRows {\n  id           Int      @id @default(autoincrement())\n  date         DateTime\n  userActivity String\n  details      String\n  Users        Users?   @relation(fields: [usersId], references: [id])\n  usersId      Int?\n}\n",
+  "inlineSchemaHash": "1bb8f3cd29457c6fa50835423e8fde9c5a6374bd6fe32d64218189f542cccc53",
   "copyEngine": true
 }
 config.dirname = '/'
@@ -178,7 +187,7 @@ config.engineWasm = undefined
 
 config.injectableEdgeEnv = () => ({
   parsed: {
-    DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_URL || undefined
+    POSTGRES_PRISMA_URL: typeof globalThis !== 'undefined' && globalThis['POSTGRES_PRISMA_URL'] || typeof process !== 'undefined' && process.env && process.env.POSTGRES_PRISMA_URL || undefined
   }
 })
 
