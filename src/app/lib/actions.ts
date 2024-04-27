@@ -1,5 +1,5 @@
-'use server';
-import { revalidatePath } from 'next/cache';
+// 'use server';
+// import { revalidatePath } from 'next/cache';
 import { prisma } from './prisma';
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
@@ -59,7 +59,7 @@ export async function registerUser(
   const user = await prisma.users.create({ data: userData });
 
   await userCreateLog(user.id, 'create');
-  revalidatePath('/');
+  // revalidatePath('/');
 }
 
 export async function userCreateLog(id: number, action: string) {
@@ -152,7 +152,7 @@ export async function clearLogs(usersId: number) {
       usersId: { in: [usersId] },
     },
   });
-  revalidatePath('/');
+  // revalidatePath('/');
 }
 
 export async function findUser(id: number | null) {
