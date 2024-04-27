@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import SessionWrapper from '@/components/SessionWrapper/SessionWrapper';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -23,6 +25,8 @@ export default function RootLayout({
         <body className="bg-bg-color">
           <main className={`${inter.className} my-0 mx-auto  max-w-5xl`}>
             {children}
+            <Analytics />
+            <SpeedInsights />
           </main>
         </body>
       </html>

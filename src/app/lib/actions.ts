@@ -28,7 +28,7 @@ export async function createUser(formData: FormData) {
   const user = await prisma.users.create({ data: userData });
 
   await userCreateLog(user.id, 'create');
-  revalidatePath('/');
+  revalidatePath('/users-field');
 }
 
 export async function registerUser(
@@ -107,7 +107,7 @@ export async function userCreateLog(id: number, action: string) {
   await prisma.subRows.create({
     data: logData,
   });
-  revalidatePath('/');
+  revalidatePath('/users-field/users');
 }
 
 export async function userCreateGroupLogUpdate(
@@ -140,7 +140,7 @@ export async function deleteUser(id: number) {
       id,
     },
   });
-  revalidatePath('/');
+  revalidatePath('/users-field');
 }
 
 export async function clearLogs(usersId: number) {
@@ -192,7 +192,7 @@ export async function updateUser(id: number, formData: FormData) {
     await userCreateLog(updatedUser.id, 'activate');
   }
 
-  revalidatePath('/');
+  revalidatePath('/users-field');
 }
 
 export async function updateSetUserPaid(usersId: number[]) {
@@ -227,7 +227,7 @@ export async function userActivate(id: number) {
     },
   });
   await userCreateLog(activateUser.id, 'activate');
-  revalidatePath('/');
+  revalidatePath('/users-field');
   return true;
 }
 
