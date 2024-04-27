@@ -1,9 +1,6 @@
 'use server';
-// import { revalidatePath } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { prisma } from './prisma';
-export const revalidate = 0;
-export const dynamic = 'force-dynamic';
-export const fetchCache = 'force-no-store';
 
 export async function getData() {
   const data = await prisma.users.findMany();
@@ -31,7 +28,7 @@ export async function createUser(formData: FormData) {
   const user = await prisma.users.create({ data: userData });
 
   await userCreateLog(user.id, 'create');
-  // revalidatePath('/users-field');
+  revalidatePath('/');
 }
 
 export async function registerUser(
@@ -59,7 +56,7 @@ export async function registerUser(
   const user = await prisma.users.create({ data: userData });
 
   await userCreateLog(user.id, 'create');
-  // revalidatePath('/');
+  revalidatePath('/');
 }
 
 export async function userCreateLog(id: number, action: string) {
@@ -110,7 +107,7 @@ export async function userCreateLog(id: number, action: string) {
   await prisma.subRows.create({
     data: logData,
   });
-  // revalidatePath('/users-field/users');
+  revalidatePath('/');
 }
 
 export async function userCreateGroupLogUpdate(
@@ -129,7 +126,7 @@ export async function userCreateGroupLogUpdate(
   await prisma.subRows.create({
     data: logData,
   });
-  // revalidatePath('/');
+  revalidatePath('/');
 }
 
 export async function deleteUser(id: number) {
@@ -143,7 +140,7 @@ export async function deleteUser(id: number) {
       id,
     },
   });
-  // revalidatePath('/users-field');
+  revalidatePath('/');
 }
 
 export async function clearLogs(usersId: number) {
@@ -152,7 +149,7 @@ export async function clearLogs(usersId: number) {
       usersId: { in: [usersId] },
     },
   });
-  // revalidatePath('/');
+  revalidatePath('/');
 }
 
 export async function findUser(id: number | null) {
@@ -195,7 +192,7 @@ export async function updateUser(id: number, formData: FormData) {
     await userCreateLog(updatedUser.id, 'activate');
   }
 
-  // revalidatePath('/users-field');
+  revalidatePath('/');
 }
 
 export async function updateSetUserPaid(usersId: number[]) {
@@ -204,7 +201,7 @@ export async function updateSetUserPaid(usersId: number[]) {
     data: { paymentStatus: 'Paid' },
   });
 
-  // revalidatePath('/users-field');
+  revalidatePath('/users-field');
 }
 
 export async function userActivate(id: number) {
@@ -230,7 +227,7 @@ export async function userActivate(id: number) {
     },
   });
   await userCreateLog(activateUser.id, 'activate');
-  // revalidatePath('/users-field');
+  revalidatePath('/');
   return true;
 }
 
