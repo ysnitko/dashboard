@@ -23,7 +23,7 @@ export default function UpdateUser({
       action={updateUserWithId}
       onSubmit={() => setUpdateUser(false)}
       className="flex flex-col p-[30px] justify-between fixed top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  bg-bg-table-primary border-[1px] rounded-md
-      shadow-xl
+      shadow-xl max-sm:min-w-[90%]
       "
     >
       <h2 className="text-text-header font-bold text-xl border-b-2 mb-4">

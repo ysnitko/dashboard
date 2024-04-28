@@ -6,11 +6,13 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <div className="flex flex-col items-center">
-      <div className="flex justify-between items-center w-4/5 mt-5">
-        <h1 className="text-text-header text-3xl">Data table application</h1>
-        <div className="flex gap-4 items-center">
+      <div className="flex justify-between items-center w-4/5 mt-5 max-sm:flex-col max-sm:gap-4 max-sm:mb-2">
+        <h1 className="text-text-header text-3xl max-sm:text-2xl">
+          Data table application
+        </h1>
+        <div className="flex gap-4 items-center max-sm:h-8">
           <button
-            className="bg-bg-color text-bg-page  text-text-header border-border-clr border-[1px] rounded-md px-2 py-1 hover:bg-text-header hover:text-bg-color hover:border-none"
+            className="bg-bg-color text-bg-page  text-text-header border-border-clr border-[1px] rounded-md px-2 py-1 hover:bg-text-header hover:text-bg-color hover:border-none max-sm:w-[100px]"
             onClick={() => signIn()}
           >
             Sign in

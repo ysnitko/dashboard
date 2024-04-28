@@ -94,7 +94,7 @@ export default function Table({
         accessorKey: 'name',
         cell: (props: any) => {
           return (
-            <p className="text-sm flex flex-col">
+            <p className="text-sm flex flex-col  max-sm:text-[10px]">
               <span className="text-clr-primary">{props.getValue()}</span>
               <span className="text-text-header">
                 {props.row.original.email}
@@ -112,7 +112,7 @@ export default function Table({
           dateformat(now, 'hammerTime');
 
           return (
-            <div className="text-xs flex flex-col gap-1 justify-center">
+            <div className="text-xs flex flex-col gap-1 justify-center max-sm:text-[10px]">
               {props.getValue() === 'Active' ? (
                 <>
                   <p className="flex gap-1 bg-bg-active-status rounded-[10px] px-2 py-[2px] w-fit">
@@ -126,7 +126,7 @@ export default function Table({
                       {props.getValue()}
                     </span>
                   </p>
-                  <span className="text-xs font-medium text-text-header">
+                  <span className="text-xs font-medium text-text-header max-sm:text-[10px]">
                     Created at: {`${dateformat(now, 'hammerTime')}`}
                   </span>
                 </>
@@ -143,7 +143,7 @@ export default function Table({
                       {props.getValue()}
                     </span>
                   </p>
-                  <span className="text-xs font-medium text-text-header">
+                  <span className="text-xs font-medium text-text-header max-sm:text-[10px]">
                     Created at: {`${dateformat(now, 'hammerTime')}`}
                   </span>
                 </>
@@ -159,8 +159,6 @@ export default function Table({
         cell: (props: any) => {
           const now = props.row.original.createdAt;
           const duesTime = props.row.original.duesDate;
-          console.log(props.row.original);
-
           masks.hammerTime = 'dd/mmm/yyyy';
           dateformat(now, 'hammerTime');
 
@@ -168,7 +166,7 @@ export default function Table({
           const bgClrStatus = bgStatusPayment(props.getValue());
           const srcImgPayment = srcStatusPayment(props.getValue());
           return (
-            <div className="text-xs flex flex-col gap-1 justify-start">
+            <div className="text-xs flex flex-col gap-1 justify-start max-sm:text-[10px]">
               <p
                 className={`flex gap-1 ${bgClrStatus} rounded-[10px] px-2 py-[2px] w-fit justify-left`}
               >
@@ -183,7 +181,7 @@ export default function Table({
                 </span>
               </p>
               <span
-                className="text-xs font-medium text-text-header"
+                className="text-xs font-medium text-text-header max-sm:text-[10px]"
                 style={{
                   color:
                     props.row.original.paymentStatus === 'Unsalaried'
@@ -209,11 +207,13 @@ export default function Table({
         accessorKey: 'amount',
         cell: (props: any) => {
           return (
-            <p className="text-sm flex flex-col gap-1 justify-start">
+            <p className="text-sm flex flex-col gap-1 justify-start max-sm:text-[10px]">
               <span className="text-clr-primary font-medium">
                 ${props.getValue()}
               </span>
-              <span className="text-xs font-medium text-text-header">USD</span>
+              <span className="text-xs font-medium text-text-header max-sm:text-[10px]">
+                USD
+              </span>
             </p>
           );
         },
@@ -238,7 +238,7 @@ export default function Table({
           const rowId = props.row.original.id;
           const isOpen = rowId === openRowId;
           return (
-            <div className="flex justify-end items-end gap-4 relative">
+            <div className="flex justify-end items-end gap-4 relative max-sm:text-[10px]">
               <span className="text-xs font-medium text-text-header">
                 View More
               </span>
@@ -314,7 +314,10 @@ export default function Table({
               className="text-base font-semibold text-text-header tracking-widest border-border-clr border-[1px]"
             >
               {headerGroup.headers.map((header) => (
-                <th key={header.id} className="p-4 text-left">
+                <th
+                  key={header.id}
+                  className="p-4 text-left  max-sm:text-[10px] max-sm:p-1"
+                >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext()
@@ -333,7 +336,10 @@ export default function Table({
               style={{ background: row.getIsSelected() ? '#F4F2FF' : '' }}
             >
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="px-4 py-3">
+                <td
+                  key={cell.id}
+                  className="px-4 py-3  max-sm:text-[10px]  max-sm:p-1"
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}

@@ -37,7 +37,6 @@ export default function SignInPage() {
       password,
     })
       .then((res) => {
-        console.log(user);
         if (user?.userStatus === 'Blocked') {
           setErrorValiadation(ERRORS.user_blocked);
           return;

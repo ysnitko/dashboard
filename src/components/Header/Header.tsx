@@ -9,8 +9,8 @@ export default function Header() {
   const { data: session } = useSession();
 
   return (
-    <header className="flex gap-3 items-center  justify-between">
-      <div className="flex">
+    <header className="flex gap-3 items-center  justify-between max-sm:p-1">
+      <div className="flex ">
         <h1 className=" text-sm font-bold tracking-widest py-3 pr-1 text-text-header">
           TABLE HEADING
         </h1>

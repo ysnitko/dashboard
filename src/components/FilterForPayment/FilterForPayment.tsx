@@ -58,7 +58,7 @@ export default function FilterForPayment(props: Props) {
   };
 
   return (
-    <div className="flex justify-between  border-border-clr border-b-[1px]">
+    <div className="flex justify-between  border-border-clr border-b-[1px] max-sm:p-1 max-sm:flex-col">
       <div className="flex gap-5 text-sm min-h-full">
         {['All', 'Paid', 'Unsalaried', 'Overdue'].map((item, index) => {
           return (
@@ -75,12 +75,14 @@ export default function FilterForPayment(props: Props) {
           );
         })}
       </div>
-      <span className="text-sm py-1 text-text-btn-filter w-full text-right ">
+      <span className="text-sm py-1 text-text-btn-filter w-full text-right max-sm:text-left ">
         Total payable amount:
         <span className="text-lg font-bold text-text-total-prise">
           &nbsp;${totalPayable()}
         </span>
-        <span className="text-lg text-text-btn-filter">&nbsp;USD</span>
+        <span className="text-lg text-text-btn-filter max-sm:text-[14px]">
+          &nbsp;USD
+        </span>
       </span>
     </div>
   );

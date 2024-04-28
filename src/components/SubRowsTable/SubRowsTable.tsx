@@ -78,7 +78,7 @@ export default function SubRowsTable({
               <th
                 key={header.id}
                 style={{ width: header.getSize() }}
-                className="p-2 text-left"
+                className="p-2 text-left max-sm:text-[10px]"
               >
                 {flexRender(
                   header.column.columnDef.header,
@@ -93,10 +93,13 @@ export default function SubRowsTable({
         {table.getRowModel().rows.map((row) => (
           <tr
             key={row.id}
-            className="bg-bg-color border-border-clr border-[1px] "
+            className="bg-bg-color border-border-clr border-[1px] max-sm:text-[10px]"
           >
             {row.getVisibleCells().map((cell) => (
-              <td key={cell.id} className="p-2 text-clr-primary text-sm">
+              <td
+                key={cell.id}
+                className="p-2 text-clr-primary text-sm max-sm:text-[12px]"
+              >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}

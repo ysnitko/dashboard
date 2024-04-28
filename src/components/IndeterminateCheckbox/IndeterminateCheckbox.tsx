@@ -12,5 +12,12 @@ export default function IndeterminateCheckbox({
     }
   }, [ref, indeterminate, rest.checked]);
 
-  return <input type="checkbox" ref={ref} className="w-5 h-5" {...rest} />;
+  return (
+    <input
+      type="checkbox"
+      ref={ref}
+      className="w-5 h-5  max-sm:w-3  max-sm:h-3"
+      {...rest}
+    />
+  );
 }
