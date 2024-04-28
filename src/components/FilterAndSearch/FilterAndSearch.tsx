@@ -72,7 +72,7 @@ export default function FilterAndSearch(props: Props) {
         </label>
       </div>
       <button
-        className="bg-bg-btn-dues text-bg-color px-4 py-1 rounded-md font-semibold  text-base"
+        className="bg-bg-btn-dues text-bg-color px-4 py-1 rounded-md font-semibold  text-base max-sm:text-sm max-sm:p-1"
         style={{
           opacity: changedId.length === 0 ? '0.5' : '1',
           cursor: changedId.length === 0 ? 'not-allowed' : '',
