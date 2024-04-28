@@ -32,7 +32,7 @@ export default function UserMenu({
     <ul
       ref={menuRef}
       className="absolute top-0 -left-[25px] p-2 bg-bg-table-primary border-[1px] rounded-md  text-sm tracking-widest w-[150px] flex flex-col gap-2 z-10 [&_li:hover]:bg-bg-color
-      shadow-2xl max-sm:text-[12px] max-sm:-left-[60px] max-sm:top-[8px]"
+      shadow-2xl max-sm:text-[12px] max-sm:-left-[85px] max-sm:top-[8px]"
     >
       <button
         className="absolute -right-[10px] -top-[10px] p-1 rounded-full border-[1px] bg-bg-table-primary"
