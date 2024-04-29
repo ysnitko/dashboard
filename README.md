@@ -1,6 +1,7 @@
 # Users payment accounting table
 
 Project for accounting for user payments for certain assets. The project was developed to gain practical experience in full-stack development.
+
 ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/home-page.png)
 
 ## Table of contents
@@ -38,20 +39,44 @@ Project for accounting for user payments for certain assets. The project was dev
 Users should be able to:
 
 - View the optimal layout for each page depending on their device's screen size (screen & mobile)
-  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
+
+  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/mobile.png)
+
 - Built-in user authorization mechanism.The user's email and password are used as credentials
-  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
+
+  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/sign-in.png)
+
 - Form validation upon user login and registration, if the user is blocked, entry is denied
-  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
+
+  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/valid-reg.png)
+  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/validate-signin.png)
+
 - The app will use all CRUD actions on the user
-  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
-  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
-  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
-  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
+
+  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/create-user.png)
+  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/edit-in.png)
+  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/padd-menu.png)
+
 - Search for user by name, email, payment status and activity status
+
+  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/search.png)
+
 - User filter and sorting by numerous parameters
+
+![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/filter-sort.png)
+
 - User details page with activity logs
-- A drop-down menu with actions on users has been implemented (edit, delete, activate, view details)
+
+![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/user-details.png)
+
 - Pagination, choice of displaying 10 or 20 users per page
+
+![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/pagination.png)
+
 - Multiple payment posting
+
+![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/multiple-pay.png)
+
 - Data is saved to the Postgresql database
+
+![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/db.png)
