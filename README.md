@@ -39,7 +39,7 @@ Project for accounting for user payments for certain assets. The project was dev
 Users should be able to:
 
 - View the optimal layout for each page depending on their device's screen size (screen & mobile)
-
+  mobile:
   ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/mobile.png)
 
 - Built-in user authorization mechanism.The user's email and password are used as credentials
@@ -50,7 +50,9 @@ Users should be able to:
 
   ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/valid-reg.png)
 
-  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/validate-signin.png)
+---
+
+![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/validate-signin.png)
 
 - The app will use all CRUD actions on the user
 
