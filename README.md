@@ -17,7 +17,7 @@ Project for accounting for user payments for certain assets. The project was dev
 
 - Source code: [https://github.com/ysnitko/dashboard.git](https://github.com/ysnitko/dashboard.git)
 - Live Site URL (deploy on vercel): [https://dashboard-rose-omega.vercel.app/](https://dashboard-rose-omega.vercel.app/)
-  To authorize in the app, enter login: <strong>test@test<strong> password: <strong>test</strong>
+  To authorize in the app, enter login: <strong>test@test</strong>, password: <strong>test</strong>
 
 ### Built with
 
