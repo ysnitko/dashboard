@@ -40,7 +40,7 @@ Users should be able to:
 
 - View the optimal layout for each page depending on their device's screen size (screen & mobile)
 
-  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/mobile.png)
+  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/mobile.png){width=200px}
 
 - Built-in user authorization mechanism.The user's email and password are used as credentials
 
