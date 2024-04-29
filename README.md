@@ -1,7 +1,7 @@
 # Users payment accounting table
 
 Project for accounting for user payments for certain assets. The project was developed to gain practical experience in full-stack development.
-![ScreenShot](https://raw.github.com/ysnitko/dashboard/blob/main/public/assets/home-page.png)
+![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/home-page.png)
 
 ## Table of contents
 
