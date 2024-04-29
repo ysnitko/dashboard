@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Users payment accounting table
 
-## Getting Started
+Project for accounting for user payments for certain assets. The project was developed to gain practical experience in full-stack development.
 
-First, run the development server:
+## Table of contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Overview](#overview)
+  - [Live link & source code](#Live-link-&-source-code)
+  - [Built stack](#built-stack)
+  - [Features](#features)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Live link & code
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Source code: [https://github.com/ysnitko/dashboard.git](https://github.com/ysnitko/dashboard.git)
+- Live Site URL (deploy on vercel): [https://dashboard-rose-omega.vercel.app/](https://dashboard-rose-omega.vercel.app/)
+  To authorize in the app, enter login: <strong>test@test<strong> password: <strong>test</strong>
 
-## Learn More
+### Built with
 
-To learn more about Next.js, take a look at the following resources:
+- [React](https://reactjs.org/)
+- [Next.js](https://nextjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Next-auth.js](next-auth.js)
+- [Tanstack](https://tanstack.com/)
+- [Prisma ORM](https://www.prisma.io/)
+- [Postgresql]https://www.postgresql.org/
+- [React-loader-spinner](https://www.npmjs.com/package/react-loader-spinner)
+- [React-onclickoutside](https://www.npmjs.com/package/react-onclickoutside)
+- [Dateformat](https://www.npmjs.com/package/dateformat)
+- [Vercel](https://vercel.com/)
+- [TailwindCSS](https://tailwindcss.com/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Users should be able to:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- View the optimal layout for each page depending on their device's screen size
+  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
+- Built-in user authorization mechanism.The user's email and password are used as credentials
+  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
+- Form validation upon user login and registration, if the user is blocked, entry is denied
+  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
+- The app will use all CRUD actions on the user
+  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
+  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
+  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
+  ![DATA TABLE](https://github.com/ysnitko/link_shortering/blob/main/src/assets/images/Screenshot1.png)
+- Search for user by name, email, payment status and activity status
+- User filter and sorting by numerous parameters
+- User details page with activity logs
+- A drop-down menu with actions on users has been implemented (edit, delete, activate, view details)
+- Pagination, choice of displaying 10 or 20 users per page
+- Multiple payment posting
+- Data is saved to the Postgresql database
