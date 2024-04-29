@@ -40,7 +40,7 @@ Users should be able to:
 
 - View the optimal layout for each page depending on their device's screen size (screen & mobile)
 
-  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/mobile.png =250x300)
+  ![Image](https://github.com/ysnitko/dashboard/blob/main/public/assets/mobile.png =250x300)
 
 - Built-in user authorization mechanism.The user's email and password are used as credentials
 
@@ -54,7 +54,7 @@ Users should be able to:
 - The app will use all CRUD actions on the user
 
   ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/create-user.png)
-  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/edit.png)
+  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/edit-user.png)
   ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/padd-menu.png)
 
 - Search for user by name, email, payment status and activity status
