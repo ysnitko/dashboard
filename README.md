@@ -50,9 +50,7 @@ Users should be able to:
 
   ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/valid-reg.png)
 
----
-
-![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/validate-signin.png)
+  ![ScreenShot](https://github.com/ysnitko/dashboard/blob/main/public/assets/validate-signin.png)
 
 - The app will use all CRUD actions on the user
 
