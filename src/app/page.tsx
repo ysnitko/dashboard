@@ -2,21 +2,8 @@
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect } from 'react';
 
 export default function Home() {
-  useEffect(() => {
-    fetch('/api/visit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data.message))
-      .catch((error) => console.error(error));
-  }, []);
-
   return (
     <div className="flex flex-col items-center">
       <div className="flex justify-between items-center w-4/5 mt-5 max-sm:flex-col max-sm:gap-4 max-sm:mb-2">
