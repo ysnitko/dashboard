@@ -1,9 +1,22 @@
 'use client';
+import { useEffect } from 'react';
+import axios from 'axios';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
+  useEffect(() => {
+    axios
+      .get('/api/visit')
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }, []);
+
   return (
     <div className="flex flex-col items-center">
       <div className="flex justify-between items-center w-4/5 mt-5 max-sm:flex-col max-sm:gap-4 max-sm:mb-2">
